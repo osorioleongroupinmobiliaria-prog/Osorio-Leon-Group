@@ -1,0 +1,202 @@
+
+
+import React, { useState, useEffect } from 'react';
+import type { Property, Imagen } from '../types';
+import NeumorphicCard from './ui/NeumorphicCard';
+import NeumorphicInput from './ui/NeumorphicInput';
+import NeumorphicButton from './ui/NeumorphicButton';
+import NeumorphicCheckbox from './ui/NeumorphicCheckbox';
+
+interface PropertyFormProps {
+  property: Property | null;
+  onSave: (property: Property) => void;
+  onCancel: () => void;
+}
+
+const emptyProperty: Property = {
+  id: '',
+  titulo: '',
+  descripcion: '',
+  ciudad: '',
+  barrio_sector: '',
+  tipo_operacion: 'venta',
+  tipo_propiedad: 'apartamento',
+  precio: 0,
+  es_negociable: false,
+  area_construida: 0,
+  habitaciones: 0,
+  banos_completos: 0,
+  parqueaderos: 0,
+  tiene_balcon: false,
+  tiene_gimnasio: false,
+  tiene_piscina_comun: false,
+  tiene_ascensor: false,
+  tiene_porteria_24h: false,
+  imagenes: [],
+  es_destacado: false,
+  estado_publicacion: 'borrador',
+  fecha_publicacion: new Date().toISOString(),
+};
+
+const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel }) => {
+  const [formData, setFormData] = useState<Property>(emptyProperty);
+
+  useEffect(() => {
+    setFormData(property ? { ...property } : { ...emptyProperty, id: `prop_${Date.now()}` });
+  }, [property]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    
+    let processedValue: any = value;
+    if (type === 'number') {
+        processedValue = value === '' ? 0 : parseFloat(value);
+    }
+    
+    setFormData(prev => ({ ...prev, [name]: processedValue }));
+  };
+
+  const handleCheckboxChange = (name: string, checked: boolean) => {
+    setFormData(prev => ({ ...prev, [name]: checked }));
+  };
+
+  const handleImageChange = (index: number, url: string) => {
+    const newImages = [...formData.imagenes];
+    newImages[index].url_imagen = url;
+    setFormData(prev => ({ ...prev, imagenes: newImages }));
+  };
+  
+  const addImageField = () => {
+    const newImage: Imagen = { id: `img_${Date.now()}`, url_imagen: '', es_principal: formData.imagenes.length === 0 };
+    setFormData(prev => ({ ...prev, imagenes: [...prev.imagenes, newImage]}));
+  };
+
+  const removeImageField = (index: number) => {
+    const newImages = formData.imagenes.filter((_, i) => i !== index);
+    if(newImages.length > 0 && !newImages.some(img => img.es_principal)) {
+      newImages[0].es_principal = true;
+    }
+    setFormData(prev => ({ ...prev, imagenes: newImages }));
+  };
+
+  const setPrincipalImage = (index: number) => {
+    const newImages = formData.imagenes.map((img, i) => ({
+      ...img,
+      es_principal: i === index
+    }));
+    setFormData(prev => ({ ...prev, imagenes: newImages }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({ ...formData, fecha_publicacion: new Date().toISOString() });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <NeumorphicCard className="p-8">
+        <h2 className="text-2xl font-bold text-[#153B67] mb-6">{property ? 'Editar Propiedad' : 'Nueva Propiedad'}</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+          {/* Columna Izquierda */}
+          <div className="space-y-4">
+            <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Información Básica</h3>
+            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+            <LabeledInput label="Título" name="titulo" value={formData.titulo} onChange={handleChange} required />
+            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+            <LabeledInput as="textarea" label="Descripción" name="descripcion" value={formData.descripcion} onChange={handleChange} rows={5} required />
+            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+            <LabeledInput label="Ciudad" name="ciudad" value={formData.ciudad} onChange={handleChange} required />
+            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+            <LabeledInput label="Barrio/Sector" name="barrio_sector" value={formData.barrio_sector} onChange={handleChange} required />
+            
+            <div className="grid grid-cols-2 gap-4">
+                {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+                <LabeledInput as="select" label="Operación" name="tipo_operacion" value={formData.tipo_operacion} onChange={handleChange}>
+                    <option value="venta">Venta</option>
+                    <option value="arriendo">Arriendo</option>
+                </LabeledInput>
+                {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+                <LabeledInput as="select" label="Tipo de Propiedad" name="tipo_propiedad" value={formData.tipo_propiedad} onChange={handleChange}>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="casa">Casa</option>
+                    <option value="oficina">Oficina</option>
+                    <option value="local">Local</option>
+                    <option value="lote">Lote</option>
+                    <option value="finca">Finca</option>
+                </LabeledInput>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 items-center">
+              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+              <LabeledInput type="number" label="Precio (COP)" name="precio" value={formData.precio} onChange={handleChange} required />
+              <NeumorphicCheckbox name="es_negociable" label="Precio Negociable" checked={formData.es_negociable} onChange={checked => handleCheckboxChange('es_negociable', checked)} />
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+              <LabeledInput type="number" label="Área (m²)" name="area_construida" value={formData.area_construida} onChange={handleChange} />
+              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+              <LabeledInput type="number" label="Habitaciones" name="habitaciones" value={formData.habitaciones} onChange={handleChange} />
+              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+              <LabeledInput type="number" label="Baños" name="banos_completos" value={formData.banos_completos} onChange={handleChange} />
+              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+              <LabeledInput type="number" label="Parqueaderos" name="parqueaderos" value={formData.parqueaderos} onChange={handleChange} />
+            </div>
+          </div>
+
+          {/* Columna Derecha */}
+          <div className="space-y-4">
+            <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Características Adicionales</h3>
+            <div className="grid grid-cols-2 gap-3">
+                <NeumorphicCheckbox name="tiene_balcon" label="Balcón" checked={formData.tiene_balcon} onChange={c => handleCheckboxChange('tiene_balcon', c)} />
+                <NeumorphicCheckbox name="tiene_gimnasio" label="Gimnasio" checked={formData.tiene_gimnasio} onChange={c => handleCheckboxChange('tiene_gimnasio', c)} />
+                <NeumorphicCheckbox name="tiene_piscina_comun" label="Piscina" checked={formData.tiene_piscina_comun} onChange={c => handleCheckboxChange('tiene_piscina_comun', c)} />
+                <NeumorphicCheckbox name="tiene_ascensor" label="Ascensor" checked={formData.tiene_ascensor} onChange={c => handleCheckboxChange('tiene_ascensor', c)} />
+                <NeumorphicCheckbox name="tiene_porteria_24h" label="Portería 24h" checked={formData.tiene_porteria_24h} onChange={c => handleCheckboxChange('tiene_porteria_24h', c)} />
+            </div>
+
+            <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Imágenes (URLs)</h3>
+            <div className="space-y-3 max-h-60 overflow-y-auto pr-2">
+                {formData.imagenes.map((img, index) => (
+                    <div key={img.id} className="flex items-center gap-2">
+                        <input type="radio" name="principal_image" checked={img.es_principal} onChange={() => setPrincipalImage(index)} title="Marcar como principal" className="mt-1"/>
+                        <NeumorphicInput containerClassName="flex-grow" placeholder="https://..." value={img.url_imagen} onChange={e => handleImageChange(index, e.target.value)} />
+                        <NeumorphicButton type="button" onClick={() => removeImageField(index)} className="!px-3 !py-1 text-xs !bg-red-200">X</NeumorphicButton>
+                    </div>
+                ))}
+            </div>
+            <NeumorphicButton type="button" onClick={addImageField} className="text-sm w-full">Añadir Imagen</NeumorphicButton>
+
+            <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Publicación</h3>
+            <div className="grid grid-cols-2 gap-4 items-center">
+                 {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
+                 <LabeledInput as="select" label="Estado" name="estado_publicacion" value={formData.estado_publicacion} onChange={handleChange}>
+                    <option value="publicado">Publicado</option>
+                    <option value="borrador">Borrador</option>
+                    <option value="pausado">Pausado</option>
+                </LabeledInput>
+                 <NeumorphicCheckbox name="es_destacado" label="Propiedad Destacada" checked={formData.es_destacado} onChange={c => handleCheckboxChange('es_destacado', c)} />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-4 mt-8">
+            <NeumorphicButton type="button" onClick={onCancel}>Cancelar</NeumorphicButton>
+            <NeumorphicButton type="submit" className="!bg-[#153B67] !text-white">Guardar Cambios</NeumorphicButton>
+        </div>
+
+      </NeumorphicCard>
+    </form>
+  );
+};
+
+// Helper component for label + input combo
+const LabeledInput: React.FC<React.ComponentProps<typeof NeumorphicInput> & { label: string }> = ({ label, ...props }) => (
+    <div>
+        <label className="block text-sm font-medium text-gray-600 mb-1">{label}</label>
+        <NeumorphicInput {...props} />
+    </div>
+);
+
+export default PropertyForm;
