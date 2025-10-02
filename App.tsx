@@ -18,8 +18,12 @@ import ServicesSection from './components/ServicesSection';
 import OfferPropertySection from './components/OfferPropertySection';
 import TestimonialsSection from './components/TestimonialsSection';
 import VisitorNotification from './components/VisitorNotification';
+import SplashScreen from './components/SplashScreen';
+import AdminAccessButton from './components/AdminAccessButton';
 
 export const initialFilters: Filters = {
+  searchTerm: '',
+  codigo_inmueble: '',
   tipo_operacion: 'todos',
   tipo_propiedad: 'todos',
   precio_min: 50000000,
@@ -30,15 +34,43 @@ export const initialFilters: Filters = {
   banos: 'any',
   parqueaderos: 'any',
   extras: [],
+  estrato_min: 1,
+  estrato_max: 6,
+  estado_inmueble: 'any',
+  estado_amoblado: 'any',
+  departamento: 'todos',
+  barrio: '',
 };
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [view, setView] = useState<'public' | 'login' | 'admin'>('public');
-  const [properties, setProperties] = useState<Property[]>(MOCK_PROPERTIES);
+  
+  const [properties, setProperties] = useState<Property[]>(() => {
+    try {
+      const storedProperties = localStorage.getItem('osorioLeonProperties');
+      if (storedProperties) {
+        return JSON.parse(storedProperties);
+      }
+    } catch (error) {
+      console.error("Failed to parse properties from localStorage", error);
+    }
+    return MOCK_PROPERTIES;
+  });
+
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [sortBy, setSortBy] = useState('default');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('osorioLeonProperties', JSON.stringify(properties));
+    } catch (error) {
+      console.error("Failed to save properties to localStorage", error);
+    }
+  }, [properties]);
 
   useEffect(() => {
     const handlePathChange = () => {
@@ -51,8 +83,8 @@ function App() {
       }
     };
 
-    handlePathChange(); // Check path on initial load and auth change
-    window.addEventListener('popstate', handlePathChange); // Listen for history changes
+    handlePathChange();
+    window.addEventListener('popstate', handlePathChange);
 
     return () => {
       window.removeEventListener('popstate', handlePathChange);
@@ -69,8 +101,8 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    window.history.pushState({}, '', '/'); // Change URL without reloading
-    setView('public'); // Manually set view to public for instant update
+    window.history.pushState({}, '', '/');
+    setView('public');
   };
   
   const handleSaveProperty = (property: Property) => {
@@ -88,8 +120,23 @@ function App() {
   };
 
   const filteredProperties = useMemo(() => {
+    const lowerSearchTerm = filters.searchTerm.toLowerCase().trim();
+    const lowerCode = filters.codigo_inmueble.toLowerCase().trim();
+    const lowerBarrio = filters.barrio.toLowerCase().trim();
+
     return properties.filter(p => {
+      if (p.estado_publicacion !== 'publicado') return false;
       if (p.es_destacado) return false;
+
+      if (lowerCode) {
+        if (p.id.toLowerCase() !== lowerCode) return false;
+      } else if (lowerSearchTerm) {
+        const inCity = p.ciudad.toLowerCase().includes(lowerSearchTerm);
+        const inNeighborhood = p.barrio_sector.toLowerCase().includes(lowerSearchTerm);
+        const inTitle = p.titulo.toLowerCase().includes(lowerSearchTerm);
+        if (!inCity && !inNeighborhood && !inTitle) return false;
+      }
+      
       if (filters.tipo_operacion !== 'todos' && p.tipo_operacion !== filters.tipo_operacion) return false;
       if (filters.tipo_propiedad !== 'todos' && p.tipo_propiedad !== filters.tipo_propiedad) return false;
       if (p.precio < filters.precio_min || p.precio > filters.precio_max) return false;
@@ -101,12 +148,18 @@ function App() {
       const passesExtras = filters.extras.every(extraKey => p[extraKey as keyof Property]);
       if (!passesExtras) return false;
 
+      if (p.estrato && (p.estrato < filters.estrato_min || p.estrato > filters.estrato_max)) return false;
+      if (filters.estado_inmueble !== 'any' && p.estado_inmueble !== filters.estado_inmueble) return false;
+      if (filters.estado_amoblado !== 'any' && p.estado_amoblado !== filters.estado_amoblado) return false;
+      if (filters.departamento !== 'todos' && p.departamento !== filters.departamento) return false;
+      if (lowerBarrio && !p.barrio_sector.toLowerCase().includes(lowerBarrio)) return false;
+
       return true;
     });
   }, [properties, filters]);
   
   const featuredProperties = useMemo(() => {
-    return properties.filter(p => p.es_destacado);
+    return properties.filter(p => p.es_destacado && p.estado_publicacion === 'publicado');
   }, [properties]);
 
   const sortedAndFilteredProperties = useMemo(() => {
@@ -127,6 +180,10 @@ function App() {
     return sortedProperties;
   }, [filteredProperties, sortBy]);
 
+  if (isLoading) {
+    return <SplashScreen onFinished={() => setIsLoading(false)} />;
+  }
+
   switch (view) {
     case 'login':
       return <LoginForm onLogin={handleLogin} />;
@@ -139,7 +196,11 @@ function App() {
           <Header />
           <main>
             <HeroSection />
-            <FilterSection filters={filters} setFilters={setFilters} />
+            <FilterSection 
+              filters={filters} 
+              setFilters={setFilters}
+              filteredCount={sortedAndFilteredProperties.length} 
+            />
             <FeaturedProperties 
               properties={featuredProperties} 
               onPropertySelect={setSelectedProperty} 
@@ -156,8 +217,9 @@ function App() {
             <TestimonialsSection />
             <ContactSection />
           </main>
-          <VisitorNotification />
-          {!selectedProperty && <ChatbotAura />}
+          <VisitorNotification isChatbotOpen={isChatbotOpen} />
+          {!selectedProperty && <ChatbotAura isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} />}
+          <AdminAccessButton />
           <Footer />
           {selectedProperty && (
             <PropertyModal property={selectedProperty} onClose={() => setSelectedProperty(null)} />

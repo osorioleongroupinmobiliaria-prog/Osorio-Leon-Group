@@ -13,6 +13,11 @@ const Footer: React.FC = () => {
     { key: 'nav.contact', href: '#contacto' },
   ];
 
+  const navigateToAdmin = () => {
+    window.history.pushState({}, '', '/acceso-digital-osorio');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <footer className="bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -22,6 +27,7 @@ const Footer: React.FC = () => {
             <p className="mt-2 text-sm text-gray-600">{t(COMPANY_INFO.sloganKey)}</p>
             <div className="mt-4 text-xs text-gray-500 space-y-1">
                 <p>{COMPANY_INFO.address}</p>
+                <p>{COMPANY_INFO.registrationNumber}</p>
             </div>
           </div>
           <div>
@@ -63,12 +69,16 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-300 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. {t('footer.copyright')}</p>
+           <div
+            onClick={navigateToAdmin}
+            className="cursor-pointer inline-block"
+            title="Admin Access"
+            aria-label="Admin Access"
+          >
+            <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. {t('footer.copyright')}</p>
+          </div>
         </div>
       </div>
-      <a href="/acceso-digital-osorio" className="absolute bottom-1 right-1 text-[8px] font-mono text-gray-400/30 hover:text-gray-500/80 transition-colors">
-        OSORIO & LEON GROUP
-      </a>
     </footer>
   );
 };

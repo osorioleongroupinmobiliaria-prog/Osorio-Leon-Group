@@ -40,6 +40,12 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
     { labelKey: 'features.pool', value: property.tiene_piscina_comun },
     { labelKey: 'features.elevator', value: property.tiene_ascensor },
     { labelKey: 'features.concierge', value: property.tiene_porteria_24h },
+    { labelKey: 'features.greenAreas', value: property.tiene_zonas_verdes },
+    { labelKey: 'features.soccerField', value: property.tiene_cancha_futbol },
+    { labelKey: 'features.bbqKiosk', value: property.tiene_kiosko_asados },
+    { labelKey: 'features.socialRoom', value: property.tiene_salon_social },
+    { labelKey: 'features.playground', value: property.tiene_juegos_infantiles },
+    { labelKey: 'features.walkingPath', value: property.tiene_sendero_peatonal },
   ].filter(f => f.value);
 
   return (
@@ -79,6 +85,7 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
                 <div className="mb-6">
                   <h3 className="font-bold text-lg mb-3 text-[#153B67]">{t('propertyModal.additionalFeatures')}</h3>
                   <div className="flex flex-wrap gap-2">
+                    <FeatureChip>{t(`furnishing.${property.estado_amoblado}`)}</FeatureChip>
                     {features.map(f => <FeatureChip key={f.labelKey}>{t(f.labelKey)}</FeatureChip>)}
                   </div>
                 </div>

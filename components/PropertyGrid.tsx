@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropertyCard from './PropertyCard';
 import NeumorphicInput from './ui/NeumorphicInput';
@@ -16,7 +17,7 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, sortBy, setSort
   const { t } = useI18n();
 
   return (
-    <div className="py-12">
+    <div id="property-grid" className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
             <h2 className="text-2xl font-bold text-[#153B67]">{t('propertyGrid.title')} ({properties.length})</h2>

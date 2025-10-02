@@ -37,7 +37,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
           className="w-full h-56 object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300 flex items-center justify-center">
-          <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-32 h-auto opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+          <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-40 h-auto opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
         </div>
         <div className="absolute top-3 left-3 px-3 py-1 bg-[#e0e0e0] rounded-full shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] text-xs font-semibold text-gray-700 capitalize">
           {t(`property.operation.${property.tipo_operacion}`)}

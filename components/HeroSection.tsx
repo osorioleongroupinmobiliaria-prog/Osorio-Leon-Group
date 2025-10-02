@@ -1,16 +1,27 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
 import { COMPANY_INFO } from '../constants';
 import { useI18n } from '../i18n';
 
 const HeroSection: React.FC = () => {
   const { t } = useI18n();
+  const [offsetY, setOffsetY] = useState(0);
+  const handleScroll = () => setOffsetY(window.pageYOffset);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section id="inicio" className="relative py-20 md:py-32">
+    <section id="inicio" className="relative py-20 md:py-32 overflow-hidden">
        <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20" 
-        style={{backgroundImage: "url('https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg')"}}
+        className="absolute inset-0 bg-cover bg-center opacity-30" 
+        style={{
+            backgroundImage: "url('https://lh3.googleusercontent.com/pw/AP1GczMoom0Ce5RAG0bQEFsf08cgCLjCNdfqbZymAz7qhPJ5ean2R93IjXjTONeUuxkQVt37fsK9kW7y9YSmkwUN5VaAsV7VgHO-oMySDaBtn6Dyom4c7_RvjG56FNEGdHhp3OsQpl0wEImTybVpjKFJeMAs=w1344-h768-s-no-gm?authuser=0')",
+            transform: `translateY(${offsetY * 0.2}px)`
+        }}
       ></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
         <NeumorphicCard className="inline-block p-8 md:p-12 bg-opacity-80">

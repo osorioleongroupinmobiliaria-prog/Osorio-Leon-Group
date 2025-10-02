@@ -3,12 +3,12 @@ import NeumorphicCard from './ui/NeumorphicCard';
 import { useI18n } from '../i18n';
 
 const services = [
-  { nameKey: 'services.commercialization', image: 'https://images.pexels.com/photos/50987/money-card-business-credit-card-50987.jpeg' },
-  { nameKey: 'services.propertyManagement', image: 'https://images.pexels.com/photos/439416/pexels-photo-439416.jpeg' },
+  { nameKey: 'services.commercialization', image: 'https://lh3.googleusercontent.com/pw/AP1GczN7AdeOlOpd3xIV_hJ0zNxvgg5k_1ODmLgDQM3F_A5a8R54r3jwIMgwxfEjRWtCoslC0kYBwzmxLpYVHB7AigZA7qKKNHvxcemGIUoaJV6dvndPHYSLyVUpbxxhsZUbt_wmrR8IiwqxfcuhHF8KCSUb=w1418-h945-s-no-gm?authuser=0' },
+  { nameKey: 'services.propertyManagement', image: 'https://lh3.googleusercontent.com/pw/AP1GczNXolii7uc7wQi9aVfH4thz0N3g0jj1U7uqFDBE4DpN5a_sj3c3ARDcjkDiyINmGJEs7H_xMjHM-nRQHNYz4nkV_XVDmCN_2IwGhDNrKLg7ED83P-ElraTtCNUn0nDS_eYnqeyqX2MUoMgXi1ijsQlT=w1417-h945-s-no-gm?authuser=0' },
   { nameKey: 'services.brokerageLeasing', image: 'https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg' },
-  { nameKey: 'services.propertySales', image: 'https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg' },
+  { nameKey: 'services.propertySales', image: 'https://lh3.googleusercontent.com/pw/AP1GczMFBX80nkygaQZZ5pwUEQI_x1x72tNVSb_wjf9fJhjWz_K8_x_ChZYKdI4eaA3tETFRTzf4-4TQoeJlP-bqL0Gx7Xe9avpC6uhdzEl3qtAX5NzGRPbLcwzaovOHWwxganOH4TT-UpdKUnxsmykdEPQh=w1417-h945-s-no-gm?authuser=0' },
   { nameKey: 'services.appraisals', image: 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg' },
-  { nameKey: 'services.consulting', image: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg' },
+  { nameKey: 'services.consulting', image: 'https://lh3.googleusercontent.com/pw/AP1GczNUhA9aB1NQLYjS9BKCxlHqpvx44j48SgytUsG0vTPjoNX3swmDAgj3InXQSLvYPc-2RdZDJnIDZHWuuR3tiCrlWsv1_1cs5mpzP_MItJ01xjy79llDbN5Pj4OoquGiCvrXG8wT5yUEaLeca9HE2TrU=w1418-h945-s-no-gm?authuser=0' },
 ];
 
 const ServiceCard: React.FC<{ name: string; image: string; }> = ({ name, image }) => (

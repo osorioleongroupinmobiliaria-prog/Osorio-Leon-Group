@@ -12,7 +12,7 @@ const OfferPropertySection: React.FC = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <NeumorphicCard className="p-8 md:p-12">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="md:order-2">
+                        <div className="md:order-1">
                             <h2 className="text-3xl font-bold text-[#153B67] mb-4">{t('offerProperty.title')}</h2>
                             <p className="text-gray-600 mb-6">{t('offerProperty.subtitle')}</p>
                             <form className="space-y-4">
@@ -25,10 +25,10 @@ const OfferPropertySection: React.FC = () => {
                                 </NeumorphicButton>
                             </form>
                         </div>
-                        <div className="md:order-1">
+                        <div className="md:order-2">
                              <div className="rounded-2xl overflow-hidden shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff]">
                                 <img 
-                                    src="https://images.pexels.com/photos/7578839/pexels-photo-7578839.jpeg" 
+                                    src="https://lh3.googleusercontent.com/pw/AP1GczNQpQ-1irdhC0GIOhfHNe6pgW_5T2D62J8eKpqSxc77Pqljf7rzxMzgcEvzpWhIvwBn-tjPm_UEqAEmM16sKZbUQbKx5J1BOcvUnbIZHuJHyOEKWXf4NX-2xqZj2ZQ_SlugbOgsFjPap6AeNIiTeTYz=w540-h945-s-no-gm?authuser=0" 
                                     alt={t('offerProperty.imageAlt')}
                                     className="w-full h-full object-cover"
                                 />

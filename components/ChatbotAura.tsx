@@ -8,6 +8,11 @@ interface Message {
   isBot: boolean;
 }
 
+interface ChatbotAuraProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
 const ChatIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -28,16 +33,17 @@ const SendIcon = () => (
 );
 
 
-const ChatbotAura: React.FC = () => {
+const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useI18n();
-  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
   
   // Effect to set the initial message when the chat opens for the first time or language changes
   useEffect(() => {
-    setMessages([{ id: '1', text: t('chatbot.greeting'), isBot: true }]);
+    if (isOpen) {
+      setMessages([{ id: '1', text: t('chatbot.greeting'), isBot: true }]);
+    }
   }, [t, isOpen]);
 
   const scrollToBottom = () => {
@@ -49,12 +55,47 @@ const ChatbotAura: React.FC = () => {
   const generateResponse = (input: string): string => {
     const lowerInput = input.toLowerCase();
     
-    // Keywords are kept in Spanish as they are simple and common across languages in this context
     const knowledgeBase = [
-        { keywords: ['hola', 'buenos', 'buenas', 'hello', 'good morning'], answerKey: 'chatbot.answers.greeting' },
-        { keywords: ['servicios', 'ayudan', 'hacen', 'services', 'what do you do'], answerKey: 'chatbot.answers.services' },
+        // General Info
+        { keywords: ['hola', 'buenos', 'buenas', 'hello', 'good morning', 'hi'], answerKey: 'chatbot.answers.greeting' },
+        { keywords: ['quiénes son', 'que es', 'a qué se dedican', 'about', 'who are you', 'what is'], answerKey: 'chatbot.answers.whoAreYou' },
+        { keywords: ['servicios', 'ayudan', 'hacen', 'services', 'what do you do'], answerKey: 'chatbot.answers.servicesOffered' },
+        { keywords: ['ciudades', 'operan', 'dónde', 'cities', 'where', 'operate'], answerKey: 'chatbot.answers.operatingCities' },
+        { keywords: ['contacto', 'teléfono', 'llamar', 'dirección', 'email', 'contact', 'phone', 'address'], answerKey: 'chatbot.answers.contactInfo' },
+        { keywords: ['lema', 'slogan'], answerKey: 'chatbot.answers.slogan' },
         { keywords: ['horario', 'atienden', 'abren', 'hours', 'open'], answerKey: 'chatbot.answers.hours' },
-        { keywords: ['contacto', 'teléfono', 'llamar', 'dirección', 'email', 'contact', 'phone', 'address'], answerKey: 'chatbot.answers.contact' },
+        { keywords: ['misión', 'visión', 'valores', 'mission', 'vision', 'values'], answerKey: 'chatbot.answers.missionVision' },
+        
+        // Property Management
+        { keywords: ['administración', 'incluye', 'management', 'includes'], answerKey: 'chatbot.answers.adminServiceIncludes' },
+        { keywords: ['reparaciones', 'locativas', 'repairs'], answerKey: 'chatbot.answers.locativeRepairs' },
+        { keywords: ['cuota de administración', 'pago de cuota', 'admin fee payment'], answerKey: 'chatbot.answers.adminFeePayment' },
+
+        // Costs and Payments
+        { keywords: ['honorarios', 'costo', 'tarifa', 'fees', 'cost', 'rate'], answerKey: 'chatbot.answers.adminServiceFee' },
+        { keywords: ['afianza', 'costo afianza', 'guarantee fee'], answerKey: 'chatbot.answers.guaranteeFee' },
+        { keywords: ['cuándo pagan', 'pago del canon', 'cuando me pagan', 'payment schedule', 'when do i get paid'], answerKey: 'chatbot.answers.paymentSchedule' },
+        { keywords: ['débitos', 'descuentan', 'debits', 'deductions'], answerKey: 'chatbot.answers.monthlyDebits' },
+        { keywords: ['iva', 'retenciones', 'impuestos', 'vat', 'retentions', 'taxes'], answerKey: 'chatbot.answers.vatAndRetentions' },
+        
+        // Documentation
+        { keywords: ['documentos persona natural', 'docs natural person'], answerKey: 'chatbot.answers.docsNaturalPerson' },
+        { keywords: ['documentos persona jurídica', 'docs legal entity'], answerKey: 'chatbot.answers.docsLegalEntity' },
+        { keywords: ['líneas telefónicas', 'phone lines'], answerKey: 'chatbot.answers.phoneLinesPolicy' },
+        { keywords: ['estudio', 'afianzadora', 'datafianza', 'guarantee study'], answerKey: 'chatbot.answers.guaranteeStudyPayer' },
+
+        // Rent Increases
+        { keywords: ['incremento vivienda', 'aumento canon', 'rent increase housing'], answerKey: 'chatbot.answers.rentIncreaseHousing' },
+        { keywords: ['incremento comercial', 'increase commercial'], answerKey: 'chatbot.answers.rentIncreaseCommercial' },
+        { keywords: ['incremento cuota de administración', 'increase admin fee'], answerKey: 'chatbot.answers.adminFeeIncrease' },
+        
+        // Other Processes
+        { keywords: ['rut', 'cambios tributarios', 'tax changes'], answerKey: 'chatbot.answers.taxInfoUpdate' },
+        { keywords: ['fallece', 'fallecimiento', 'muerte arrendatario', 'tenant death'], answerKey: 'chatbot.answers.tenantDeath' },
+        { keywords: ['pautar', 'publicar para venta', 'list for sale'], answerKey: 'chatbot.answers.infoForSaleListing' },
+        { keywords: ['comisión', 'comision por venta', 'sales commission'], answerKey: 'chatbot.answers.saleCommission' },
+
+        // Fallback / General
         { keywords: ['vender', 'venda', 'propiedad', 'sell', 'property'], answerKey: 'chatbot.answers.sell' },
         { keywords: ['arrendar', 'arriendo', 'alquilar', 'rent', 'lease'], answerKey: 'chatbot.answers.rent' },
         { keywords: ['gracias', 'ok', 'listo', 'thanks', 'thank you'], answerKey: 'chatbot.answers.thanks' }

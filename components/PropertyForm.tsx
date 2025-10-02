@@ -27,11 +27,19 @@ const emptyProperty: Property = {
   habitaciones: 0,
   banos_completos: 0,
   parqueaderos: 0,
+  estado_inmueble: 'used',
+  estado_amoblado: 'sin_amoblar',
   tiene_balcon: false,
   tiene_gimnasio: false,
   tiene_piscina_comun: false,
   tiene_ascensor: false,
   tiene_porteria_24h: false,
+  tiene_zonas_verdes: false,
+  tiene_cancha_futbol: false,
+  tiene_kiosko_asados: false,
+  tiene_salon_social: false,
+  tiene_juegos_infantiles: false,
+  tiene_sendero_peatonal: false,
   imagenes: [],
   es_destacado: false,
   estado_publicacion: 'borrador',
@@ -101,22 +109,16 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel 
           {/* Columna Izquierda */}
           <div className="space-y-4">
             <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Información Básica</h3>
-            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
             <LabeledInput label="Título" name="titulo" value={formData.titulo} onChange={handleChange} required />
-            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
             <LabeledInput as="textarea" label="Descripción" name="descripcion" value={formData.descripcion} onChange={handleChange} rows={5} required />
-            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
             <LabeledInput label="Ciudad" name="ciudad" value={formData.ciudad} onChange={handleChange} required />
-            {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
             <LabeledInput label="Barrio/Sector" name="barrio_sector" value={formData.barrio_sector} onChange={handleChange} required />
             
             <div className="grid grid-cols-2 gap-4">
-                {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
                 <LabeledInput as="select" label="Operación" name="tipo_operacion" value={formData.tipo_operacion} onChange={handleChange}>
                     <option value="venta">Venta</option>
                     <option value="arriendo">Arriendo</option>
                 </LabeledInput>
-                {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
                 <LabeledInput as="select" label="Tipo de Propiedad" name="tipo_propiedad" value={formData.tipo_propiedad} onChange={handleChange}>
                     <option value="apartamento">Apartamento</option>
                     <option value="casa">Casa</option>
@@ -128,19 +130,28 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel 
             </div>
 
             <div className="grid grid-cols-2 gap-4 items-center">
-              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
               <LabeledInput type="number" label="Precio (COP)" name="precio" value={formData.precio} onChange={handleChange} required />
               <NeumorphicCheckbox name="es_negociable" label="Precio Negociable" checked={formData.es_negociable} onChange={checked => handleCheckboxChange('es_negociable', checked)} />
             </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+                <LabeledInput as="select" label="Estado del Inmueble" name="estado_inmueble" value={formData.estado_inmueble} onChange={handleChange}>
+                    <option value="new">A Estrenar</option>
+                    <option value="used">Usado</option>
+                    <option value="remodeled">Remodelado</option>
+                    <option value="under_construction">En Construcción</option>
+                </LabeledInput>
+                <LabeledInput as="select" label="Amoblado" name="estado_amoblado" value={formData.estado_amoblado} onChange={handleChange}>
+                    <option value="sin_amoblar">Sin Amoblar</option>
+                    <option value="amoblado">Amoblado</option>
+                    <option value="semi_amoblado">Semi-amoblado</option>
+                </LabeledInput>
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
               <LabeledInput type="number" label="Área (m²)" name="area_construida" value={formData.area_construida} onChange={handleChange} />
-              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
               <LabeledInput type="number" label="Habitaciones" name="habitaciones" value={formData.habitaciones} onChange={handleChange} />
-              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
               <LabeledInput type="number" label="Baños" name="banos_completos" value={formData.banos_completos} onChange={handleChange} />
-              {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
               <LabeledInput type="number" label="Parqueaderos" name="parqueaderos" value={formData.parqueaderos} onChange={handleChange} />
             </div>
           </div>
@@ -154,6 +165,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel 
                 <NeumorphicCheckbox name="tiene_piscina_comun" label="Piscina" checked={formData.tiene_piscina_comun} onChange={c => handleCheckboxChange('tiene_piscina_comun', c)} />
                 <NeumorphicCheckbox name="tiene_ascensor" label="Ascensor" checked={formData.tiene_ascensor} onChange={c => handleCheckboxChange('tiene_ascensor', c)} />
                 <NeumorphicCheckbox name="tiene_porteria_24h" label="Portería 24h" checked={formData.tiene_porteria_24h} onChange={c => handleCheckboxChange('tiene_porteria_24h', c)} />
+                <NeumorphicCheckbox name="tiene_zonas_verdes" label="Zonas Verdes" checked={formData.tiene_zonas_verdes} onChange={c => handleCheckboxChange('tiene_zonas_verdes', c)} />
+                <NeumorphicCheckbox name="tiene_cancha_futbol" label="Cancha de Fútbol" checked={formData.tiene_cancha_futbol} onChange={c => handleCheckboxChange('tiene_cancha_futbol', c)} />
+                <NeumorphicCheckbox name="tiene_kiosko_asados" label="Kiosko Asados" checked={formData.tiene_kiosko_asados} onChange={c => handleCheckboxChange('tiene_kiosko_asados', c)} />
+                <NeumorphicCheckbox name="tiene_salon_social" label="Salón Social" checked={formData.tiene_salon_social} onChange={c => handleCheckboxChange('tiene_salon_social', c)} />
+                <NeumorphicCheckbox name="tiene_juegos_infantiles" label="Juegos Infantiles" checked={formData.tiene_juegos_infantiles} onChange={c => handleCheckboxChange('tiene_juegos_infantiles', c)} />
+                <NeumorphicCheckbox name="tiene_sendero_peatonal" label="Sendero Peatonal" checked={formData.tiene_sendero_peatonal} onChange={c => handleCheckboxChange('tiene_sendero_peatonal', c)} />
             </div>
 
             <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Imágenes (URLs)</h3>
@@ -170,7 +187,6 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel 
 
             <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Publicación</h3>
             <div className="grid grid-cols-2 gap-4 items-center">
-                 {/* FIX: Replaced NeumorphicInput with LabeledInput to correctly handle the 'label' prop. */}
                  <LabeledInput as="select" label="Estado" name="estado_publicacion" value={formData.estado_publicacion} onChange={handleChange}>
                     <option value="publicado">Publicado</option>
                     <option value="borrador">Borrador</option>

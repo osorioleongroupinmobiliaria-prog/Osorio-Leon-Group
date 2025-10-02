@@ -26,7 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     <div className="min-h-screen bg-[#e0e0e0] flex items-center justify-center p-4">
       <NeumorphicCard className="w-full max-w-sm p-8">
         <div className="text-center mb-8">
-            <img src={COMPANY_INFO.logoUrl} alt="Logo" className="w-48 h-auto mx-auto" />
+            <img src={COMPANY_INFO.logoUrl} alt="Logo" className="w-64 h-auto mx-auto" />
             <h1 className="mt-4 text-2xl font-bold text-[#153B67]">Panel de Administración</h1>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -36,7 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 type="email" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)}
-                placeholder="osorioyleongroupdigital@gmail.com"
+                placeholder="osorioyleongroup@gmail.com"
                 required 
             />
           </div>
