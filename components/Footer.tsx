@@ -1,31 +1,40 @@
 
 import React from 'react';
 import { COMPANY_INFO, SOCIAL_LINKS } from '../constants';
+import { useI18n } from '../i18n';
 
 const Footer: React.FC = () => {
+  const { t } = useI18n();
+
+  const quickLinks = [
+    { key: 'nav.home', href: '#inicio' },
+    { key: 'nav.properties', href: '#propiedades' },
+    { key: 'nav.about', href: '#nosotros' },
+    { key: 'nav.contact', href: '#contacto' },
+  ];
+
   return (
     <footer className="bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
           <div className="md:col-span-2">
             <h3 className="text-lg font-bold text-[#153B67]">{COMPANY_INFO.name}</h3>
-            <p className="mt-2 text-sm text-gray-600">{COMPANY_INFO.slogan}</p>
+            <p className="mt-2 text-sm text-gray-600">{t(COMPANY_INFO.sloganKey)}</p>
             <div className="mt-4 text-xs text-gray-500 space-y-1">
                 <p>{COMPANY_INFO.address}</p>
             </div>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-[#153B67]">Enlaces Rápidos</h3>
+            <h3 className="text-lg font-bold text-[#153B67]">{t('footer.quickLinks')}</h3>
             <ul className="mt-2 space-y-1 text-sm">
-              <li><a href="#inicio" className="text-gray-600 hover:text-gray-900">Inicio</a></li>
-              <li><a href="#propiedades" className="text-gray-600 hover:text-gray-900">Propiedades</a></li>
-              <li><a href="#nosotros" className="text-gray-600 hover:text-gray-900">Nosotros</a></li>
-              <li><a href="#contacto" className="text-gray-600 hover:text-gray-900">Contacto</a></li>
-              <li><a href={SOCIAL_LINKS.reviews} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">Escribe una Reseña</a></li>
+              {quickLinks.map(link => (
+                <li key={link.key}><a href={link.href} className="text-gray-600 hover:text-gray-900">{t(link.key)}</a></li>
+              ))}
+              <li><a href={SOCIAL_LINKS.reviews} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900">{t('footer.writeReview')}</a></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-[#153B67]">Contacto</h3>
+            <h3 className="text-lg font-bold text-[#153B67]">{t('footer.contact')}</h3>
             <ul className="mt-2 space-y-1 text-sm text-gray-600">
                 <li>{COMPANY_INFO.phones[0]}</li>
                 <li>{COMPANY_INFO.phones[1]}</li>
@@ -54,7 +63,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-300 pt-8 text-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. {t('footer.copyright')}</p>
         </div>
       </div>
       <a href="/acceso-digital-osorio" className="absolute bottom-1 right-1 text-[8px] font-mono text-gray-400/30 hover:text-gray-500/80 transition-colors">

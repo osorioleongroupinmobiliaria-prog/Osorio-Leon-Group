@@ -16,7 +16,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       <div className="relative group rounded-2xl overflow-hidden cursor-pointer shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff]" onClick={() => setIsLightboxOpen(true)}>
         <img src={mainImage} alt={images[0]?.alt} className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105" />
         <div className="absolute inset-0 flex items-center justify-center">
-            <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-24 h-24 opacity-20 pointer-events-none" />
+            <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-32 h-auto opacity-20 pointer-events-none" />
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2 mt-2">
@@ -33,7 +33,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             <div className="relative w-full max-w-4xl" onClick={e => e.stopPropagation()}>
                 <img src={mainImage} alt={images[0]?.alt} className="max-h-[90vh] w-auto mx-auto rounded-lg"/>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-32 h-32 opacity-25 pointer-events-none" />
+                    <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-48 h-auto opacity-25 pointer-events-none" />
                 </div>
             </div>
         </div>

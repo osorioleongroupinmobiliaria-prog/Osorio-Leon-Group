@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -15,6 +16,8 @@ import { MOCK_PROPERTIES, ADMIN_CREDENTIALS } from './constants';
 import type { Property, Filters } from './types';
 import ServicesSection from './components/ServicesSection';
 import OfferPropertySection from './components/OfferPropertySection';
+import TestimonialsSection from './components/TestimonialsSection';
+import VisitorNotification from './components/VisitorNotification';
 
 export const initialFilters: Filters = {
   tipo_operacion: 'todos',
@@ -150,8 +153,10 @@ function App() {
             <ServicesSection />
             <OfferPropertySection />
             <AboutSection />
+            <TestimonialsSection />
             <ContactSection />
           </main>
+          <VisitorNotification />
           {!selectedProperty && <ChatbotAura />}
           <Footer />
           {selectedProperty && (

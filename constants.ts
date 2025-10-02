@@ -1,21 +1,21 @@
-import type { Property } from './types';
+import type { Property, Testimonial } from './types';
 
 export const COMPANY_INFO = {
   name: 'Osorio & León Group S.A.S',
-  slogan: '“MÁS QUE PROPIEDADES, CONSTRUIMOS CONFIANZA”',
-  logoUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzE1M0I2NyIvPjxwYXRoIGQ9Ik01MCAyMCBMMjAgNDUgTDMwIDQ1IEwzMCA4MCBMNzAgODAgTDcwIDQ1IEw4MCA0NSBaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==',
+  sloganKey: 'company.slogan',
+  logoUrl: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAH0AfQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1VWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK//Z',
   address: 'Manizales, Caldas, Colombia',
   phones: ['+57 311 567 3740', '+57 321 278 0607'],
   email: 'contacto@osorioleongroup.com',
-  hours: 'Lunes a Viernes: 9am - 6pm',
-  mission: 'Brindar servicios inmobiliarios integrales y personalizados, promoviendo la excelencia en el trato humano y profesional de nuestros agentes, comprometidos a asesorar y acompañar a nuestros clientes en todas las etapas del proceso, ya sea asesoría, compra, venta o alquiler de propiedades, garantizando la transparencia, confiabilidad y satisfacción en cada transacción.',
-  vision: 'Ser la inmobiliaria líder en Manizales y Caldas para el año 2.027 y reconocida a nivel nacional e internacional para el año 2030 por nuestra integridad, innovación y compromiso con la excelencia en el servicio al cliente, contribuyendo al desarrollo Urbano y Rural, sostenible con nuestras comunidades.',
+  hoursKey: 'company.hours',
+  missionKey: 'company.mission',
+  visionKey: 'company.vision',
   values: [
-    { name: 'Compromiso', description: 'nos comprometemos a dar lo mejor de nosotros con nuestros clientes y superar sus expectativas en cada interacción.' },
-    { name: 'Transparencia', description: 'actuamos con honestidad y claridad en todas nuestras operaciones y relaciones comerciales.' },
-    { name: 'Profesionalismo', description: 'actuamos con integridad y ética en todo momento.' },
-    { name: 'Colaboración', description: 'fomentamos un ambiente donde el trabajo en equipo y el apoyo mutuo es fundamental para nuestro éxito.' },
-    { name: 'Innovación', description: 'Buscamos constantemente nuevas formas de mejorar y adaptarnos a las demandas del mercado.' },
+    { nameKey: 'values.commitment.name', descriptionKey: 'values.commitment.description' },
+    { nameKey: 'values.transparency.name', descriptionKey: 'values.transparency.description' },
+    { nameKey: 'values.professionalism.name', descriptionKey: 'values.professionalism.description' },
+    { nameKey: 'values.collaboration.name', descriptionKey: 'values.collaboration.description' },
+    { nameKey: 'values.innovation.name', descriptionKey: 'values.innovation.description' },
   ],
 };
 
@@ -229,33 +229,67 @@ export const MOCK_PROPERTIES: Property[] = [
   }
 ];
 
-export const CHATBOT_KNOWLEDGE_BASE = [
-    {
-        keywords: ['hola', 'buenos', 'buenas'],
-        answer: '¡Hola! Soy Aura, tu asistente virtual de Osorio & León Group. ¿Cómo puedo ayudarte hoy? Puedes preguntarme sobre nuestros servicios, horarios o cómo contactarnos.'
-    },
-    {
-        keywords: ['servicios', 'ayudan', 'hacen'],
-        answer: 'Ofrecemos servicios de venta, arrendamiento, administración y avalúos de propiedades. ¿Te gustaría saber más sobre alguno en particular?'
-    },
-    {
-        keywords: ['horario', 'atienden', 'abren'],
-        answer: `Nuestro horario de atención es de Lunes a Viernes, de 9:00 AM a 6:00 PM. ¡Estaremos encantados de atenderte!`
-    },
-    {
-        keywords: ['contacto', 'teléfono', 'llamar', 'dirección', 'email'],
-        answer: `Claro, puedes contactarnos a los teléfonos ${COMPANY_INFO.phones[0]} o ${COMPANY_INFO.phones[1]}. Nuestra oficina se encuentra en ${COMPANY_INFO.address}. Para una atención más directa, te recomiendo usar el botón de WhatsApp.`
-    },
-    {
-        keywords: ['vender', 'venda', 'propiedad'],
-        answer: '¡Excelente! Para vender tu propiedad, el primer paso es contactar a uno de nuestros asesores para una valoración. Puedes iniciar el proceso a través de nuestro WhatsApp.'
-    },
-    {
-        keywords: ['arrendar', 'arriendo', 'alquilar'],
-        answer: 'Si buscas una propiedad para arrendar, puedes usar los filtros en nuestra página para ver las opciones disponibles. Si quieres que te ayudemos a arrendar tu propiedad, contáctanos por WhatsApp.'
-    },
-    {
-        keywords: ['gracias', 'ok', 'listo'],
-        answer: '¡Con mucho gusto! Si tienes alguna otra pregunta, no dudes en consultarme. Para una asesoría personalizada, te invito a contactarnos por WhatsApp.'
-    }
+// FIX: Added parentheses around the intersection type to ensure it's an array of the combined type,
+// not an intersection of a type and an array type.
+export const TESTIMONIALS: (Omit<Testimonial, 'comment'> & { commentKey: string })[] = [
+  {
+    name: 'Carlos Mendoza',
+    rating: 5,
+    commentKey: 'testimonials.carlosMendoza',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+  },
+  {
+    name: 'Ana Sofía Restrepo',
+    rating: 5,
+    commentKey: 'testimonials.anaSofiaRestrepo',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+  },
+  {
+    name: 'Javier Correa',
+    rating: 4.5,
+    commentKey: 'testimonials.javierCorrea',
+    avatar: 'https://randomuser.me/api/portraits/men/46.jpg',
+  },
+  {
+    name: 'Lucía Vélez',
+    rating: 5,
+    commentKey: 'testimonials.luciaVelez',
+    avatar: 'https://randomuser.me/api/portraits/women/31.jpg',
+  },
+  {
+    name: 'Ricardo Palacio',
+    rating: 4,
+    commentKey: 'testimonials.ricardoPalacio',
+    avatar: 'https://randomuser.me/api/portraits/men/60.jpg',
+  },
+  {
+    name: 'Isabella Giraldo',
+    rating: 5,
+    commentKey: 'testimonials.isabellaGiraldo',
+    avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+  },
+  {
+    name: 'Mateo Arango',
+    rating: 4.5,
+    commentKey: 'testimonials.mateoArango',
+    avatar: 'https://randomuser.me/api/portraits/men/78.jpg',
+  },
+  {
+    name: 'Valentina Hoyos',
+    rating: 5,
+    commentKey: 'testimonials.valentinaHoyos',
+    avatar: 'https://randomuser.me/api/portraits/women/8.jpg',
+  },
+  {
+    name: 'Andrés Castaño',
+    rating: 4,
+    commentKey: 'testimonials.andresCastano',
+    avatar: 'https://randomuser.me/api/portraits/men/11.jpg',
+  },
+  {
+    name: 'Daniela Franco',
+    rating: 5,
+    commentKey: 'testimonials.danielaFranco',
+    avatar: 'https://randomuser.me/api/portraits/women/17.jpg',
+  }
 ];

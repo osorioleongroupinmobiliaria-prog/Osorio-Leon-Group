@@ -61,3 +61,10 @@ export interface Filters {
   parqueaderos: 'any' | string;
   extras: string[];
 }
+
+export interface Testimonial {
+  name: string;
+  rating: number;
+  comment: string;
+  avatar: string;
+}

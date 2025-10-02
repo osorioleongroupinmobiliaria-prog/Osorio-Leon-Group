@@ -3,6 +3,7 @@ import PropertyCard from './PropertyCard';
 import NeumorphicInput from './ui/NeumorphicInput';
 import type { Property } from '../types';
 import NeumorphicCard from './ui/NeumorphicCard';
+import { useI18n } from '../i18n';
 
 interface PropertyGridProps {
   properties: Property[];
@@ -12,23 +13,25 @@ interface PropertyGridProps {
 }
 
 const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, sortBy, setSortBy, onPropertySelect }) => {
+  const { t } = useI18n();
+
   return (
     <div className="py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-            <h2 className="text-2xl font-bold text-[#153B67]">Otras Propiedades ({properties.length})</h2>
+            <h2 className="text-2xl font-bold text-[#153B67]">{t('propertyGrid.title')} ({properties.length})</h2>
             <div className="flex items-center gap-2">
-                <label className="text-sm font-medium text-gray-600">Ordenar por:</label>
+                <label className="text-sm font-medium text-gray-600">{t('propertyGrid.sortBy')}:</label>
                 <NeumorphicInput 
                     as="select" 
                     value={sortBy} 
                     onChange={e => setSortBy(e.target.value)}
                     containerClassName="w-48"
                 >
-                    <option value="default">Relevancia</option>
-                    <option value="price_asc">Precio: Menor a Mayor</option>
-                    <option value="price_desc">Precio: Mayor a Menor</option>
-                    <option value="area_desc">Área: Mayor a Menor</option>
+                    <option value="default">{t('propertyGrid.sortOptions.relevance')}</option>
+                    <option value="price_asc">{t('propertyGrid.sortOptions.priceAsc')}</option>
+                    <option value="price_desc">{t('propertyGrid.sortOptions.priceDesc')}</option>
+                    <option value="area_desc">{t('propertyGrid.sortOptions.areaDesc')}</option>
                 </NeumorphicInput>
             </div>
         </div>
@@ -42,8 +45,8 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, sortBy, setSort
         ) : (
           <div className="text-center py-16">
             <NeumorphicCard className="inline-block p-12">
-              <p className="text-xl text-gray-600">No se encontraron propiedades.</p>
-              <p className="text-gray-500 mt-2">Intenta ajustar los filtros para ampliar tu búsqueda.</p>
+              <p className="text-xl text-gray-600">{t('propertyGrid.notFound.title')}</p>
+              <p className="text-gray-500 mt-2">{t('propertyGrid.notFound.subtitle')}</p>
             </NeumorphicCard>
           </div>
         )}

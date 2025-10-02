@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SOCIAL_LINKS, CHATBOT_KNOWLEDGE_BASE } from '../constants';
+import { SOCIAL_LINKS } from '../constants';
+import { useI18n } from '../i18n';
 
 interface Message {
   id: string;
@@ -28,12 +29,16 @@ const SendIcon = () => (
 
 
 const ChatbotAura: React.FC = () => {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { id: '1', text: '¡Hola! Soy Aura, tu asistente virtual. ¿En qué puedo ayudarte?', isBot: true }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
+  
+  // Effect to set the initial message when the chat opens for the first time or language changes
+  useEffect(() => {
+    setMessages([{ id: '1', text: t('chatbot.greeting'), isBot: true }]);
+  }, [t, isOpen]);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -43,17 +48,27 @@ const ChatbotAura: React.FC = () => {
 
   const generateResponse = (input: string): string => {
     const lowerInput = input.toLowerCase();
+    
+    // Keywords are kept in Spanish as they are simple and common across languages in this context
+    const knowledgeBase = [
+        { keywords: ['hola', 'buenos', 'buenas', 'hello', 'good morning'], answerKey: 'chatbot.answers.greeting' },
+        { keywords: ['servicios', 'ayudan', 'hacen', 'services', 'what do you do'], answerKey: 'chatbot.answers.services' },
+        { keywords: ['horario', 'atienden', 'abren', 'hours', 'open'], answerKey: 'chatbot.answers.hours' },
+        { keywords: ['contacto', 'teléfono', 'llamar', 'dirección', 'email', 'contact', 'phone', 'address'], answerKey: 'chatbot.answers.contact' },
+        { keywords: ['vender', 'venda', 'propiedad', 'sell', 'property'], answerKey: 'chatbot.answers.sell' },
+        { keywords: ['arrendar', 'arriendo', 'alquilar', 'rent', 'lease'], answerKey: 'chatbot.answers.rent' },
+        { keywords: ['gracias', 'ok', 'listo', 'thanks', 'thank you'], answerKey: 'chatbot.answers.thanks' }
+    ];
 
-    for (const entry of CHATBOT_KNOWLEDGE_BASE) {
+    for (const entry of knowledgeBase) {
       for (const keyword of entry.keywords) {
         if (lowerInput.includes(keyword)) {
-          return entry.answer;
+          return t(entry.answerKey);
         }
       }
     }
-
-    // Default response if no keyword is matched
-    return 'Entendido. Para una atención más personalizada, te invito a continuar la conversación con uno de nuestros asesores por WhatsApp.';
+    
+    return t('chatbot.answers.default');
   };
 
   const handleSendMessage = () => {
@@ -75,7 +90,7 @@ const ChatbotAura: React.FC = () => {
         <button 
           onClick={() => setIsOpen(!isOpen)} 
           className="w-16 h-16 rounded-full bg-green-500 text-white flex items-center justify-center shadow-2xl hover:bg-green-600 transition-all transform hover:scale-110 focus:outline-none"
-          aria-label={isOpen ? "Cerrar chat" : "Abrir chat"}
+          aria-label={t(isOpen ? 'chatbot.closeAria' : 'chatbot.openAria')}
         >
           {isOpen ? <CloseIcon /> : <ChatIcon />}
         </button>
@@ -97,7 +112,7 @@ const ChatbotAura: React.FC = () => {
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-[#153B67] text-white flex items-center justify-center font-bold text-xl">A</div>
                 <div>
                     <h3 className="font-bold text-gray-800">Aura</h3>
-                    <p className="text-xs text-green-700 font-semibold">● En línea</p>
+                    <p className="text-xs text-green-700 font-semibold">● {t('chatbot.statusOnline')}</p>
                 </div>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-2xl text-gray-600 hover:text-gray-900">&times;</button>
@@ -127,7 +142,7 @@ const ChatbotAura: React.FC = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                    placeholder="Escribe un mensaje..."
+                    placeholder={t('chatbot.inputPlaceholder')}
                     className="flex-1 bg-white/80 rounded-full px-4 py-2 text-sm text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#153B67]/50"
                   />
                   <button onClick={handleSendMessage} className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center flex-shrink-0 hover:bg-green-600 transition-colors">
@@ -135,7 +150,7 @@ const ChatbotAura: React.FC = () => {
                   </button>
               </div>
                <a href={SOCIAL_LINKS.whatsapp1} target="_blank" rel="noopener noreferrer" className="block w-full mt-2 text-center bg-green-500/90 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors px-4 py-2 text-sm">
-                Continuar en WhatsApp
+                {t('chatbot.whatsappButton')}
             </a>
           </footer>
         </div>

@@ -41,7 +41,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, o
       <div className="max-w-7xl mx-auto">
         <header className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="flex items-center space-x-3">
-             <img src={COMPANY_INFO.logoUrl} alt="Logo" className="w-12 h-12 rounded-full shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff]" />
+             <img src={COMPANY_INFO.logoUrl} alt="Logo" className="h-14 w-auto" />
              <h1 className="text-2xl font-bold text-[#153B67]">Panel de Administración</h1>
           </div>
           <NeumorphicButton onClick={onLogout} className="text-sm px-4 py-2">Cerrar Sesión</NeumorphicButton>

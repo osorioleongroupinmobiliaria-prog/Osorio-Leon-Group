@@ -9,6 +9,7 @@ import AreaIcon from './icons/AreaIcon';
 import GarageIcon from './icons/GarageIcon';
 import LocationIcon from './icons/LocationIcon';
 import { SOCIAL_LINKS } from '../constants';
+import { useI18n } from '../i18n';
 
 interface PropertyModalProps {
   property: Property;
@@ -23,9 +24,10 @@ const FeatureChip: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 
 const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
+  const { t, language } = useI18n();
   
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-CO', {
+    return new Intl.NumberFormat(language === 'es' ? 'es-CO' : 'en-US', {
       style: 'currency',
       currency: 'COP',
       minimumFractionDigits: 0,
@@ -33,11 +35,11 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
   };
 
   const features = [
-    { label: 'Balcón', value: property.tiene_balcon },
-    { label: 'Gimnasio', value: property.tiene_gimnasio },
-    { label: 'Piscina', value: property.tiene_piscina_comun },
-    { label: 'Ascensor', value: property.tiene_ascensor },
-    { label: 'Portería 24h', value: property.tiene_porteria_24h },
+    { labelKey: 'features.balcony', value: property.tiene_balcon },
+    { labelKey: 'features.gym', value: property.tiene_gimnasio },
+    { labelKey: 'features.pool', value: property.tiene_piscina_comun },
+    { labelKey: 'features.elevator', value: property.tiene_ascensor },
+    { labelKey: 'features.concierge', value: property.tiene_porteria_24h },
   ].filter(f => f.value);
 
   return (
@@ -52,7 +54,7 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
             <div>
               <ImageGallery images={property.imagenes.map(img => ({ url: img.url_imagen, alt: img.alt_text || property.titulo }))} />
               <div className="mt-6">
-                <h3 className="font-bold text-lg mb-3 text-[#153B67]">Descripción</h3>
+                <h3 className="font-bold text-lg mb-3 text-[#153B67]">{t('propertyModal.description')}</h3>
                 <p className="text-gray-600">{property.descripcion}</p>
               </div>
             </div>
@@ -64,31 +66,31 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
               <p className="text-4xl font-bold text-[#153B67] mb-1">
                 {formatPrice(property.precio)}
               </p>
-              {property.es_negociable && <p className="text-sm text-gray-500 mb-6">Precio Negociable</p>}
+              {property.es_negociable && <p className="text-sm text-gray-500 mb-6">{t('propertyModal.negotiable')}</p>}
               
               <div className="grid grid-cols-2 gap-4 text-gray-700 mb-6">
-                <div className="flex items-center space-x-2 text-lg"><BedIcon className="w-6 h-6"/><span>{property.habitaciones || 0} Habitaciones</span></div>
-                <div className="flex items-center space-x-2 text-lg"><BathIcon className="w-6 h-6"/><span>{property.banos_completos || 0} Baños</span></div>
+                <div className="flex items-center space-x-2 text-lg"><BedIcon className="w-6 h-6"/><span>{property.habitaciones || 0} {t('propertyModal.bedrooms')}</span></div>
+                <div className="flex items-center space-x-2 text-lg"><BathIcon className="w-6 h-6"/><span>{property.banos_completos || 0} {t('propertyModal.bathrooms')}</span></div>
                 <div className="flex items-center space-x-2 text-lg"><AreaIcon className="w-6 h-6"/><span>{property.area_construida || 0} m²</span></div>
-                <div className="flex items-center space-x-2 text-lg"><GarageIcon className="w-6 h-6"/><span>{property.parqueaderos || 0} Parqueaderos</span></div>
+                <div className="flex items-center space-x-2 text-lg"><GarageIcon className="w-6 h-6"/><span>{property.parqueaderos || 0} {t('propertyModal.parking')}</span></div>
               </div>
               
               {features.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="font-bold text-lg mb-3 text-[#153B67]">Características Adicionales</h3>
+                  <h3 className="font-bold text-lg mb-3 text-[#153B67]">{t('propertyModal.additionalFeatures')}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {features.map(f => <FeatureChip key={f.label}>{f.label}</FeatureChip>)}
+                    {features.map(f => <FeatureChip key={f.labelKey}>{t(f.labelKey)}</FeatureChip>)}
                   </div>
                 </div>
               )}
               
               <a
-                href={`${SOCIAL_LINKS.whatsapp1}?text=${encodeURIComponent(`Hola, estoy interesado/a en la propiedad: ${property.titulo}. ¿Podrían darme más información?`)}`}
+                href={`${SOCIAL_LINKS.whatsapp1}?text=${encodeURIComponent(t('propertyModal.whatsappMessage', { title: property.titulo }))}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full text-center block bg-green-500 text-white rounded-xl font-semibold shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff] hover:shadow-[2px_2px_5px_#bebebe,-2px_-2px_5px_#ffffff] active:shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] transition-all duration-150 ease-in-out focus:outline-none px-6 py-4 text-lg"
               >
-                Contactar por WhatsApp
+                {t('propertyModal.contactButton')}
               </a>
             </div>
           </div>
