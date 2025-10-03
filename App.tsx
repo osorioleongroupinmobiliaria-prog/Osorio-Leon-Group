@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
@@ -6,7 +7,7 @@ import FilterSection from './components/FilterSection';
 import PropertyGrid from './components/PropertyGrid';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
-import ChatbotAura from './components/ChatbotAura';
+import ChatbotTatiana from './components/ChatbotAura';
 import Footer from './components/Footer';
 import LoginForm from './components/LoginForm';
 import AdminPanel from './components/AdminPanel';
@@ -26,7 +27,7 @@ export const initialFilters: Filters = {
   codigo_inmueble: '',
   tipo_operacion: 'todos',
   tipo_propiedad: 'todos',
-  precio_min: 50000000,
+  precio_min: 0,
   precio_max: 2000000000,
   area_min: 30,
   area_max: 500,
@@ -47,17 +48,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [view, setView] = useState<'public' | 'login' | 'admin'>('public');
   
-  const [properties, setProperties] = useState<Property[]>(() => {
-    try {
-      const storedProperties = localStorage.getItem('osorioLeonProperties');
-      if (storedProperties) {
-        return JSON.parse(storedProperties);
-      }
-    } catch (error) {
-      console.error("Failed to parse properties from localStorage", error);
-    }
-    return MOCK_PROPERTIES;
-  });
+  const [properties, setProperties] = useState<Property[]>(MOCK_PROPERTIES);
 
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [sortBy, setSortBy] = useState('default');
@@ -134,7 +125,8 @@ function App() {
         const inCity = p.ciudad.toLowerCase().includes(lowerSearchTerm);
         const inNeighborhood = p.barrio_sector.toLowerCase().includes(lowerSearchTerm);
         const inTitle = p.titulo.toLowerCase().includes(lowerSearchTerm);
-        if (!inCity && !inNeighborhood && !inTitle) return false;
+        const inDescription = p.descripcion.toLowerCase().includes(lowerSearchTerm);
+        if (!inCity && !inNeighborhood && !inTitle && !inDescription) return false;
       }
       
       if (filters.tipo_operacion !== 'todos' && p.tipo_operacion !== filters.tipo_operacion) return false;
@@ -218,7 +210,7 @@ function App() {
             <ContactSection />
           </main>
           <VisitorNotification isChatbotOpen={isChatbotOpen} />
-          {!selectedProperty && <ChatbotAura isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} />}
+          {!selectedProperty && <ChatbotTatiana isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} />}
           <AdminAccessButton />
           <Footer />
           {selectedProperty && (

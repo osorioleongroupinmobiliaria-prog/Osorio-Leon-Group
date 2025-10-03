@@ -1,3 +1,5 @@
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { useI18n } from '../i18n';
@@ -8,7 +10,7 @@ interface Message {
   isBot: boolean;
 }
 
-interface ChatbotAuraProps {
+interface ChatbotTatianaProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
@@ -33,7 +35,7 @@ const SendIcon = () => (
 );
 
 
-const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
+const ChatbotTatiana: React.FC<ChatbotTatianaProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useI18n();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -41,10 +43,10 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
   
   // Effect to set the initial message when the chat opens for the first time or language changes
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && messages.length === 0) {
       setMessages([{ id: '1', text: t('chatbot.greeting'), isBot: true }]);
     }
-  }, [t, isOpen]);
+  }, [t, isOpen, messages.length]);
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -53,50 +55,51 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
   useEffect(scrollToBottom, [messages]);
 
   const generateResponse = (input: string): string => {
-    const lowerInput = input.toLowerCase();
+    const lowerInput = input.toLowerCase().trim();
     
+    // This is now a simple keyword matcher. The logic resides in the i18n file for easier management.
     const knowledgeBase = [
-        // General Info
-        { keywords: ['hola', 'buenos', 'buenas', 'hello', 'good morning', 'hi'], answerKey: 'chatbot.answers.greeting' },
-        { keywords: ['quiénes son', 'que es', 'a qué se dedican', 'about', 'who are you', 'what is'], answerKey: 'chatbot.answers.whoAreYou' },
-        { keywords: ['servicios', 'ayudan', 'hacen', 'services', 'what do you do'], answerKey: 'chatbot.answers.servicesOffered' },
-        { keywords: ['ciudades', 'operan', 'dónde', 'cities', 'where', 'operate'], answerKey: 'chatbot.answers.operatingCities' },
+        // Company Info
+        { keywords: ['quiénes son', 'que es osorio', 'a qué se dedican', 'about', 'who are you', 'what is osorio'], answerKey: 'chatbot.answers.whoAreYou' },
+        { keywords: ['misión', 'visión', 'valores', 'mission', 'vision', 'values'], answerKey: 'chatbot.answers.missionVision' },
+        { keywords: ['servicios', 'ayudan', 'hacen', 'ofrecen', 'services', 'what do you do', 'offer'], answerKey: 'chatbot.answers.servicesOffered' },
+        { keywords: ['ciudades', 'operan', 'dónde están', 'cities', 'where', 'operate'], answerKey: 'chatbot.answers.operatingCities' },
         { keywords: ['contacto', 'teléfono', 'llamar', 'dirección', 'email', 'contact', 'phone', 'address'], answerKey: 'chatbot.answers.contactInfo' },
         { keywords: ['lema', 'slogan'], answerKey: 'chatbot.answers.slogan' },
         { keywords: ['horario', 'atienden', 'abren', 'hours', 'open'], answerKey: 'chatbot.answers.hours' },
-        { keywords: ['misión', 'visión', 'valores', 'mission', 'vision', 'values'], answerKey: 'chatbot.answers.missionVision' },
         
         // Property Management
-        { keywords: ['administración', 'incluye', 'management', 'includes'], answerKey: 'chatbot.answers.adminServiceIncludes' },
-        { keywords: ['reparaciones', 'locativas', 'repairs'], answerKey: 'chatbot.answers.locativeRepairs' },
-        { keywords: ['cuota de administración', 'pago de cuota', 'admin fee payment'], answerKey: 'chatbot.answers.adminFeePayment' },
+        { keywords: ['administración', 'administrar', 'incluye el servicio', 'management', 'administer', 'includes'], answerKey: 'chatbot.answers.adminServiceIncludes' },
+        { keywords: ['reparaciones', 'locativas', 'arreglos', 'repairs'], answerKey: 'chatbot.answers.locativeRepairs' },
+        { keywords: ['pagan la cuota de administración', 'pago de cuota', 'admin fee payment'], answerKey: 'chatbot.answers.adminFeePayment' },
 
         // Costs and Payments
-        { keywords: ['honorarios', 'costo', 'tarifa', 'fees', 'cost', 'rate'], answerKey: 'chatbot.answers.adminServiceFee' },
-        { keywords: ['afianza', 'costo afianza', 'guarantee fee'], answerKey: 'chatbot.answers.guaranteeFee' },
+        { keywords: ['honorarios', 'costo', 'tarifa', 'comisión por administración', 'fees', 'cost', 'rate', 'management commission'], answerKey: 'chatbot.answers.adminServiceFee' },
+        { keywords: ['afianza', 'costo afianza', 'seguro', 'guarantee fee', 'insurance'], answerKey: 'chatbot.answers.guaranteeFee' },
         { keywords: ['cuándo pagan', 'pago del canon', 'cuando me pagan', 'payment schedule', 'when do i get paid'], answerKey: 'chatbot.answers.paymentSchedule' },
         { keywords: ['débitos', 'descuentan', 'debits', 'deductions'], answerKey: 'chatbot.answers.monthlyDebits' },
         { keywords: ['iva', 'retenciones', 'impuestos', 'vat', 'retentions', 'taxes'], answerKey: 'chatbot.answers.vatAndRetentions' },
         
         // Documentation
-        { keywords: ['documentos persona natural', 'docs natural person'], answerKey: 'chatbot.answers.docsNaturalPerson' },
-        { keywords: ['documentos persona jurídica', 'docs legal entity'], answerKey: 'chatbot.answers.docsLegalEntity' },
-        { keywords: ['líneas telefónicas', 'phone lines'], answerKey: 'chatbot.answers.phoneLinesPolicy' },
-        { keywords: ['estudio', 'afianzadora', 'datafianza', 'guarantee study'], answerKey: 'chatbot.answers.guaranteeStudyPayer' },
+        { keywords: ['documentos persona natural', 'requisitos persona natural', 'docs natural person', 'requirements'], answerKey: 'chatbot.answers.docsNaturalPerson' },
+        { keywords: ['documentos persona jurídica', 'requisitos empresa', 'docs legal entity', 'company requirements'], answerKey: 'chatbot.answers.docsLegalEntity' },
+        { keywords: ['líneas telefónicas', 'telefono', 'phone lines'], answerKey: 'chatbot.answers.phoneLinesPolicy' },
+        { keywords: ['estudio', 'afianzadora', 'datafianza', 'quien paga el estudio', 'guarantee study'], answerKey: 'chatbot.answers.guaranteeStudyPayer' },
 
         // Rent Increases
-        { keywords: ['incremento vivienda', 'aumento canon', 'rent increase housing'], answerKey: 'chatbot.answers.rentIncreaseHousing' },
-        { keywords: ['incremento comercial', 'increase commercial'], answerKey: 'chatbot.answers.rentIncreaseCommercial' },
-        { keywords: ['incremento cuota de administración', 'increase admin fee'], answerKey: 'chatbot.answers.adminFeeIncrease' },
+        { keywords: ['incremento vivienda', 'aumento arriendo', 'subida de alquiler', 'rent increase housing'], answerKey: 'chatbot.answers.rentIncreaseHousing' },
+        { keywords: ['incremento comercial', 'aumento local', 'increase commercial'], answerKey: 'chatbot.answers.rentIncreaseCommercial' },
+        { keywords: ['incremento cuota de administración', 'subida administracion', 'increase admin fee'], answerKey: 'chatbot.answers.adminFeeIncrease' },
         
         // Other Processes
-        { keywords: ['rut', 'cambios tributarios', 'tax changes'], answerKey: 'chatbot.answers.taxInfoUpdate' },
+        { keywords: ['rut', 'cambios tributarios', 'actualizar rut', 'tax changes'], answerKey: 'chatbot.answers.taxInfoUpdate' },
         { keywords: ['fallece', 'fallecimiento', 'muerte arrendatario', 'tenant death'], answerKey: 'chatbot.answers.tenantDeath' },
-        { keywords: ['pautar', 'publicar para venta', 'list for sale'], answerKey: 'chatbot.answers.infoForSaleListing' },
-        { keywords: ['comisión', 'comision por venta', 'sales commission'], answerKey: 'chatbot.answers.saleCommission' },
-
-        // Fallback / General
-        { keywords: ['vender', 'venda', 'propiedad', 'sell', 'property'], answerKey: 'chatbot.answers.sell' },
+        { keywords: ['pautar', 'publicar para venta', 'informacion para vender', 'list for sale', 'info to sell'], answerKey: 'chatbot.answers.infoForSaleListing' },
+        { keywords: ['comisión por venta', 'cuanto cobran por vender', 'sales commission'], answerKey: 'chatbot.answers.saleCommission' },
+        
+        // General & Greetings
+        { keywords: ['hola', 'buenos', 'buenas', 'hello', 'good morning', 'hi'], answerKey: 'chatbot.answers.greeting' },
+        { keywords: ['vender', 'venda', 'mi propiedad', 'sell', 'my property'], answerKey: 'chatbot.answers.sell' },
         { keywords: ['arrendar', 'arriendo', 'alquilar', 'rent', 'lease'], answerKey: 'chatbot.answers.rent' },
         { keywords: ['gracias', 'ok', 'listo', 'thanks', 'thank you'], answerKey: 'chatbot.answers.thanks' }
     ];
@@ -138,7 +141,7 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
       </div>
       {isOpen && (
         <div 
-          className="fixed bottom-24 right-6 z-50 w-80 md:w-96 h-[32rem] flex flex-col overflow-hidden rounded-2xl"
+          className="fixed bottom-24 right-6 z-50 w-80 md:w-96 h-[32rem] flex flex-col overflow-hidden rounded-2xl animate-slide-in"
           style={{
             background: 'rgba(230, 230, 230, 0.5)',
             backdropFilter: 'blur(15px)',
@@ -150,9 +153,9 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
           {/* Header */}
           <header className="p-3 flex items-center justify-between bg-white/20 border-b border-white/30 flex-shrink-0">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-[#153B67] text-white flex items-center justify-center font-bold text-xl">A</div>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-[#153B67] text-white flex items-center justify-center font-bold text-xl">T</div>
                 <div>
-                    <h3 className="font-bold text-gray-800">Aura</h3>
+                    <h3 className="font-bold text-gray-800">Tatiana</h3>
                     <p className="text-xs text-green-700 font-semibold">● {t('chatbot.statusOnline')}</p>
                 </div>
               </div>
@@ -168,7 +171,7 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
                 {messages.map(msg => (
                     <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
                         <div className={`max-w-[85%] px-3 py-2 rounded-lg shadow-md text-sm text-gray-800 ${msg.isBot ? 'bg-white/90 rounded-bl-none' : 'bg-[#dcf8c6]/90 rounded-br-none'}`}>
-                            {msg.text}
+                            {msg.text.split('\n').map((line, i) => <p key={i}>{line}</p>)}
                         </div>
                     </div>
                 ))}
@@ -200,4 +203,4 @@ const ChatbotAura: React.FC<ChatbotAuraProps> = ({ isOpen, setIsOpen }) => {
   );
 };
 
-export default ChatbotAura;
+export default ChatbotTatiana;
