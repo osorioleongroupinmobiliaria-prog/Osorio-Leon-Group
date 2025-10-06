@@ -43,33 +43,33 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
           {t(`property.operation.${property.tipo_operacion}`)}
         </div>
       </div>
-      <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-lg font-bold text-gray-800 h-14 line-clamp-2">{property.titulo}</h3>
+      <div className="p-4 sm:p-5 flex flex-col flex-grow">
+        <h3 className="text-base sm:text-lg font-bold text-gray-800 h-12 sm:h-14 line-clamp-2">{property.titulo}</h3>
         <div className="flex items-center text-sm text-gray-500 mt-1">
             <LocationIcon className="w-4 h-4 mr-1"/>
             <span>{property.barrio_sector}, {property.ciudad}</span>
         </div>
-        <p className="text-2xl font-bold text-[#153B67] my-4">
+        <p className="text-xl sm:text-2xl font-bold text-[#153B67] my-3 sm:my-4">
           {formatPrice(property.precio)}
           {property.es_negociable && <span className="text-xs text-gray-500 ml-2 font-normal">{t('property.negotiable')}</span>}
         </p>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-gray-600 mb-5">
-            {property.habitaciones && <div className="flex items-center space-x-1"><BedIcon className="w-5 h-5"/><span>{property.habitaciones}</span></div>}
-            {property.banos_completos && <div className="flex items-center space-x-1"><BathIcon className="w-5 h-5"/><span>{property.banos_completos}</span></div>}
-            {property.area_construida && <div className="flex items-center space-x-1"><AreaIcon className="w-5 h-5"/><span>{property.area_construida} m²</span></div>}
-            {property.parqueaderos && <div className="flex items-center space-x-1"><GarageIcon className="w-5 h-5"/><span>{property.parqueaderos}</span></div>}
+        <div className="grid grid-cols-4 gap-2 text-xs text-gray-600 mb-4 sm:mb-5">
+            {property.habitaciones ? <div className="flex items-center space-x-1"><BedIcon className="w-5 h-5"/><span>{property.habitaciones}</span></div> : <div />}
+            {property.banos_completos ? <div className="flex items-center space-x-1"><BathIcon className="w-5 h-5"/><span>{property.banos_completos}</span></div> : <div />}
+            {property.area_construida ? <div className="flex items-center space-x-1"><AreaIcon className="w-5 h-5"/><span>{property.area_construida} m²</span></div> : <div />}
+            {property.parqueaderos ? <div className="flex items-center space-x-1"><GarageIcon className="w-5 h-5"/><span>{property.parqueaderos}</span></div> : <div />}
         </div>
         
         <div className="mt-auto flex flex-col sm:flex-row gap-3">
-          <NeumorphicButton onClick={() => onVerMas(property)} className="w-full text-sm">
+          <NeumorphicButton onClick={() => onVerMas(property)} className="w-full !px-4 !py-2.5 text-sm">
             {t('property.detailsButton')}
           </NeumorphicButton>
           <a
             href={`${SOCIAL_LINKS.whatsapp1}?text=${encodeURIComponent(t('property.whatsappMessage', { title: property.titulo }))}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full text-center bg-green-500 text-white rounded-xl font-semibold shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff] hover:shadow-[2px_2px_5px_#bebebe,-2px_-2px_5px_#ffffff] active:shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] transition-all duration-150 ease-in-out focus:outline-none px-6 py-3 text-sm"
+            className="w-full text-center bg-green-500 text-white rounded-xl font-semibold shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff] hover:shadow-[2px_2px_5px_#bebebe,-2px_-2px_5px_#ffffff] active:shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] transition-all duration-150 ease-in-out focus:outline-none px-4 py-2.5 text-sm"
           >
             WhatsApp
           </a>

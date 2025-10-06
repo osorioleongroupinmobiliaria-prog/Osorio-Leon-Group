@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NeumorphicInput from './ui/NeumorphicInput';
 import NeumorphicButton from './ui/NeumorphicButton';
@@ -26,10 +25,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
   };
   
   return (
-    <section id="propiedades" className="py-10 -mt-20 relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <NeumorphicCard className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
+    <section id="propiedades" className="py-8 -mt-16 sm:py-10 sm:-mt-20 relative z-10">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+        <NeumorphicCard className="p-4 sm:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4 items-end">
             <div className="lg:col-span-2">
               <label className="block text-sm font-medium text-gray-600 mb-1">{t('filter.keywordLabel')}</label>
               <NeumorphicInput

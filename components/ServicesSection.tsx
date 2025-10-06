@@ -24,13 +24,13 @@ const ServiceCard: React.FC<{ name: string; image: string; }> = ({ name, image }
 const ServicesSection: React.FC = () => {
   const { t } = useI18n();
   return (
-    <section id="servicios" className="py-20 bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#153B67] mb-4">{t('services.title')}</h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600">{t('services.subtitle')}</p>
+    <section id="servicios" className="py-12 sm:py-20 bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#153B67] mb-4">{t('services.title')}</h2>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600">{t('services.subtitle')}</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map(service => (
             <ServiceCard key={service.nameKey} name={t(service.nameKey)} image={service.image} />
           ))}

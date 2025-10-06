@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { TESTIMONIALS } from '../constants';
 import TestimonialCard from './TestimonialCard';
 import { useI18n } from '../i18n';
@@ -9,80 +9,96 @@ const TestimonialsSection: React.FC = () => {
   const { t } = useI18n();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const testimonialsWithTranslation = TESTIMONIALS.map(testimonial => ({
       ...testimonial,
       comment: t(testimonial.commentKey)
   }));
-
-  const checkScrollPosition = useCallback(() => {
-    if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-        setCanScrollLeft(scrollLeft > 5);
-        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+  
+  const checkScrollability = useCallback(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      // Use a small buffer (e.g., 1px) to account for fractional pixel values
+      setCanScrollLeft(scrollLeft > 1);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
   }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-        checkScrollPosition();
-        container.addEventListener('scroll', checkScrollPosition, { passive: true });
-        const resizeObserver = new ResizeObserver(checkScrollPosition);
-        resizeObserver.observe(container);
+      checkScrollability();
+      container.addEventListener('scroll', checkScrollability, { passive: true });
+      window.addEventListener('resize', checkScrollability);
+      
+      const timer = setTimeout(checkScrollability, 100);
 
-        return () => {
-            container.removeEventListener('scroll', checkScrollPosition);
-            resizeObserver.unobserve(container);
-        };
+      return () => {
+        container.removeEventListener('scroll', checkScrollability);
+        window.removeEventListener('resize', checkScrollability);
+        clearTimeout(timer);
+      };
     }
-  }, [checkScrollPosition, testimonialsWithTranslation.length]);
+  }, [checkScrollability, testimonialsWithTranslation.length]);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-        const scrollAmount = direction === 'left' ? -352 : 352; // Card width (w-80) + gap (8)
-        scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  const handleNavClick = (direction: 'left' | 'right') => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const scrollAmount = container.clientWidth * 0.8; // Scroll by 80% of visible width
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
     }
   };
 
+  const NavButton: React.FC<{ direction: 'left' | 'right', onClick: () => void, disabled: boolean }> = ({ direction, onClick, disabled }) => (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`absolute top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full flex items-center justify-center
+        bg-white/10 backdrop-blur-md border border-white/20 text-white 
+        hover:bg-white/20
+        disabled:opacity-40 disabled:cursor-not-allowed
+        transition-all duration-200
+        hidden md:flex
+        ${direction === 'left' ? 'left-0' : 'right-0'}`
+      }
+      aria-label={direction === 'left' ? t('propertyGrid.sortOptions.priceAsc') : t('propertyGrid.sortOptions.priceDesc')}
+    >
+      {direction === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+    </button>
+  );
+
   return (
-    <section id="testimonios" className="py-20 bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]">
-      <div className="container mx-auto">
-        <div className="text-center mb-12 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#153B67] mb-4">{t('testimonials.title')}</h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600">{t('testimonials.subtitle')}</p>
+    <section 
+      id="testimonios" 
+      className="py-12 sm:py-20 relative bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage: "url('https://lh3.googleusercontent.com/pw/AP1GczMoom0Ce5RAG0bQEFsf08cgCLjCNdfqbZymAz7qhPJ5ean2R93IjXjTONeUuxkQVt37fsK9kW7y9YSmkwUN5VaAsV7VgHO-oMySDaBtn6Dyom4c7_RvjG56FNEGdHhp3OsQpl0wEImTybVpjKFJeMAs=w1344-h768-s-no-gm?authuser=0')"
+      }}
+    >
+      <div className="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
+      <div className="container mx-auto relative z-10">
+        <div className="text-center mb-10 sm:mb-12 px-2 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">{t('testimonials.title')}</h2>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-200">{t('testimonials.subtitle')}</p>
         </div>
-        <div className="relative">
+        <div className="relative px-4 sm:px-6 lg:px-12">
+          <NavButton direction="left" onClick={() => handleNavClick('left')} disabled={!canScrollLeft} />
           <div 
             ref={scrollContainerRef}
-            className="flex space-x-8 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide px-4 sm:px-6 lg:px-8"
+            className="flex space-x-4 sm:space-x-8 overflow-x-auto scroll-smooth py-4 scrollbar-hide"
           >
             {testimonialsWithTranslation.map((testimonial, index) => (
-              <div key={index} className="snap-center">
+              <div key={index} className="flex-shrink-0">
                 <TestimonialCard testimonial={testimonial} />
               </div>
             ))}
           </div>
-          {/* Desktop Navigation Buttons */}
-          <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 w-full justify-between px-2 pointer-events-none">
-            <button 
-                onClick={() => scroll('left')} 
-                disabled={!canScrollLeft}
-                className={`bg-[#e0e0e0]/80 rounded-full p-2 shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] hover:shadow-[1px_1px_2px_#bebebe,-1px_-1px_2px_#ffffff] pointer-events-auto transition-opacity ${!canScrollLeft ? 'opacity-30 cursor-not-allowed' : 'opacity-100'}`} 
-                aria-label="Previous testimonial"
-            >
-                <ChevronLeftIcon />
-            </button>
-            <button 
-                onClick={() => scroll('right')}
-                disabled={!canScrollRight} 
-                className={`bg-[#e0e0e0]/80 rounded-full p-2 shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] hover:shadow-[1px_1px_2px_#bebebe,-1px_-1px_2px_#ffffff] pointer-events-auto transition-opacity ${!canScrollRight ? 'opacity-30 cursor-not-allowed' : 'opacity-100'}`} 
-                aria-label="Next testimonial"
-            >
-                <ChevronRightIcon />
-            </button>
-          </div>
+          <NavButton direction="right" onClick={() => handleNavClick('right')} disabled={!canScrollRight} />
         </div>
       </div>
     </section>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropertyCard from './PropertyCard';
 import NeumorphicInput from './ui/NeumorphicInput';
@@ -17,17 +16,17 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, sortBy, setSort
   const { t } = useI18n();
 
   return (
-    <div id="property-grid" className="py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-            <h2 className="text-2xl font-bold text-[#153B67]">{t('propertyGrid.title')} ({properties.length})</h2>
-            <div className="flex items-center gap-2">
+    <div id="property-grid" className="py-10 sm:py-12">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#153B67]">{t('propertyGrid.title')} ({properties.length})</h2>
+            <div className="flex items-center gap-2 w-full md:w-auto">
                 <label className="text-sm font-medium text-gray-600">{t('propertyGrid.sortBy')}:</label>
                 <NeumorphicInput 
                     as="select" 
                     value={sortBy} 
                     onChange={e => setSortBy(e.target.value)}
-                    containerClassName="w-48"
+                    containerClassName="w-full md:w-48"
                 >
                     <option value="default">{t('propertyGrid.sortOptions.relevance')}</option>
                     <option value="price_asc">{t('propertyGrid.sortOptions.priceAsc')}</option>
@@ -38,7 +37,7 @@ const PropertyGrid: React.FC<PropertyGridProps> = ({ properties, sortBy, setSort
         </div>
 
         {properties.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {properties.map((prop) => (
               <PropertyCard key={prop.id} property={prop} onVerMas={onPropertySelect} />
             ))}

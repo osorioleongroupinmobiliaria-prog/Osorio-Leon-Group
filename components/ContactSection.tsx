@@ -6,12 +6,12 @@ import { COMPANY_INFO } from '../constants';
 import { useI18n } from '../i18n';
 
 const ContactInfoItem: React.FC<{icon: React.ReactNode; title: string; children: React.ReactNode}> = ({icon, title, children}) => (
-    <div className="flex items-start space-x-4">
-        <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center bg-[#e0e0e0] shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]">
+    <div className="flex items-start space-x-3 sm:space-x-4">
+        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-[#e0e0e0] shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff]">
             {icon}
         </div>
         <div>
-            <h4 className="font-bold text-gray-800">{title}</h4>
+            <h4 className="font-bold text-base sm:text-lg text-gray-800">{title}</h4>
             <div className="text-sm text-gray-600">{children}</div>
         </div>
     </div>
@@ -21,13 +21,13 @@ const ContactSection: React.FC = () => {
   const { t } = useI18n();
 
   return (
-    <section id="contacto" className="py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#153B67] mb-12">{t('contact.title')}</h2>
-        <div className="grid lg:grid-cols-5 gap-12">
+    <section id="contacto" className="py-12 sm:py-20">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#153B67] mb-10 sm:mb-12">{t('contact.title')}</h2>
+        <div className="grid lg:grid-cols-5 gap-8 sm:gap-12">
           
           <div className="lg:col-span-2">
-              <NeumorphicCard className="p-8 h-full">
+              <NeumorphicCard className="p-6 sm:p-8 h-full">
                   <div className="space-y-6">
                       <ContactInfoItem icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>} title={t('contact.phones')}>
                           <a href={`tel:${COMPANY_INFO.phones[0].replace(/\s/g, '')}`} className="hover:text-[#153B67]">{COMPANY_INFO.phones[0]}</a><br/>
@@ -47,8 +47,8 @@ const ContactSection: React.FC = () => {
           </div>
 
           <div className="lg:col-span-3">
-              <NeumorphicCard className="p-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-6">{t('contact.form.title')}</h3>
+              <NeumorphicCard className="p-6 sm:p-8">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">{t('contact.form.title')}</h3>
                 <form className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                         <NeumorphicInput name="name" placeholder={t('contact.form.namePlaceholder')} required />

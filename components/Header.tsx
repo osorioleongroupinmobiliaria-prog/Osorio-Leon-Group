@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { COMPANY_INFO } from '../constants';
 import { useI18n } from '../i18n';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -6,6 +6,26 @@ import LanguageSwitcher from './LanguageSwitcher';
 const Header: React.FC = () => {
   const { t } = useI18n();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const controlHeader = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY && window.scrollY > 100) { // scrolling down
+          setVisible(false);
+        } else { // scrolling up
+          setVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', controlHeader);
+    return () => {
+      window.removeEventListener('scroll', controlHeader);
+    };
+  }, [lastScrollY]);
 
   const navLinks = [
     { key: 'nav.home', href: '#inicio' },
@@ -15,12 +35,12 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-30 bg-[#e0e0e0] shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <header className={`sticky top-0 z-30 bg-[#e0e0e0] shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center">
-              <img className="h-16 w-auto" src={COMPANY_INFO.logoUrl} alt={COMPANY_INFO.name} />
+              <img className="h-14 sm:h-16 w-auto" src={COMPANY_INFO.logoUrl} alt={COMPANY_INFO.name} />
             </a>
           </div>
 
@@ -47,11 +67,11 @@ const Header: React.FC = () => {
             >
               <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <svg className="block h-6 w-6" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <svg className="block h-6 w-6" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}

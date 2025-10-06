@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { COMPANY_INFO, SOCIAL_LINKS } from '../constants';
 import { useI18n } from '../i18n';
@@ -19,8 +18,8 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-gray-200 shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] relative pb-20 sm:pb-0">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
           <div className="md:col-span-2">
             <h3 className="text-lg font-bold text-[#153B67]">{COMPANY_INFO.name}</h3>
@@ -68,7 +67,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mt-8 border-t border-gray-300 pt-8 text-center text-sm text-gray-500">
+        <div className="mt-8 border-t border-gray-300 pt-6 sm:pt-8 text-center text-sm text-gray-500">
            <div
             onClick={navigateToAdmin}
             className="cursor-pointer inline-block"

@@ -23,7 +23,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, totalStars = 5 }) => {
         return (
           <div key={index} className="relative">
             {/* Background star */}
-            <StarIcon className="w-5 h-5 text-gray-300" fillColor="currentColor" strokeColor="currentColor"/>
+            <StarIcon className="w-5 h-5 text-white/30" fillColor="currentColor" strokeColor="currentColor"/>
 
             {/* Filled star */}
             {(fillType === 'full' || fillType === 'half') && (

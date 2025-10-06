@@ -8,13 +8,13 @@ const OfferPropertySection: React.FC = () => {
     const { t } = useI18n();
 
     return (
-        <section className="py-20 bg-[#e0e0e0]">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <NeumorphicCard className="p-8 md:p-12">
+        <section className="py-12 sm:py-20 bg-[#e0e0e0]">
+            <div className="container mx-auto px-2 sm:px-6 lg:px-8">
+                <NeumorphicCard className="p-6 sm:p-8 md:p-12">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="md:order-1">
-                            <h2 className="text-3xl font-bold text-[#153B67] mb-4">{t('offerProperty.title')}</h2>
-                            <p className="text-gray-600 mb-6">{t('offerProperty.subtitle')}</p>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-[#153B67] mb-4">{t('offerProperty.title')}</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6">{t('offerProperty.subtitle')}</p>
                             <form className="space-y-4">
                                 <NeumorphicInput name="name" placeholder={t('offerProperty.namePlaceholder')} required />
                                 <NeumorphicInput type="email" name="email" placeholder={t('offerProperty.emailPlaceholder')} required />
