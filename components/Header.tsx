@@ -35,7 +35,7 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className={`sticky top-0 z-30 bg-[#e0e0e0] shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
+    <header className={`sticky top-0 z-30 bg-black/20 backdrop-blur-lg border-b border-white/30 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="container mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <div className="flex-shrink-0">
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           <nav className="hidden md:flex items-center gap-6">
             <div className="flex space-x-4">
               {navLinks.map((link) => (
-                <a key={link.key} href={link.href} className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <a key={link.key} href={link.href} className="text-white/80 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
                   {t(link.key)}
                 </a>
               ))}
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
             <LanguageSwitcher />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-white/80 hover:text-white focus:outline-none"
               aria-controls="mobile-menu"
               aria-expanded={isMenuOpen}
             >
@@ -82,14 +82,14 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#e0e0e0] shadow-inner" id="mobile-menu">
+        <div className="md:hidden bg-black/20 backdrop-blur-lg" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
               <a
                 key={link.key}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+                className="text-white/80 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               >
                 {t(link.key)}
               </a>

@@ -24,7 +24,6 @@ import AdminAccessButton from './components/AdminAccessButton';
 
 export const initialFilters: Filters = {
   searchTerm: '',
-  codigo_inmueble: '',
   tipo_operacion: 'todos',
   tipo_propiedad: 'todos',
   precio_min: 0,
@@ -40,7 +39,6 @@ export const initialFilters: Filters = {
   estado_inmueble: 'any',
   estado_amoblado: 'any',
   departamento: 'todos',
-  barrio: '',
 };
 
 function App() {
@@ -112,21 +110,15 @@ function App() {
 
   const filteredProperties = useMemo(() => {
     const lowerSearchTerm = filters.searchTerm.toLowerCase().trim();
-    const lowerCode = filters.codigo_inmueble.toLowerCase().trim();
-    const lowerBarrio = filters.barrio.toLowerCase().trim();
 
     return properties.filter(p => {
       if (p.estado_publicacion !== 'publicado') return false;
       if (p.es_destacado) return false;
 
-      if (lowerCode) {
-        if (p.id.toLowerCase() !== lowerCode) return false;
-      } else if (lowerSearchTerm) {
+      if (lowerSearchTerm) {
         const inCity = p.ciudad.toLowerCase().includes(lowerSearchTerm);
         const inNeighborhood = p.barrio_sector.toLowerCase().includes(lowerSearchTerm);
-        const inTitle = p.titulo.toLowerCase().includes(lowerSearchTerm);
-        const inDescription = p.descripcion.toLowerCase().includes(lowerSearchTerm);
-        if (!inCity && !inNeighborhood && !inTitle && !inDescription) return false;
+        if (!inCity && !inNeighborhood) return false;
       }
       
       if (filters.tipo_operacion !== 'todos' && p.tipo_operacion !== filters.tipo_operacion) return false;
@@ -144,7 +136,6 @@ function App() {
       if (filters.estado_inmueble !== 'any' && p.estado_inmueble !== filters.estado_inmueble) return false;
       if (filters.estado_amoblado !== 'any' && p.estado_amoblado !== filters.estado_amoblado) return false;
       if (filters.departamento !== 'todos' && p.departamento !== filters.departamento) return false;
-      if (lowerBarrio && !p.barrio_sector.toLowerCase().includes(lowerBarrio)) return false;
 
       return true;
     });

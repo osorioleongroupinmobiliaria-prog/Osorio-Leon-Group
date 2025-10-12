@@ -1,12 +1,7 @@
-
 import React from 'react';
 import type { Property } from '../types';
 import NeumorphicCard from './ui/NeumorphicCard';
 import ImageGallery from './ImageGallery';
-import BedIcon from './icons/BedIcon';
-import BathIcon from './icons/BathIcon';
-import AreaIcon from './icons/AreaIcon';
-import GarageIcon from './icons/GarageIcon';
 import LocationIcon from './icons/LocationIcon';
 import { SOCIAL_LINKS } from '../constants';
 import { useI18n } from '../i18n';
@@ -75,10 +70,10 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
               {property.es_negociable && <p className="text-sm text-gray-500 mb-6">{t('propertyModal.negotiable')}</p>}
               
               <div className="grid grid-cols-2 gap-4 text-gray-700 mb-6">
-                <div className="flex items-center space-x-2 text-lg"><BedIcon className="w-6 h-6"/><span>{property.habitaciones || 0} {t('propertyModal.bedrooms')}</span></div>
-                <div className="flex items-center space-x-2 text-lg"><BathIcon className="w-6 h-6"/><span>{property.banos_completos || 0} {t('propertyModal.bathrooms')}</span></div>
-                <div className="flex items-center space-x-2 text-lg"><AreaIcon className="w-6 h-6"/><span>{property.area_construida || 0} m²</span></div>
-                <div className="flex items-center space-x-2 text-lg"><GarageIcon className="w-6 h-6"/><span>{property.parqueaderos || 0} {t('propertyModal.parking')}</span></div>
+                <div className="flex items-center space-x-2 text-lg"><span role="img" aria-label={t('propertyModal.bedrooms')} className="text-xl">🛏️</span><span>{property.habitaciones || 0} {t('propertyModal.bedrooms')}</span></div>
+                <div className="flex items-center space-x-2 text-lg"><span role="img" aria-label={t('propertyModal.bathrooms')} className="text-xl">🛁</span><span>{property.banos_completos || 0} {t('propertyModal.bathrooms')}</span></div>
+                <div className="flex items-center space-x-2 text-lg"><span role="img" aria-label="área construida" className="text-xl">📏</span><span>{property.area_construida || 0} m²</span></div>
+                <div className="flex items-center space-x-2 text-lg"><span role="img" aria-label={t('propertyModal.parking')} className="text-xl">🚗</span><span>{property.parqueaderos || 0} {t('propertyModal.parking')}</span></div>
               </div>
               
               {features.length > 0 && (

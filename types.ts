@@ -1,41 +1,37 @@
-
+// FIX: Replaced incorrect file content with proper type definitions to resolve import errors across the application.
 export interface Imagen {
   id: string;
   url_imagen: string;
-  alt_text?: string;
   es_principal: boolean;
+  alt_text?: string;
 }
 
+export type OperationType = 'venta' | 'arriendo';
+export type PropertyType = 'apartamento' | 'casa' | 'oficina' | 'local' | 'lote' | 'finca';
+export type PropertyState = 'new' | 'used' | 'remodeled' | 'under_construction';
+export type FurnishedState = 'sin_amoblar' | 'amoblado' | 'semi_amoblado';
+export type PublicationStatus = 'publicado' | 'borrador' | 'pausado';
+
 export interface Property {
-  id:string;
+  id: string;
   titulo: string;
   descripcion: string;
-  
-  // Location
   departamento?: string;
   ciudad: string;
   barrio_sector: string;
   direccion_completa?: string;
   estrato?: number;
-  
-  // Types
-  tipo_operacion: 'venta' | 'arriendo';
-  tipo_propiedad: 'apartamento' | 'casa' | 'oficina' | 'lote' | 'local' | 'finca';
-
-  // Price
+  tipo_operacion: OperationType;
+  tipo_propiedad: PropertyType;
   precio: number;
   valor_administracion?: number;
   es_negociable: boolean;
-  
-  // Basic Features
   area_construida?: number;
   habitaciones?: number;
   banos_completos?: number;
   parqueaderos?: number;
-  estado_inmueble?: 'new' | 'used' | 'remodeled' | 'under_construction';
-  estado_amoblado: 'amoblado' | 'sin_amoblar' | 'semi_amoblado';
-
-  // Extra Features (booleans for filtering)
+  estado_inmueble: PropertyState;
+  estado_amoblado: FurnishedState;
   tiene_balcon: boolean;
   tiene_gimnasio: boolean;
   tiene_piscina_comun: boolean;
@@ -47,38 +43,32 @@ export interface Property {
   tiene_salon_social: boolean;
   tiene_juegos_infantiles: boolean;
   tiene_sendero_peatonal: boolean;
-  
-  // Media
   imagenes: Imagen[];
-  
-  // Metadata
   es_destacado: boolean;
-  estado_publicacion: 'publicado' | 'borrador' | 'pausado';
-  fecha_publicacion: string; // ISO date string
-
-  // Indexable signature for extras filtering
+  estado_publicacion: PublicationStatus;
+  fecha_publicacion: string;
   [key: string]: any;
 }
 
 export interface Filters {
   searchTerm: string;
-  codigo_inmueble: string;
-  tipo_operacion: 'todos' | 'venta' | 'arriendo';
-  tipo_propiedad: 'todos' | 'apartamento' | 'casa' | 'oficina' | 'lote' | 'local' | 'finca';
+  tipo_operacion: 'todos' | OperationType;
+  tipo_propiedad: 'todos' | PropertyType;
   precio_min: number;
   precio_max: number;
   area_min: number;
   area_max: number;
-  habitaciones: 'any' | string;
-  banos: 'any' | string;
-  parqueaderos: 'any' | string;
+  habitaciones: string;
+  banos: string;
+  parqueaderos: string;
   extras: string[];
   estrato_min: number;
   estrato_max: number;
-  estado_inmueble: 'any' | 'new' | 'used' | 'remodeled' | 'under_construction';
-  estado_amoblado: 'any' | 'amoblado' | 'sin_amoblar' | 'semi_amoblado';
+  estado_inmueble: 'any' | PropertyState;
+  estado_amoblado: 'any' | FurnishedState;
   departamento: string;
-  barrio: string;
+  barrio?: string;
+  codigo_inmueble?: string;
 }
 
 export interface Testimonial {
@@ -86,4 +76,5 @@ export interface Testimonial {
   rating: number;
   comment: string;
   avatar: string;
+  commentKey?: string;
 }

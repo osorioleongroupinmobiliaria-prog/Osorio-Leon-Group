@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, useContext, useEffect, useMemo } from 'react';
 
 // Language definitions
@@ -46,11 +47,11 @@ const translations: Record<Language, any> = {
     },
     filter: {
         searchPlaceholder: 'Ciudad, barrio o palabra clave...',
-        moreFiltersButton: 'Más Filtros',
+        moreFiltersButton: 'Búsqueda Avanzada',
         modalTitle: 'Filtros Avanzados',
         roomsAndSpaces: 'Habitaciones y Espacios',
         applyButton: 'Mostrar {count} propiedades',
-        keywordLabel: 'Buscar Propiedad',
+        keywordLabel: 'Ciudad o Barrio',
         operationLabel: 'Tipo de Operación',
         propertyTypeLabel: 'Tipo de Inmueble',
         bedrooms: 'Habitaciones',
@@ -65,7 +66,7 @@ const translations: Record<Language, any> = {
         operation: { all: 'Venta o Arriendo', sale: 'Venta', rent: 'Arriendo' },
         propertyType: { all: 'Todos', apartment: 'Apartamento', house: 'Casa', office: 'Oficina', commercial: 'Local', lot: 'Lote', farm: 'Finca' },
         propertyCodeLabel: 'Código',
-        propertyCodePlaceholder: 'Ej: prop-123',
+        propertyCodePlaceholder: 'Ej: Manizales, Palermo...',
         socioeconomicStratum: 'Estrato Socioeconómico',
         stratumMin: 'Mín.',
         stratumMax: 'Máx.',
@@ -78,9 +79,9 @@ const translations: Record<Language, any> = {
             under_construction: 'En Construcción',
         },
         location: 'Ubicación',
-        departmentLabel: 'Departamento/Estado',
-        neighborhoodLabel: 'Barrio/Sector',
-        neighborhoodPlaceholder: 'Escribe un barrio...',
+        departmentLabel: 'Departamento',
+        neighborhoodLabel: 'Barrio/Sector (Avanzado)',
+        neighborhoodPlaceholder: 'Escribe un barrio específico...',
         department: {
             all: 'Todos los departamentos',
             caldas: 'Caldas',
@@ -285,11 +286,11 @@ const translations: Record<Language, any> = {
     },
     filter: {
         searchPlaceholder: 'City, neighborhood or keyword...',
-        moreFiltersButton: 'More Filters',
+        moreFiltersButton: 'Advanced Search',
         modalTitle: 'Advanced Filters',
         roomsAndSpaces: 'Rooms and Spaces',
         applyButton: 'Show {count} properties',
-        keywordLabel: 'Search Property',
+        keywordLabel: 'City or Neighborhood',
         operationLabel: 'Operation Type',
         propertyTypeLabel: 'Property Type',
         bedrooms: 'Bedrooms',
@@ -304,7 +305,7 @@ const translations: Record<Language, any> = {
         operation: { all: 'Sale or Rent', sale: 'Sale', rent: 'Rent' },
         propertyType: { all: 'All', apartment: 'Apartment', house: 'House', office: 'Office', commercial: 'Commercial', lot: 'Lot', farm: 'Farm' },
         propertyCodeLabel: 'Code',
-        propertyCodePlaceholder: 'E.g. prop-123',
+        propertyCodePlaceholder: 'E.g: Manizales, Palermo...',
         socioeconomicStratum: 'Socioeconomic Stratum',
         stratumMin: 'Min',
         stratumMax: 'Max',
@@ -317,9 +318,9 @@ const translations: Record<Language, any> = {
             under_construction: 'Under Construction',
         },
         location: 'Location',
-        departmentLabel: 'State/Department',
-        neighborhoodLabel: 'Neighborhood/Sector',
-        neighborhoodPlaceholder: 'Type a neighborhood...',
+        departmentLabel: 'Department',
+        neighborhoodLabel: 'Neighborhood/Sector (Advanced)',
+        neighborhoodPlaceholder: 'Type a specific neighborhood...',
         department: {
             all: 'All departments',
             caldas: 'Caldas',

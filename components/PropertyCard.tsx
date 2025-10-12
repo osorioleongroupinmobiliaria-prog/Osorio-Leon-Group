@@ -2,10 +2,6 @@ import React from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
 import NeumorphicButton from './ui/NeumorphicButton';
 import type { Property } from '../types';
-import BedIcon from './icons/BedIcon';
-import BathIcon from './icons/BathIcon';
-import AreaIcon from './icons/AreaIcon';
-import GarageIcon from './icons/GarageIcon';
 import LocationIcon from './icons/LocationIcon';
 import { SOCIAL_LINKS, COMPANY_INFO } from '../constants';
 import { useI18n } from '../i18n';
@@ -54,11 +50,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
           {property.es_negociable && <span className="text-xs text-gray-500 ml-2 font-normal">{t('property.negotiable')}</span>}
         </p>
         
-        <div className="grid grid-cols-4 gap-2 text-xs text-gray-600 mb-4 sm:mb-5">
-            {property.habitaciones ? <div className="flex items-center space-x-1"><BedIcon className="w-5 h-5"/><span>{property.habitaciones}</span></div> : <div />}
-            {property.banos_completos ? <div className="flex items-center space-x-1"><BathIcon className="w-5 h-5"/><span>{property.banos_completos}</span></div> : <div />}
-            {property.area_construida ? <div className="flex items-center space-x-1"><AreaIcon className="w-5 h-5"/><span>{property.area_construida} m²</span></div> : <div />}
-            {property.parqueaderos ? <div className="flex items-center space-x-1"><GarageIcon className="w-5 h-5"/><span>{property.parqueaderos}</span></div> : <div />}
+        <div className="grid grid-cols-4 gap-2 text-gray-600 mb-4 sm:mb-5">
+            {property.habitaciones ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="habitaciones" className="text-lg">🛏️</span><span className="text-sm">{property.habitaciones}</span></div> : <div />}
+            {property.banos_completos ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="baños" className="text-lg">🛁</span><span className="text-sm">{property.banos_completos}</span></div> : <div />}
+            {property.area_construida ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="área" className="text-lg">📏</span><span className="text-sm">{property.area_construida} m²</span></div> : <div />}
+            {property.parqueaderos ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="parqueaderos" className="text-lg">🚗</span><span className="text-sm">{property.parqueaderos}</span></div> : <div />}
         </div>
         
         <div className="mt-auto flex flex-col sm:flex-row gap-3">
