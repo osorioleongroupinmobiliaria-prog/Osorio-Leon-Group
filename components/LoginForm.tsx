@@ -1,25 +1,33 @@
+
 import React, { useState } from 'react';
+import { supabase } from '../supabase/client';
 import NeumorphicCard from './ui/NeumorphicCard';
 import NeumorphicInput from './ui/NeumorphicInput';
 import NeumorphicButton from './ui/NeumorphicButton';
 import { COMPANY_INFO } from '../constants';
 
-interface LoginFormProps {
-  onLogin: (user: string, pass: string) => boolean;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+const LoginForm: React.FC = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    const success = onLogin(username, password);
-    if (!success) {
-      setError('Usuario o contraseña incorrectos.');
+    setIsLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    
+    setIsLoading(false);
+
+    if (error) {
+      setError(error.message === 'Invalid login credentials' ? 'Usuario o contraseña incorrectos.' : error.message);
     }
+    // On success, the onAuthStateChange listener in App.tsx will handle the navigation.
   };
 
   return (
@@ -31,13 +39,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">Usuario</label>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Usuario (Email)</label>
             <NeumorphicInput 
                 type="email" 
-                value={username} 
-                onChange={e => setUsername(e.target.value)}
+                value={email} 
+                onChange={e => setEmail(e.target.value)}
                 placeholder="osorioyleongroup@gmail.com"
                 required 
+                disabled={isLoading}
             />
           </div>
           <div>
@@ -48,11 +57,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required 
+                disabled={isLoading}
             />
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-white">
-            Ingresar
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-white" disabled={isLoading}>
+            {isLoading ? 'Ingresando...' : 'Ingresar'}
           </NeumorphicButton>
         </form>
       </NeumorphicCard>

@@ -12,11 +12,12 @@ interface AdminPanelProps {
   onSave: (property: Property) => void;
   onDelete: (id: string) => void;
   onLogout: () => void;
+  isSaving: boolean;
 }
 
 type AdminView = 'list' | 'form' | 'instructions';
 
-const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, onLogout }) => {
+const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, onLogout, isSaving }) => {
   const [view, setView] = useState<AdminView>('list');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
 
@@ -55,7 +56,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, o
         
         <main>
             {view === 'list' && <PropertyList properties={properties} onEdit={handleEdit} onDelete={onDelete} />}
-            {view === 'form' && <PropertyForm property={selectedProperty} onSave={handleSave} onCancel={() => setView('list')} />}
+            {view === 'form' && <PropertyForm property={selectedProperty} onSave={handleSave} onCancel={() => setView('list')} isSaving={isSaving} />}
             {view === 'instructions' && <AdminInstructions />}
         </main>
       </div>

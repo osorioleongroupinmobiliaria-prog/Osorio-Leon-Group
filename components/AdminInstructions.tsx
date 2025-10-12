@@ -1,7 +1,6 @@
 
 import React from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
-import { ADMIN_CREDENTIALS } from '../constants';
 
 const AdminInstructions: React.FC = () => {
   return (
@@ -10,10 +9,10 @@ const AdminInstructions: React.FC = () => {
       <div className="space-y-6 text-gray-700">
         <div>
           <h3 className="text-lg font-semibold mb-2">Credenciales de Acceso</h3>
-          <p>Para acceder a este panel, utiliza las siguientes credenciales:</p>
+          <p>Para acceder a este panel, utiliza el correo electrónico y la contraseña que configuraste en el panel de Autenticación de Supabase.</p>
           <ul className="list-disc list-inside mt-2 bg-[#e0e0e0] p-4 rounded-xl shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff]">
-            <li><strong>Usuario:</strong> {ADMIN_CREDENTIALS.user}</li>
-            <li><strong>Contraseña:</strong> {ADMIN_CREDENTIALS.pass}</li>
+            <li><strong>Usuario:</strong> Tu email de administrador.</li>
+            <li><strong>Contraseña:</strong> Tu contraseña de administrador.</li>
           </ul>
         </div>
 

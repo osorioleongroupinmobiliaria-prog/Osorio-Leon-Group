@@ -1,6 +1,6 @@
 
-
 import React, { useState, useEffect, useMemo } from 'react';
+import { supabase } from './supabase/client';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import FilterSection from './components/FilterSection';
@@ -13,7 +13,6 @@ import LoginForm from './components/LoginForm';
 import AdminPanel from './components/AdminPanel';
 import PropertyModal from './components/PropertyModal';
 import FeaturedProperties from './components/FeaturedProperties';
-import { MOCK_PROPERTIES, ADMIN_CREDENTIALS } from './constants';
 import type { Property, Filters } from './types';
 import ServicesSection from './components/ServicesSection';
 import OfferPropertySection from './components/OfferPropertySection';
@@ -45,21 +44,54 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [view, setView] = useState<'public' | 'login' | 'admin'>('public');
+  const [isSaving, setIsSaving] = useState(false);
   
-  const [properties, setProperties] = useState<Property[]>(MOCK_PROPERTIES);
+  const [properties, setProperties] = useState<Property[]>([]);
 
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [sortBy, setSortBy] = useState('default');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('osorioLeonProperties', JSON.stringify(properties));
-    } catch (error) {
-      console.error("Failed to save properties to localStorage", error);
+  const fetchProperties = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    let query = supabase.from('properties').select('*');
+    
+    // For public view (no session), explicitly fetch only 'publicado' properties.
+    // For admins (session exists), fetch all properties, relying on RLS to grant access.
+    if (!session) {
+      query = query.eq('estado_publicacion', 'publicado');
     }
-  }, [properties]);
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching properties:", error);
+      alert(`Error al cargar las propiedades: ${error.message}.\n\nAsegúrate de que:\n1. La tabla 'properties' existe en Supabase.\n2. La Seguridad a Nivel de Fila (RLS) está HABILITADA.\n3. Has creado las políticas de SELECT correctas (una para acceso público y otra para administradores).`);
+    } else {
+      setProperties(data || []);
+    }
+  };
+
+  useEffect(() => {
+    // Check initial session and set up listener for auth changes
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        setIsAuthenticated(!!session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Fetch properties whenever authentication status changes (e.g., on login/logout)
+  useEffect(() => {
+    fetchProperties();
+  }, [isAuthenticated]);
+
 
   useEffect(() => {
     const handlePathChange = () => {
@@ -80,38 +112,68 @@ function App() {
     };
   }, [isAuthenticated]);
 
-  const handleLogin = (user: string, pass: string) => {
-    if (user === ADMIN_CREDENTIALS.user && pass === ADMIN_CREDENTIALS.pass) {
-      setIsAuthenticated(true);
-      return true;
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+        console.error('Error signing out:', error);
     }
-    return false;
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
+    // The onAuthStateChange listener will automatically set isAuthenticated to false
     window.history.pushState({}, '', '/');
     setView('public');
   };
   
-  const handleSaveProperty = (property: Property) => {
-    setProperties(prev => {
-      const existing = prev.find(p => p.id === property.id);
-      if (existing) {
-        return prev.map(p => p.id === property.id ? property : p);
+  const handleSaveProperty = async (property: Property) => {
+    setIsSaving(true);
+    try {
+      const isNew = property.id.startsWith('prop_');
+      let error;
+
+      if (isNew) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id, ...propertyToInsert } = property;
+        ({ error } = await supabase.from('properties').insert([propertyToInsert]).select());
+      } else {
+        ({ error } = await supabase.from('properties').update(property).eq('id', property.id).select());
       }
-      return [...prev, property];
-    });
+
+      if (error) {
+        console.error('Error saving property:', error);
+        alert(`Error al guardar la propiedad: ${error.message}`);
+      } else {
+        await fetchProperties();
+      }
+    } catch (e) {
+      console.error("An unexpected error occurred during save:", e);
+      alert("Ocurrió un error inesperado al guardar la propiedad.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleDeleteProperty = (id: string) => {
-    setProperties(prev => prev.filter(p => p.id !== id));
+  const handleDeleteProperty = async (id: string) => {
+    setIsSaving(true);
+    try {
+      const { error } = await supabase.from('properties').delete().eq('id', id);
+      if (error) {
+        console.error('Error deleting property:', error);
+        alert(`Error al eliminar la propiedad: ${error.message}`);
+      } else {
+        await fetchProperties();
+      }
+    } catch (e) {
+      console.error("An unexpected error occurred during delete:", e);
+      alert("Ocurrió un error inesperado al eliminar la propiedad.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const filteredProperties = useMemo(() => {
     const lowerSearchTerm = filters.searchTerm.toLowerCase().trim();
 
     return properties.filter(p => {
+      // When an admin is logged in, `properties` may contain non-published items.
+      // This client-side filter ensures only published ones appear on the public site.
       if (p.estado_publicacion !== 'publicado') return false;
       if (p.es_destacado) return false;
 
@@ -169,9 +231,15 @@ function App() {
 
   switch (view) {
     case 'login':
-      return <LoginForm onLogin={handleLogin} />;
+      return <LoginForm />;
     case 'admin':
-      return <AdminPanel properties={properties} onSave={handleSaveProperty} onDelete={handleDeleteProperty} onLogout={handleLogout} />;
+      return <AdminPanel 
+                properties={properties} 
+                onSave={handleSaveProperty} 
+                onDelete={handleDeleteProperty} 
+                onLogout={handleLogout} 
+                isSaving={isSaving}
+             />;
     case 'public':
     default:
       return (

@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 import type { Property, Imagen } from '../types';
 import NeumorphicCard from './ui/NeumorphicCard';
@@ -11,6 +10,7 @@ interface PropertyFormProps {
   property: Property | null;
   onSave: (property: Property) => void;
   onCancel: () => void;
+  isSaving: boolean;
 }
 
 const emptyProperty: Property = {
@@ -46,7 +46,7 @@ const emptyProperty: Property = {
   fecha_publicacion: new Date().toISOString(),
 };
 
-const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel }) => {
+const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel, isSaving }) => {
   const [formData, setFormData] = useState<Property>(emptyProperty);
 
   useEffect(() => {
@@ -198,8 +198,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel 
         </div>
 
         <div className="flex justify-end gap-4 mt-8">
-            <NeumorphicButton type="button" onClick={onCancel}>Cancelar</NeumorphicButton>
-            <NeumorphicButton type="submit" className="!bg-[#153B67] !text-white">Guardar Cambios</NeumorphicButton>
+            <NeumorphicButton type="button" onClick={onCancel} disabled={isSaving}>Cancelar</NeumorphicButton>
+            <NeumorphicButton type="submit" className="!bg-[#153B67] !text-white" disabled={isSaving}>
+                {isSaving ? 'Guardando...' : 'Guardar Cambios'}
+            </NeumorphicButton>
         </div>
 
       </NeumorphicCard>
