@@ -19,7 +19,6 @@ import OfferPropertySection from './components/OfferPropertySection';
 import TestimonialsSection from './components/TestimonialsSection';
 import VisitorNotification from './components/VisitorNotification';
 import SplashScreen from './components/SplashScreen';
-import AdminAccessButton from './components/AdminAccessButton';
 
 export const initialFilters: Filters = {
   searchTerm: '',
@@ -270,7 +269,6 @@ function App() {
           </main>
           <VisitorNotification isChatbotOpen={isChatbotOpen} />
           {!selectedProperty && <ChatbotTatiana isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} />}
-          <AdminAccessButton />
           <Footer />
           {selectedProperty && (
             <PropertyModal property={selectedProperty} onClose={() => setSelectedProperty(null)} />

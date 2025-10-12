@@ -68,14 +68,17 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-300 pt-6 sm:pt-8 text-center text-sm text-gray-500">
-           <div
-            onClick={navigateToAdmin}
-            className="cursor-pointer inline-block"
-            title="Admin Access"
-            aria-label="Admin Access"
-          >
-            <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. {t('footer.copyright')}</p>
-          </div>
+          <p>
+            <span
+              onClick={navigateToAdmin}
+              className="cursor-pointer"
+              title="Admin Access"
+              aria-label="Admin Access"
+            >
+              &copy;
+            </span>
+            {' '}{new Date().getFullYear()} {COMPANY_INFO.name}. {t('footer.copyright')}
+          </p>
         </div>
       </div>
     </footer>
