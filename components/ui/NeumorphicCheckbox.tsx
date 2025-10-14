@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface NeumorphicCheckboxProps {
@@ -12,7 +11,7 @@ interface NeumorphicCheckboxProps {
 const NeumorphicCheckbox: React.FC<NeumorphicCheckboxProps> = ({ label, checked, onChange, name, variant = 'neumorphic' }) => {
   const isNeumorphic = variant === 'neumorphic';
   
-  const labelStyles = isNeumorphic ? 'text-gray-700' : 'text-white';
+  const labelStyles = isNeumorphic ? 'text-gray-700' : 'text-gray-800';
   const boxStyles = isNeumorphic
     ? checked 
       ? 'shadow-[inset_2px_2px_4px_#bebebe,inset_-2px_-2px_4px_#ffffff]' 
@@ -20,8 +19,8 @@ const NeumorphicCheckbox: React.FC<NeumorphicCheckboxProps> = ({ label, checked,
     : checked
       ? 'bg-white/30 border border-white/50'
       : 'bg-white/10 border border-white/30 group-hover:bg-white/20';
-  const checkedIndicatorStyles = isNeumorphic ? 'bg-[#153B67]' : 'bg-white';
-  const hoverTextStyles = isNeumorphic ? 'group-hover:text-[#153B67]' : 'group-hover:text-gray-200';
+  const checkedIndicatorStyles = isNeumorphic ? 'bg-[#153B67]' : 'bg-[#153B67]';
+  const hoverTextStyles = isNeumorphic ? 'group-hover:text-[#153B67]' : 'group-hover:text-black';
 
   return (
     <label htmlFor={name} className={`flex items-center cursor-pointer text-sm font-medium group ${labelStyles}`}>

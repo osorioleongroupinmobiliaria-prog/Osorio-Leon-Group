@@ -2,6 +2,8 @@
 
 
 
+
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from './supabase/client';
 import Header from './components/Header';
@@ -22,6 +24,7 @@ import OfferPropertySection from './components/OfferPropertySection';
 import TestimonialsSection from './components/TestimonialsSection';
 import VisitorNotification from './components/VisitorNotification';
 import SplashScreen from './components/SplashScreen';
+import PartnersCarousel from './components/PartnersCarousel';
 
 export const initialFilters: Filters = {
   searchTerm: '',
@@ -252,6 +255,7 @@ function App() {
           <Header />
           <main>
             <HeroSection />
+            <PartnersCarousel />
             <FilterSection 
               filters={filters} 
               setFilters={setFilters}

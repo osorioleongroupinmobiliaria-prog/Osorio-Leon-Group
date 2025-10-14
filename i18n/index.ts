@@ -280,6 +280,9 @@ const translations: Record<Language, any> = {
     visitorNotification: {
         message: 'personas están viendo esta página.',
         closeAria: 'Cerrar notificación',
+    },
+    partners: {
+        title: 'Nuestros Aliados Estratégicos',
     }
   },
   en: {
@@ -545,6 +548,9 @@ const translations: Record<Language, any> = {
     visitorNotification: {
         message: 'people are viewing this page.',
         closeAria: 'Close notification',
+    },
+    partners: {
+        title: 'Our Strategic Partners',
     }
   }
 };

@@ -62,20 +62,20 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
     { name: 'tiene_puerta_tradicional', labelKey: 'features.traditionalDoor' },
   ];
 
-  const glassInputContainer = "!bg-white/20 !shadow-none border border-white/30";
-  const glassInputText = "!text-white placeholder-gray-200";
-  const glassButton = "!bg-white/20 !shadow-none !text-white hover:!bg-white/30 active:!bg-black/20";
-  const glassButtonPrimary = "!bg-[#153B67]/70 backdrop-blur-sm !text-white !shadow-lg hover:!bg-[#153B67]/90";
-  const optionStyle = "bg-gray-800 text-gray-200";
+  const glassInputContainer = "!bg-white/50 !shadow-none border border-white/60";
+  const glassInputText = "!text-gray-900 placeholder-gray-600";
+  const glassButton = "!bg-white/30 !shadow-none !text-gray-800 hover:!bg-white/50 active:!bg-white/20";
+  const glassButtonPrimary = "!bg-[#153B67]/80 backdrop-blur-sm !text-white !shadow-lg hover:!bg-[#153B67]/95";
+  const optionStyle = "bg-gray-100 text-gray-800";
   
   return (
     <section id="propiedades" className="py-8 -mt-14 sm:py-10 sm:-mt-16 relative z-10">
       <div className="container mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="transition-all duration-300 rounded-2xl bg-black/20 backdrop-blur-lg border border-white/30 shadow-xl">
+        <div className="transition-all duration-300 rounded-2xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-2xl">
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3 items-end">
               <div>
-                <label className="block text-xs font-medium text-gray-100 mb-1">{t('filter.departmentLabel')}</label>
+                <label className="block text-xs font-semibold text-gray-800 mb-1">{t('filter.departmentLabel')}</label>
                 <NeumorphicInput as="select" name="departamento" value={filters.departamento} onChange={handleInputChange} containerClassName={glassInputContainer} className={`${glassInputText} !py-2 sm:!py-3 text-sm`}>
                     <option className={optionStyle} value="todos">{t('filter.department.all')}</option>
                     <option className={optionStyle} value="Caldas">{t('filter.department.caldas')}</option>
@@ -85,7 +85,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                 </NeumorphicInput>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-100 mb-1">{t('filter.keywordLabel')}</label>
+                <label className="block text-xs font-semibold text-gray-800 mb-1">{t('filter.keywordLabel')}</label>
                 <NeumorphicInput
                     type="text"
                     name="searchTerm"
@@ -97,7 +97,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-100 mb-1">{t('filter.operationLabel')}</label>
+                <label className="block text-xs font-semibold text-gray-800 mb-1">{t('filter.operationLabel')}</label>
                 <NeumorphicInput as="select" name="tipo_operacion" value={filters.tipo_operacion} onChange={handleInputChange} containerClassName={glassInputContainer} className={`${glassInputText} !py-2 sm:!py-3 text-sm`}>
                     <option className={optionStyle} value="todos">{t('filter.operation.all')}</option>
                     <option className={optionStyle} value="venta">{t('filter.operation.sale')}</option>
@@ -105,7 +105,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                 </NeumorphicInput>
               </div>
                <div>
-                <label className="block text-xs font-medium text-gray-100 mb-1">{t('filter.propertyTypeLabel')}</label>
+                <label className="block text-xs font-semibold text-gray-800 mb-1">{t('filter.propertyTypeLabel')}</label>
                 <NeumorphicInput as="select" name="tipo_propiedad" value={filters.tipo_propiedad} onChange={handleInputChange} containerClassName={glassInputContainer} className={`${glassInputText} !py-2 sm:!py-3 text-sm`}>
                     <option className={optionStyle} value="todos">{t('filter.propertyType.all')}</option>
                     <option className={optionStyle} value="apartamento">{t('filter.propertyType.apartment')}</option>
@@ -135,33 +135,33 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                       {/* Left Column */}
                       <div className="space-y-3 md:space-y-6">
                           <div>
-                              <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.priceRange')}</h4>
+                              <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.priceRange')}</h4>
                               <div className="grid grid-cols-2 gap-3">
                                   <div>
-                                      <label className="block text-sm text-gray-100 mb-1">{t('filter.priceMin')}</label>
+                                      <label className="block text-sm text-gray-700 mb-1">{t('filter.priceMin')}</label>
                                       <NeumorphicInput type="number" name="precio_min" value={filters.precio_min} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}/>
                                   </div>
                                   <div>
-                                      <label className="block text-sm text-gray-100 mb-1">{t('filter.priceMax')}</label>
+                                      <label className="block text-sm text-gray-700 mb-1">{t('filter.priceMax')}</label>
                                       <NeumorphicInput type="number" name="precio_max" value={filters.precio_max} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}/>
                                   </div>
                               </div>
                           </div>
                           <div>
-                              <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.socioeconomicStratum')}</h4>
+                              <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.socioeconomicStratum')}</h4>
                               <div className="grid grid-cols-2 gap-3">
                                    <div>
-                                      <label className="block text-sm text-gray-100 mb-1">{t('filter.stratumMin')}</label>
+                                      <label className="block text-sm text-gray-700 mb-1">{t('filter.stratumMin')}</label>
                                       <NeumorphicInput type="number" name="estrato_min" value={filters.estrato_min} onChange={handleInputChange} min="1" max="6" containerClassName={glassInputContainer} className={glassInputText}/>
                                   </div>
                                    <div>
-                                      <label className="block text-sm text-gray-100 mb-1">{t('filter.stratumMax')}</label>
+                                      <label className="block text-sm text-gray-700 mb-1">{t('filter.stratumMax')}</label>
                                       <NeumorphicInput type="number" name="estrato_max" value={filters.estrato_max} onChange={handleInputChange} min="1" max="6" containerClassName={glassInputContainer} className={glassInputText}/>
                                   </div>
                               </div>
                           </div>
                           <div>
-                              <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.roomsAndSpaces')}</h4>
+                              <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.roomsAndSpaces')}</h4>
                               <div className="grid grid-cols-3 gap-3">
                                   <NeumorphicInput as="select" name="habitaciones" value={filters.habitaciones} onChange={handleInputChange} aria-label={t('filter.bedrooms')} containerClassName={glassInputContainer} className={glassInputText}>
                                       <option className={optionStyle} value="any">{t('filter.bedrooms')} ({t('filter.any')})</option>
@@ -178,7 +178,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                               </div>
                           </div>
                            <div>
-                              <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.propertyState')} &amp; {t('furnishing.label')}</h4>
+                              <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.propertyState')} &amp; {t('furnishing.label')}</h4>
                               <div className="grid grid-cols-2 gap-3">
                                   <NeumorphicInput as="select" name="estado_inmueble" value={filters.estado_inmueble} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}>
                                       <option className={optionStyle} value="any">{t('filter.state.all')}</option>
@@ -197,7 +197,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                           </div>
                            <div className="grid grid-cols-2 gap-3">
                               <div>
-                                <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.kitchenType')}</h4>
+                                <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.kitchenType')}</h4>
                                 <NeumorphicInput as="select" name="tipo_cocina" value={filters.tipo_cocina} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}>
                                     <option className={optionStyle} value="any">{t('kitchen.any')}</option>
                                     <option className={optionStyle} value="integral">{t('kitchen.integral')}</option>
@@ -206,7 +206,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                                 </NeumorphicInput>
                               </div>
                                <div>
-                                <h4 className="font-bold text-lg text-white mb-1.5">{t('filter.surveillanceType')}</h4>
+                                <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.surveillanceType')}</h4>
                                 <NeumorphicInput as="select" name="tipo_vigilancia" value={filters.tipo_vigilancia} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}>
                                     <option className={optionStyle} value="any">{t('surveillance.any')}</option>
                                     <option className={optionStyle} value="sin_vigilancia">{t('surveillance.sin_vigilancia')}</option>
@@ -221,7 +221,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
 
                       {/* Right Column */}
                       <div>
-                           <h4 className="font-bold text-lg text-white mb-2">{t('filter.otherFeatures')}</h4>
+                           <h4 className="font-bold text-lg text-[#153B67] mb-2">{t('filter.otherFeatures')}</h4>
                            <div className="grid grid-cols-2 gap-x-6 gap-y-2">
                               {extrasOptions.map(extra => (
                                   <NeumorphicCheckbox
@@ -236,7 +236,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                           </div>
                       </div>
                     </div>
-                     <div className="flex justify-between items-center pt-3 mt-3 md:pt-6 md:mt-6 border-t border-white/30">
+                     <div className="flex justify-between items-center pt-3 mt-3 md:pt-6 md:mt-6 border-t border-black/10">
                         <NeumorphicButton onClick={resetFilters} className={glassButton}>{t('filter.clearButton')}</NeumorphicButton>
                         <NeumorphicButton onClick={handleScrollToResults} className={glassButtonPrimary}>{t('filter.applyButton', { count: filteredCount })}</NeumorphicButton>
                       </div>

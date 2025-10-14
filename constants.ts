@@ -1,5 +1,7 @@
 
 
+
+
 import type { Property, Testimonial } from './types';
 
 export const COMPANY_INFO = {
@@ -32,6 +34,15 @@ export const SOCIAL_LINKS: { [key: string]: string } = {
   reviews: 'https://g.page/r/CXOeo9LDDy8BEBM/review',
   googleMaps: "https://www.google.com/maps/place/5%C2%B003'31.3%22N+75%C2%B029'15.3%22W/@5.0586957,-75.488227,19z/data=!3m1!4b1!4m4!3m3!8m2!3d5.0586944!4d-75.4875833?entry=ttu&g_ep=EgoyMDI1MDkyOS4wIKXMDSoASAFQAw%3D%3D",
 };
+
+export const PARTNER_LOGOS = [
+  { src: 'https://static.wixstatic.com/media/9fa31d_8898413c29044b8a883a46eb62cbf0c1~mv2.png/v1/fill/w_304,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9fa31d_8898413c29044b8a883a46eb62cbf0c1~mv2.png', alt: 'Partner Logo 1' },
+  { src: 'https://static.wixstatic.com/media/9fa31d_f8162f893ff6444f8800449e5cc233de~mv2.png/v1/fill/w_304,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9fa31d_f8162f893ff6444f8800449e5cc233de~mv2.png', alt: 'Partner Logo 2' },
+  { src: 'https://static.wixstatic.com/media/9fa31d_6dbe1ca2fef641d79937d03b63781978~mv2.png/v1/fill/w_304,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9fa31d_6dbe1ca2fef641d79937d03b63781978~mv2.png', alt: 'Partner Logo 3' },
+  { src: 'https://static.wixstatic.com/media/9fa31d_8b511450566444639a85efff907da254~mv2.png/v1/fill/w_304,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9fa31d_8b511450566444639a85efff907da254~mv2.png', alt: 'Partner Logo 4' },
+  { src: 'https://static.wixstatic.com/media/9fa31d_9aca4d383fae42a2b95b1ad2ab0d1f68~mv2.png/v1/fill/w_304,h_198,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/9fa31d_9aca4d383fae42a2b95b1ad2ab0d1f68~mv2.png', alt: 'Partner Logo 5' },
+];
+
 
 // FIX: Added parentheses around the intersection type to ensure it's an array of the combined type,
 // not an intersection of a type and an array type.

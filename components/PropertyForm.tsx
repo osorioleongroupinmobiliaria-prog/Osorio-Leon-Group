@@ -109,19 +109,19 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
 
   return (
     <form onSubmit={handleSubmit}>
-      <NeumorphicCard className="p-8">
-        <h2 className="text-2xl font-bold text-[#153B67] mb-6">{property ? 'Editar Propiedad' : 'Nueva Propiedad'}</h2>
+      <NeumorphicCard className="p-4 sm:p-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#153B67] mb-6">{property ? 'Editar Propiedad' : 'Nueva Propiedad'}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Columna Izquierda */}
           <div className="space-y-4">
-            <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Información Básica</h3>
+            <h3 className="font-bold text-base sm:text-lg text-gray-700 border-b pb-2">Información Básica</h3>
             <LabeledInput label="Título" name="titulo" value={formData.titulo} onChange={handleChange} required />
             <LabeledInput as="textarea" label="Descripción" name="descripcion" value={formData.descripcion} onChange={handleChange} rows={5} required />
             <LabeledInput label="Ciudad" name="ciudad" value={formData.ciudad} onChange={handleChange} required />
             <LabeledInput label="Barrio/Sector" name="barrio_sector" value={formData.barrio_sector} onChange={handleChange} required />
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <LabeledInput as="select" label="Operación" name="tipo_operacion" value={formData.tipo_operacion} onChange={handleChange}>
                     <option value="venta">Venta</option>
                     <option value="arriendo">Arriendo</option>
@@ -136,14 +136,14 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
                 </LabeledInput>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
               <LabeledInput type="number" label="Precio (COP)" name="precio" value={formData.precio} onChange={handleChange} required />
               <NeumorphicCheckbox name="es_negociable" label="Precio Negociable" checked={formData.es_negociable} onChange={checked => handleCheckboxChange('es_negociable', checked)} />
             </div>
             
             <LabeledInput type="number" label="Valor Administración (Opcional)" name="valor_administracion" value={formData.valor_administracion} onChange={handleChange} />
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <LabeledInput as="select" label="Estado del Inmueble" name="estado_inmueble" value={formData.estado_inmueble} onChange={handleChange}>
                     <option value="new">A Estrenar</option>
                     <option value="used">Usado</option>
@@ -167,8 +167,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
 
           {/* Columna Derecha */}
           <div className="space-y-4">
-            <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Características Adicionales</h3>
-            <div className="grid grid-cols-2 gap-3">
+            <h3 className="font-bold text-base sm:text-lg text-gray-700 border-b pb-2">Características Adicionales</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <NeumorphicCheckbox name="tiene_comedor" label="Comedor" checked={!!formData.tiene_comedor} onChange={c => handleCheckboxChange('tiene_comedor', c)} />
                 <NeumorphicCheckbox name="tiene_gas_domiciliario" label="Gas Domiciliario" checked={!!formData.tiene_gas_domiciliario} onChange={c => handleCheckboxChange('tiene_gas_domiciliario', c)} />
                 <NeumorphicCheckbox name="tiene_balcon" label="Balcón" checked={formData.tiene_balcon} onChange={c => handleCheckboxChange('tiene_balcon', c)} />
@@ -186,7 +186,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
                 <NeumorphicCheckbox name="tiene_reja" label="Reja" checked={!!formData.tiene_reja} onChange={c => handleCheckboxChange('tiene_reja', c)} />
                 <NeumorphicCheckbox name="tiene_puerta_tradicional" label="Puerta Tradicional" checked={!!formData.tiene_puerta_tradicional} onChange={c => handleCheckboxChange('tiene_puerta_tradicional', c)} />
             </div>
-             <div className="grid grid-cols-2 gap-4">
+             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <LabeledInput as="select" label="Tipo de Cocina" name="tipo_cocina" value={formData.tipo_cocina} onChange={handleChange}>
                     <option value="no_tiene">No tiene</option>
                     <option value="sencilla">Sencilla</option>
@@ -201,7 +201,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
                 </LabeledInput>
             </div>
 
-            <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Imágenes (URLs)</h3>
+            <h3 className="font-bold text-base sm:text-lg text-gray-700 border-b pb-2 pt-4">Imágenes (URLs)</h3>
             <div className="space-y-3 max-h-60 overflow-y-auto pr-2">
                 {formData.imagenes.map((img, index) => (
                     <div key={img.id} className="flex items-center gap-2">
@@ -213,8 +213,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
             </div>
             <NeumorphicButton type="button" onClick={addImageField} className="text-sm w-full">Añadir Imagen</NeumorphicButton>
 
-            <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Publicación</h3>
-            <div className="grid grid-cols-2 gap-4 items-center">
+            <h3 className="font-bold text-base sm:text-lg text-gray-700 border-b pb-2 pt-4">Publicación</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                  <LabeledInput as="select" label="Estado" name="estado_publicacion" value={formData.estado_publicacion} onChange={handleChange}>
                     <option value="publicado">Publicado</option>
                     <option value="borrador">Borrador</option>
@@ -225,9 +225,9 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
           </div>
         </div>
 
-        <div className="flex justify-end gap-4 mt-8">
-            <NeumorphicButton type="button" onClick={onCancel} disabled={isSaving}>Cancelar</NeumorphicButton>
-            <NeumorphicButton type="submit" className="!bg-[#153B67] !text-white" disabled={isSaving}>
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-4 mt-8">
+            <NeumorphicButton type="button" onClick={onCancel} disabled={isSaving} className="w-full sm:w-auto">Cancelar</NeumorphicButton>
+            <NeumorphicButton type="submit" className="!bg-[#153B67] !text-white w-full sm:w-auto" disabled={isSaving}>
                 {isSaving ? 'Guardando...' : 'Guardar Cambios'}
             </NeumorphicButton>
         </div>
