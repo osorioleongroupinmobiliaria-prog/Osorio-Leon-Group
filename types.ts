@@ -37,7 +37,6 @@ export interface Property {
   estado_amoblado: FurnishedState;
   tipo_cocina?: KitchenType;
   tipo_vigilancia?: SurveillanceType;
-  tiene_comedor?: boolean;
   tiene_gas_domiciliario?: boolean;
   tiene_balcon: boolean;
   tiene_gimnasio: boolean;

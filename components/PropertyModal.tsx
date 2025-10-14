@@ -31,7 +31,6 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
     { labelKey: `surveillance.${property.tipo_vigilancia}`, value: property.tipo_vigilancia && property.tipo_vigilancia !== 'sin_vigilancia' },
     { labelKey: 'features.kitchenIntegral', value: property.tipo_cocina === 'integral' },
     { labelKey: 'features.kitchenSimple', value: property.tipo_cocina === 'sencilla' },
-    { labelKey: 'features.diningRoom', value: property.tiene_comedor },
     { labelKey: 'features.gas', value: property.tiene_gas_domiciliario },
     { labelKey: 'features.balcony', value: property.tiene_balcon },
     { labelKey: 'features.gym', value: property.tiene_gimnasio },

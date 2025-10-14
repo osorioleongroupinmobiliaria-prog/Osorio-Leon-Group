@@ -31,7 +31,6 @@ const emptyProperty: Property = {
   estado_amoblado: 'sin_amoblar',
   tipo_cocina: 'no_tiene',
   tipo_vigilancia: 'sin_vigilancia',
-  tiene_comedor: false,
   tiene_gas_domiciliario: false,
   tiene_balcon: false,
   tiene_gimnasio: false,
@@ -169,7 +168,6 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
           <div className="space-y-4">
             <h3 className="font-bold text-base sm:text-lg text-gray-700 border-b pb-2">Características Adicionales</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <NeumorphicCheckbox name="tiene_comedor" label="Comedor" checked={!!formData.tiene_comedor} onChange={c => handleCheckboxChange('tiene_comedor', c)} />
                 <NeumorphicCheckbox name="tiene_gas_domiciliario" label="Gas Domiciliario" checked={!!formData.tiene_gas_domiciliario} onChange={c => handleCheckboxChange('tiene_gas_domiciliario', c)} />
                 <NeumorphicCheckbox name="tiene_balcon" label="Balcón" checked={formData.tiene_balcon} onChange={c => handleCheckboxChange('tiene_balcon', c)} />
                 <NeumorphicCheckbox name="tiene_gimnasio" label="Gimnasio" checked={formData.tiene_gimnasio} onChange={c => handleCheckboxChange('tiene_gimnasio', c)} />

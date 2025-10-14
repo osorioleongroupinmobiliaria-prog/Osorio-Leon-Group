@@ -108,7 +108,6 @@ const translations: Record<Language, any> = {
     features: {
         kitchenIntegral: 'Cocina Integral',
         kitchenSimple: 'Cocina Sencilla',
-        diningRoom: 'Comedor',
         gas: 'Gas Domiciliario',
         concierge: 'Portería 24h',
         elevator: 'Ascensor',
@@ -376,7 +375,6 @@ const translations: Record<Language, any> = {
     features: {
         kitchenIntegral: 'Full Kitchen',
         kitchenSimple: 'Simple Kitchen',
-        diningRoom: 'Dining Room',
         gas: 'Domestic Gas',
         concierge: '24h Concierge',
         elevator: 'Elevator',
