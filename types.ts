@@ -4,6 +4,11 @@ export interface Imagen {
   url_imagen: string;
   es_principal: boolean;
   alt_text?: string;
+  
+  // Properties to support file uploads
+  file?: File;
+  uploadMode?: 'file' | 'url';
+  isUploading?: boolean;
 }
 
 export type OperationType = 'venta' | 'arriendo';

@@ -1,51 +1,88 @@
-
 import React from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
 
+const CodeBlock: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <pre className="bg-gray-800 text-white p-3 rounded-lg text-xs overflow-x-auto">
+        <code>{children}</code>
+    </pre>
+);
+
 const AdminInstructions: React.FC = () => {
+  const policiesSQL = `-- 1. Política para permitir que CUALQUIERA pueda VER las imágenes.
+CREATE POLICY "Public Read Access"
+ON storage.objects FOR SELECT
+USING ( bucket_id = 'property-images' );
+
+-- 2. Política para permitir que SOLO los administradores (usuarios autenticados) puedan SUBIR imágenes.
+CREATE POLICY "Admin Insert Access"
+ON storage.objects FOR INSERT
+WITH CHECK ( bucket_id = 'property-images' AND role() = 'authenticated' );
+
+-- 3. Política para permitir que SOLO los administradores puedan ACTUALIZAR imágenes.
+CREATE POLICY "Admin Update Access"
+ON storage.objects FOR UPDATE
+USING ( bucket_id = 'property-images' AND role() = 'authenticated' );
+
+-- 4. Política para permitir que SOLO los administradores puedan BORRAR imágenes.
+CREATE POLICY "Admin Delete Access"
+ON storage.objects FOR DELETE
+USING ( bucket_id = 'property-images' AND role() = 'authenticated' );
+`;
+    
   return (
-    <NeumorphicCard className="p-8">
-      <h2 className="text-2xl font-bold text-[#153B67] mb-4">Instrucciones de Administración</h2>
-      <div className="space-y-6 text-gray-700">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Credenciales de Acceso</h3>
-          <p>Para acceder a este panel, utiliza el correo electrónico y la contraseña que configuraste en el panel de Autenticación de Supabase.</p>
-          <ul className="list-disc list-inside mt-2 bg-[#e0e0e0] p-4 rounded-xl shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff]">
-            <li><strong>Usuario:</strong> Tu email de administrador.</li>
-            <li><strong>Contraseña:</strong> Tu contraseña de administrador.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Gestión de Propiedades</h3>
-          <p>Desde este panel puedes controlar todo el inventario de propiedades del sitio web.</p>
-          <ul className="list-disc list-inside mt-2 space-y-2">
-            <li><strong>Ver Propiedades:</strong> La pestaña "Lista de Propiedades" muestra todas las propiedades existentes.</li>
-            <li><strong>Crear Propiedad:</strong> Haz clic en "Nueva Propiedad", completa el formulario con todos los detalles y haz clic en "Guardar".</li>
-            <li><strong>Editar Propiedad:</strong> En la lista, haz clic en el botón "Editar" de la propiedad que deseas modificar. Realiza los cambios y guarda.</li>
-            <li><strong>Eliminar Propiedad:</strong> En la lista, haz clic en "Eliminar". Esta acción es permanente.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Consejos para las Imágenes</h3>
-          <ul className="list-disc list-inside mt-2 space-y-2">
-            <li><strong>Usa URLs directas:</strong> Pega la URL completa de la imagen (ej: `https://.../imagen.jpg`).</li>
-            <li><strong>Calidad:</strong> Utiliza imágenes de alta calidad (mínimo 1200x800px) para una mejor presentación.</li>
-            <li><strong>Imagen Principal:</strong> La primera imagen que agregues será la que se muestre en la tarjeta principal de la propiedad.</li>
-            <li><strong>Bancos de Imágenes:</strong> Si no tienes fotos, puedes usar placeholders de sitios como Pexels o Unsplash.</li>
-          </ul>
-        </div>
+    <NeumorphicCard className="p-6 sm:p-8">
+      <h2 className="text-xl font-bold text-[#153B67] mb-4">Instrucciones para Administradores</h2>
+      <div className="space-y-6 text-gray-700 leading-relaxed">
         
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Estado de Publicación</h3>
-          <ul className="list-disc list-inside mt-2 space-y-2">
-            <li><strong>Publicado:</strong> La propiedad será visible para todos los visitantes del sitio web.</li>
-            <li><strong>Borrador:</strong> La propiedad se guarda en el sistema pero no es visible públicamente. Útil para trabajar en un listado antes de publicarlo.</li>
-             <li><strong>Pausado:</strong> Oculta temporalmente una propiedad del sitio público sin eliminarla.</li>
+        <section>
+          <h3 className="font-semibold text-lg mb-2 border-b pb-1">Gestión de Propiedades</h3>
+          <p>
+            Utiliza este panel para administrar todo el inventario de propiedades. El flujo de trabajo recomendado es:
+          </p>
+          <ul className="list-decimal list-inside ml-4 mt-2 space-y-1">
+            <li><strong>Dashboard:</strong> Obtén una vista general rápida de tu inventario.</li>
+            <li><strong>Lista de Propiedades:</strong> Busca, filtra y accede a propiedades existentes.</li>
+            <li><strong>Formulario de Propiedad:</strong> Crea nuevas propiedades o edita las existentes. El formulario está dividido en pestañas para facilitar la navegación.</li>
           </ul>
-        </div>
+        </section>
 
+        <section>
+            <h3 className="font-semibold text-lg mb-2 border-b pb-1">Configuración para Carga de Imágenes (¡Importante!)</h3>
+            <p className="mb-3">
+                Para que la función de <strong>subir imágenes</strong> directamente desde tu computador funcione, necesitas configurar el "Storage" en tu proyecto de Supabase. Es un proceso único que solo tienes que hacer una vez.
+            </p>
+            <div className="space-y-4">
+                <div>
+                    <h4 className="font-semibold">Paso 1: Crear el "Bucket" de Almacenamiento</h4>
+                    <ol className="list-decimal list-inside ml-4 mt-2 space-y-1 text-sm">
+                        <li>Ve a tu proyecto en <strong>Supabase.io</strong>.</li>
+                        <li>En el menú de la izquierda, haz clic en el ícono de <strong>Storage</strong> (un cilindro).</li>
+                        <li>Haz clic en el botón <strong>"New Bucket"</strong>.</li>
+                        <li>En el campo `Bucket name`, escribe exactamente: <strong className="bg-gray-200 px-1 rounded">property-images</strong></li>
+                        <li>Activa el interruptor que dice <strong>"Public bucket"</strong>. Esto es crucial para que las imágenes se vean en la web.</li>
+                        <li>Haz clic en <strong>"Save"</strong>.</li>
+                    </ol>
+                </div>
+                 <div>
+                    <h4 className="font-semibold">Paso 2: Configurar las Políticas de Seguridad (Policies)</h4>
+                    <p className="text-sm my-2">Estas reglas aseguran que solo tú (como administrador) puedas subir o borrar imágenes, pero que todos los visitantes puedan verlas.</p>
+                    <ol className="list-decimal list-inside ml-4 mt-2 space-y-1 text-sm">
+                        <li>En el menú de la izquierda, ve al <strong>SQL Editor</strong> (icono de base de datos).</li>
+                        <li>Haz clic en <strong>"+ New query"</strong>.</li>
+                        <li>Copia y pega el siguiente código completo en el editor:</li>
+                    </ol>
+                    <div className="mt-2">
+                        <CodeBlock>{policiesSQL}</CodeBlock>
+                    </div>
+                     <ol className="list-decimal list-inside ml-4 mt-2 space-y-1 text-sm" start={4}>
+                         <li>Haz clic en el botón verde <strong>"RUN"</strong> para ejecutar el código.</li>
+                    </ol>
+                </div>
+                <p className="text-sm font-medium text-green-700 bg-green-100 p-3 rounded-lg">
+                    ¡Y listo! Con estos dos pasos, la carga de imágenes desde el formulario de propiedades funcionará perfectamente.
+                </p>
+            </div>
+        </section>
       </div>
     </NeumorphicCard>
   );

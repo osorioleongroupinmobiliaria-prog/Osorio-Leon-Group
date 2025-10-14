@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import type { Property } from '../types';
 import NeumorphicCard from './ui/NeumorphicCard';
@@ -44,12 +45,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, onAddNew, o
         };
     }, [properties]);
 
-    // FIX: The error indicates a type mismatch in the sort operation.
-    // Using a generic type argument for `reduce` provides better type safety for the accumulator.
-    // Explicitly casting the sort operands to Number ensures that the subtraction
-    // is performed on numeric values, resolving the type error.
+    // FIX: The "Untyped function call" error on `reduce` is resolved by explicitly typing
+    // the accumulator and property in the callback function instead of using a generic argument on reduce itself.
     const propertiesByType = useMemo(() => {
-        const counts = properties.reduce<Record<string, number>>((acc, prop) => {
+        const counts = properties.reduce((acc: Record<string, number>, prop: Property) => {
             acc[prop.tipo_propiedad] = (acc[prop.tipo_propiedad] || 0) + 1;
             return acc;
         }, {});
