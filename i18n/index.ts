@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect, useMemo } from 'react';
 
 // Language definitions
@@ -89,8 +88,28 @@ const translations: Record<Language, any> = {
             risaralda: 'Risaralda',
             quindio: 'Quindío',
         },
+        kitchenType: 'Tipo de Cocina',
+        surveillanceType: 'Tipo de Vigilancia',
+    },
+    surveillance: {
+      any: 'Cualquiera',
+      sin_vigilancia: 'Sector Sin Vigilancia',
+      cuadrante_policia: 'Cuadrante de Policía',
+      privada: 'Vigilancia Privada',
+      pasa_policia: 'Pasa Policía Constantemente',
+      sector_vigilado: 'Sector Vigilado por Policía',
+    },
+    kitchen: {
+        any: 'Cualquiera',
+        integral: 'Integral',
+        sencilla: 'Sencilla',
+        no_tiene: 'No tiene',
     },
     features: {
+        kitchenIntegral: 'Cocina Integral',
+        kitchenSimple: 'Cocina Sencilla',
+        diningRoom: 'Comedor',
+        gas: 'Gas Domiciliario',
         concierge: 'Portería 24h',
         elevator: 'Ascensor',
         pool: 'Piscina',
@@ -102,6 +121,9 @@ const translations: Record<Language, any> = {
         socialRoom: 'Salón Social',
         playground: 'Juegos Infantiles',
         walkingPath: 'Sendero Peatonal',
+        temperedGlass: 'Vidrio Templado',
+        grille: 'Reja',
+        traditionalDoor: 'Puerta Tradicional',
     },
     furnishing: {
         label: 'Estado Amoblado',
@@ -133,6 +155,7 @@ const translations: Record<Language, any> = {
     propertyModal: {
         description: 'Descripción',
         negotiable: 'Precio Negociable',
+        adminFee: 'de administración',
         bedrooms: 'Habitaciones',
         bathrooms: 'Baños',
         parking: 'Parqueaderos',
@@ -241,6 +264,8 @@ const translations: Record<Language, any> = {
     testimonials: {
         title: 'Lo Que Dicen Nuestros Clientes',
         subtitle: 'La satisfacción de nuestros clientes es nuestra mejor carta de presentación.',
+        prev: 'Anterior',
+        next: 'Siguiente',
         carlosMendoza: '¡Excelente servicio! El equipo de Osorio & León fue increíblemente profesional y nos ayudó a encontrar la casa de nuestros sueños en tiempo récord. ¡Totalmente recomendados!',
         anaSofiaRestrepo: 'El proceso de venta de mi apartamento fue impecable. Me mantuvieron informada en cada paso y lograron un precio excelente. Mucha transparencia y profesionalismo.',
         javierCorrea: 'Muy buena experiencia arrendando con ellos. El apartaestudio estaba en perfectas condiciones y el trámite fue rápido. Solo un pequeño retraso en la entrega de llaves, pero nada grave.',
@@ -328,8 +353,28 @@ const translations: Record<Language, any> = {
             risaralda: 'Risaralda',
             quindio: 'Quindío',
         },
+        kitchenType: 'Kitchen Type',
+        surveillanceType: 'Surveillance Type',
+    },
+    surveillance: {
+      any: 'Any',
+      sin_vigilancia: 'Unsecured Sector',
+      cuadrante_policia: 'Police Quadrant',
+      privada: 'Private Security',
+      pasa_policia: 'Police Patrols Frequently',
+      sector_vigilado: 'Sector Watched by Police',
+    },
+    kitchen: {
+        any: 'Any',
+        integral: 'Full',
+        sencilla: 'Simple',
+        no_tiene: 'None',
     },
     features: {
+        kitchenIntegral: 'Full Kitchen',
+        kitchenSimple: 'Simple Kitchen',
+        diningRoom: 'Dining Room',
+        gas: 'Domestic Gas',
         concierge: '24h Concierge',
         elevator: 'Elevator',
         pool: 'Pool',
@@ -341,6 +386,9 @@ const translations: Record<Language, any> = {
         socialRoom: 'Social Room',
         playground: 'Playground',
         walkingPath: 'Walking Path',
+        temperedGlass: 'Tempered Glass',
+        grille: 'Grille',
+        traditionalDoor: 'Traditional Door',
     },
     furnishing: {
         label: 'Furnishing State',
@@ -372,6 +420,7 @@ const translations: Record<Language, any> = {
     propertyModal: {
         description: 'Description',
         negotiable: 'Price Negotiable',
+        adminFee: 'admin fee',
         bedrooms: 'Bedrooms',
         bathrooms: 'Bathrooms',
         parking: 'Parking spaces',
@@ -480,6 +529,8 @@ const translations: Record<Language, any> = {
     testimonials: {
         title: 'What Our Clients Say',
         subtitle: 'Our clients\' satisfaction is our best endorsement.',
+        prev: 'Previous',
+        next: 'Next',
         carlosMendoza: 'Excellent service! The Osorio & León team was incredibly professional and helped us find our dream home in record time. Totally recommended!',
         anaSofiaRestrepo: 'The process of selling my apartment was flawless. They kept me informed every step of the way and got an excellent price. A lot of transparency and professionalism.',
         javierCorrea: 'Very good experience renting with them. The studio apartment was in perfect condition and the process was fast. Just a small delay in handing over the keys, but nothing serious.',

@@ -3,7 +3,8 @@ import { COMPANY_INFO } from '../constants';
 import { useI18n } from '../i18n';
 
 const heroImages = [
-  'https://lh3.googleusercontent.com/pw/AP1GczOciAsUqsmP8205J6ZgBcUw2i1JMbKLwK4koEoFgyHfYVQDqZgUirkem15ByBK36F6GeKb9v0bOIXqlls7nU0W4PxpsCVGzNDBn3olijWkuo1PExcMOfxkU5amEMwm7ZZTWpjencctjMhb0h9He9vF0=w1680-h945-s-no-gm?authuser=0',
+  ' https://scontent.feoh1-1.fna.fbcdn.net/v/t39.30808-6/534152360_122107062740968811_1444268746246333553_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=Dl9pUg8V9SMQ7kNvwEJMkeg&_nc_oc=Adn1WenKG-IjGsn9c5Kf4mCtPILTtnOTFz4EdnRqzCu3SgSuhJxXTpV_5YSILnjRNzg&_nc_zt=23&_nc_ht=scontent.feoh1-1.fna&_nc_gid=PjCWhppHAy2DKB5wkyImmA&oh=00_AfcbmEr19xubNER7dkRraJNWk2jgbwuH-dH5wqkdo3Lgxw&oe=68F44C65 ', 
+  ' https://lh3.googleusercontent.com/pw/AP1GczOciAsUqsmP8205J6ZgBcUw2i1JMbKLwK4koEoFgyHfYVQDqZgUirkem15ByBK36F6GeKb9v0bOIXqlls7nU0W4PxpsCVGzNDBn3olijWkuo1PExcMOfxkU5amEMwm7ZZTWpjencctjMhb0h9He9vF0=w1680-h945-s-no-gm?authuser=0',
   'https://lh3.googleusercontent.com/pw/AP1GczMotujUhOG9Dd5AAGr7HFoFrAOB3ZENnsPZU1nSmFzPwUcXJDe72adh0byLefoabmEHSv-UcM0BtgtiTEGygbP6bKhalKFiGuo6rhz2aECqG3G8mlDMVnOR-l6Wo2kpaRFlVUsz3g6bQR0dCcHeDise=w1418-h945-s-no-gm?authuser=0',
   'https://lh3.googleusercontent.com/pw/AP1GczORE_mAdEqt2j8Z9cUuZ0rwBn7e2gg2mRYNcPx8r5cnDbPrL4wURlUyzq55lRNFI6mZb_uY6k00TV1lxa_X0FPud0f1t0kNvHPTxOsn5hXwuGJj1RxqqXt4YFFPb1y3UP6u0atLtb_lpRlJ36gefphy=w1680-h945-s-no-gm?authuser=0',
   'https://lh3.googleusercontent.com/pw/AP1GczMV8TVKJgYyWhHZeSduO_OFJv2mVC_YWUKGFu34qwQScpVArr4hof03sBpkQJgjjFcznrlwrY1kKb326htuywx55RosUwSfCm3to9BN2YXeFG_Xd7AgYp8OWZk_eBhfm6OElr1xZFEaHPPCVarEW-4u=w1417-h945-s-no-gm?authuser=0',
@@ -36,7 +37,7 @@ const HeroSection: React.FC = () => {
           }}
         />
       ))}
-      <div className="absolute inset-0 bg-black bg-opacity-50 z-[2]"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/10 z-[2]"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-[3]">
         <div className="max-w-4xl mx-auto p-6 sm:p-10 rounded-2xl bg-black/20 backdrop-blur-md border border-white/20 shadow-xl">

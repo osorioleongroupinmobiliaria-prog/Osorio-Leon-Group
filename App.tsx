@@ -1,4 +1,7 @@
 
+
+
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from './supabase/client';
 import Header from './components/Header';
@@ -13,7 +16,7 @@ import LoginForm from './components/LoginForm';
 import AdminPanel from './components/AdminPanel';
 import PropertyModal from './components/PropertyModal';
 import FeaturedProperties from './components/FeaturedProperties';
-import type { Property, Filters } from './types';
+import type { Property, Filters, KitchenType } from './types';
 import ServicesSection from './components/ServicesSection';
 import OfferPropertySection from './components/OfferPropertySection';
 import TestimonialsSection from './components/TestimonialsSection';
@@ -37,6 +40,8 @@ export const initialFilters: Filters = {
   estado_inmueble: 'any',
   estado_amoblado: 'any',
   departamento: 'todos',
+  tipo_cocina: 'any',
+  tipo_vigilancia: 'any',
 };
 
 function App() {
@@ -174,7 +179,6 @@ function App() {
       // When an admin is logged in, `properties` may contain non-published items.
       // This client-side filter ensures only published ones appear on the public site.
       if (p.estado_publicacion !== 'publicado') return false;
-      if (p.es_destacado) return false;
 
       if (lowerSearchTerm) {
         const inCity = p.ciudad.toLowerCase().includes(lowerSearchTerm);
@@ -197,6 +201,8 @@ function App() {
       if (filters.estado_inmueble !== 'any' && p.estado_inmueble !== filters.estado_inmueble) return false;
       if (filters.estado_amoblado !== 'any' && p.estado_amoblado !== filters.estado_amoblado) return false;
       if (filters.departamento !== 'todos' && p.departamento !== filters.departamento) return false;
+      if (filters.tipo_cocina !== 'any' && p.tipo_cocina !== filters.tipo_cocina) return false;
+      if (filters.tipo_vigilancia !== 'any' && p.tipo_vigilancia !== filters.tipo_vigilancia) return false;
 
       return true;
     });

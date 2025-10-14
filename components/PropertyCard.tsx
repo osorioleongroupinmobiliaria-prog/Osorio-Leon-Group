@@ -25,47 +25,47 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
   const imagenPrincipal = property.imagenes?.find(img => img.es_principal) || property.imagenes?.[0];
 
   return (
-    <NeumorphicCard className="flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+    <NeumorphicCard className="flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1">
       <div className="relative group">
         <img
           src={imagenPrincipal?.url_imagen || 'https://picsum.photos/400/300'}
           alt={property.titulo}
-          className="w-full h-56 object-cover"
+          className="w-full h-40 object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300 flex items-center justify-center">
-          <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-40 h-auto opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+          <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-24 h-auto opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
         </div>
-        <div className="absolute top-3 left-3 px-3 py-1 bg-[#e0e0e0] rounded-full shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] text-xs font-semibold text-gray-700 capitalize">
+        <div className="absolute top-2 left-2 px-2 py-0.5 bg-[#e0e0e0]/90 rounded-full shadow-[2px_2px_4px_#bebebe,-2px_-2px_4px_#ffffff] text-xs font-semibold text-gray-700 capitalize">
           {t(`property.operation.${property.tipo_operacion}`)}
         </div>
       </div>
-      <div className="p-4 sm:p-5 flex flex-col flex-grow">
-        <h3 className="text-base sm:text-lg font-bold text-gray-800 h-12 sm:h-14 line-clamp-2">{property.titulo}</h3>
-        <div className="flex items-center text-sm text-gray-500 mt-1">
-            <LocationIcon className="w-4 h-4 mr-1"/>
+      <div className="p-3 flex flex-col flex-grow">
+        <h3 className="text-sm font-bold text-gray-800 h-10 line-clamp-2">{property.titulo}</h3>
+        <div className="flex items-center text-xs text-gray-500 mt-1">
+            <LocationIcon className="w-3 h-3 mr-1"/>
             <span>{property.barrio_sector}, {property.ciudad}</span>
         </div>
-        <p className="text-xl sm:text-2xl font-bold text-[#153B67] my-3 sm:my-4">
+        <p className="text-lg font-bold text-[#153B67] my-2">
           {formatPrice(property.precio)}
           {property.es_negociable && <span className="text-xs text-gray-500 ml-2 font-normal">{t('property.negotiable')}</span>}
         </p>
         
-        <div className="grid grid-cols-4 gap-2 text-gray-600 mb-4 sm:mb-5">
-            {property.habitaciones ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="habitaciones" className="text-lg">🛏️</span><span className="text-sm">{property.habitaciones}</span></div> : <div />}
-            {property.banos_completos ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="baños" className="text-lg">🛁</span><span className="text-sm">{property.banos_completos}</span></div> : <div />}
-            {property.area_construida ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="área" className="text-lg">📏</span><span className="text-sm">{property.area_construida} m²</span></div> : <div />}
-            {property.parqueaderos ? <div className="flex items-center space-x-1.5"><span role="img" aria-label="parqueaderos" className="text-lg">🚗</span><span className="text-sm">{property.parqueaderos}</span></div> : <div />}
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-600 mb-3">
+            {property.habitaciones ? <div className="flex items-center space-x-1"><span role="img" aria-label="habitaciones" className="text-base">🛏️</span><span className="text-xs">{property.habitaciones}</span></div> : null}
+            {property.banos_completos ? <div className="flex items-center space-x-1"><span role="img" aria-label="baños" className="text-base">🛁</span><span className="text-xs">{property.banos_completos}</span></div> : null}
+            {property.area_construida ? <div className="flex items-center space-x-1"><span role="img" aria-label="área" className="text-base">📏</span><span className="text-xs">{property.area_construida} m²</span></div> : null}
+            {property.parqueaderos ? <div className="flex items-center space-x-1"><span role="img" aria-label="parqueaderos" className="text-base">🚗</span><span className="text-xs">{property.parqueaderos}</span></div> : null}
         </div>
         
-        <div className="mt-auto flex flex-col sm:flex-row gap-3">
-          <NeumorphicButton onClick={() => onVerMas(property)} className="w-full !px-4 !py-2.5 text-sm">
+        <div className="mt-auto flex flex-col gap-2">
+          <NeumorphicButton onClick={() => onVerMas(property)} className="w-full !px-3 !py-2 text-xs">
             {t('property.detailsButton')}
           </NeumorphicButton>
           <a
             href={`${SOCIAL_LINKS.whatsapp1}?text=${encodeURIComponent(t('property.whatsappMessage', { title: property.titulo }))}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full text-center bg-green-500 text-white rounded-xl font-semibold shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff] hover:shadow-[2px_2px_5px_#bebebe,-2px_-2px_5px_#ffffff] active:shadow-[inset_5px_5px_10px_#bebebe,inset_-5px_-5px_10px_#ffffff] transition-all duration-150 ease-in-out focus:outline-none px-4 py-2.5 text-sm"
+            className="w-full text-center bg-green-500 text-white rounded-xl font-semibold shadow-[4px_4px_8px_#bebebe,-4px_-4px_8px_#ffffff] hover:shadow-[2px_2px_4px_#bebebe,-2px_-2px_4px_#ffffff] active:shadow-[inset_4px_4px_8px_#bebebe,inset_-4px_-4px_8px_#ffffff] transition-all duration-150 ease-in-out focus:outline-none px-3 py-2 text-xs"
           >
             WhatsApp
           </a>

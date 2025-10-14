@@ -11,6 +11,9 @@ export type PropertyType = 'apartamento' | 'casa' | 'oficina' | 'local' | 'lote'
 export type PropertyState = 'new' | 'used' | 'remodeled' | 'under_construction';
 export type FurnishedState = 'sin_amoblar' | 'amoblado' | 'semi_amoblado';
 export type PublicationStatus = 'publicado' | 'borrador' | 'pausado';
+export type KitchenType = 'integral' | 'sencilla' | 'no_tiene';
+export type SurveillanceType = 'sin_vigilancia' | 'cuadrante_policia' | 'privada' | 'pasa_policia' | 'sector_vigilado';
+
 
 export interface Property {
   id: string;
@@ -32,6 +35,10 @@ export interface Property {
   parqueaderos?: number;
   estado_inmueble: PropertyState;
   estado_amoblado: FurnishedState;
+  tipo_cocina?: KitchenType;
+  tipo_vigilancia?: SurveillanceType;
+  tiene_comedor?: boolean;
+  tiene_gas_domiciliario?: boolean;
   tiene_balcon: boolean;
   tiene_gimnasio: boolean;
   tiene_piscina_comun: boolean;
@@ -43,6 +50,9 @@ export interface Property {
   tiene_salon_social: boolean;
   tiene_juegos_infantiles: boolean;
   tiene_sendero_peatonal: boolean;
+  tiene_vidrio_templado?: boolean;
+  tiene_reja?: boolean;
+  tiene_puerta_tradicional?: boolean;
   imagenes: Imagen[];
   es_destacado: boolean;
   estado_publicacion: PublicationStatus;
@@ -69,6 +79,8 @@ export interface Filters {
   departamento: string;
   barrio?: string;
   codigo_inmueble?: string;
+  tipo_cocina: 'any' | KitchenType;
+  tipo_vigilancia: 'any' | SurveillanceType;
 }
 
 export interface Testimonial {

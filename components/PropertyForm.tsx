@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import type { Property, Imagen } from '../types';
 import NeumorphicCard from './ui/NeumorphicCard';
@@ -22,6 +21,7 @@ const emptyProperty: Property = {
   tipo_operacion: 'venta',
   tipo_propiedad: 'apartamento',
   precio: 0,
+  valor_administracion: 0,
   es_negociable: false,
   area_construida: 0,
   habitaciones: 0,
@@ -29,6 +29,10 @@ const emptyProperty: Property = {
   parqueaderos: 0,
   estado_inmueble: 'used',
   estado_amoblado: 'sin_amoblar',
+  tipo_cocina: 'no_tiene',
+  tipo_vigilancia: 'sin_vigilancia',
+  tiene_comedor: false,
+  tiene_gas_domiciliario: false,
   tiene_balcon: false,
   tiene_gimnasio: false,
   tiene_piscina_comun: false,
@@ -40,6 +44,9 @@ const emptyProperty: Property = {
   tiene_salon_social: false,
   tiene_juegos_infantiles: false,
   tiene_sendero_peatonal: false,
+  tiene_vidrio_templado: false,
+  tiene_reja: false,
+  tiene_puerta_tradicional: false,
   imagenes: [],
   es_destacado: false,
   estado_publicacion: 'borrador',
@@ -134,6 +141,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
               <NeumorphicCheckbox name="es_negociable" label="Precio Negociable" checked={formData.es_negociable} onChange={checked => handleCheckboxChange('es_negociable', checked)} />
             </div>
             
+            <LabeledInput type="number" label="Valor Administración (Opcional)" name="valor_administracion" value={formData.valor_administracion} onChange={handleChange} />
+            
             <div className="grid grid-cols-2 gap-4">
                 <LabeledInput as="select" label="Estado del Inmueble" name="estado_inmueble" value={formData.estado_inmueble} onChange={handleChange}>
                     <option value="new">A Estrenar</option>
@@ -160,6 +169,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
           <div className="space-y-4">
             <h3 className="font-bold text-lg text-gray-700 border-b pb-2">Características Adicionales</h3>
             <div className="grid grid-cols-2 gap-3">
+                <NeumorphicCheckbox name="tiene_comedor" label="Comedor" checked={!!formData.tiene_comedor} onChange={c => handleCheckboxChange('tiene_comedor', c)} />
+                <NeumorphicCheckbox name="tiene_gas_domiciliario" label="Gas Domiciliario" checked={!!formData.tiene_gas_domiciliario} onChange={c => handleCheckboxChange('tiene_gas_domiciliario', c)} />
                 <NeumorphicCheckbox name="tiene_balcon" label="Balcón" checked={formData.tiene_balcon} onChange={c => handleCheckboxChange('tiene_balcon', c)} />
                 <NeumorphicCheckbox name="tiene_gimnasio" label="Gimnasio" checked={formData.tiene_gimnasio} onChange={c => handleCheckboxChange('tiene_gimnasio', c)} />
                 <NeumorphicCheckbox name="tiene_piscina_comun" label="Piscina" checked={formData.tiene_piscina_comun} onChange={c => handleCheckboxChange('tiene_piscina_comun', c)} />
@@ -171,6 +182,23 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel,
                 <NeumorphicCheckbox name="tiene_salon_social" label="Salón Social" checked={formData.tiene_salon_social} onChange={c => handleCheckboxChange('tiene_salon_social', c)} />
                 <NeumorphicCheckbox name="tiene_juegos_infantiles" label="Juegos Infantiles" checked={formData.tiene_juegos_infantiles} onChange={c => handleCheckboxChange('tiene_juegos_infantiles', c)} />
                 <NeumorphicCheckbox name="tiene_sendero_peatonal" label="Sendero Peatonal" checked={formData.tiene_sendero_peatonal} onChange={c => handleCheckboxChange('tiene_sendero_peatonal', c)} />
+                <NeumorphicCheckbox name="tiene_vidrio_templado" label="Vidrio Templado" checked={!!formData.tiene_vidrio_templado} onChange={c => handleCheckboxChange('tiene_vidrio_templado', c)} />
+                <NeumorphicCheckbox name="tiene_reja" label="Reja" checked={!!formData.tiene_reja} onChange={c => handleCheckboxChange('tiene_reja', c)} />
+                <NeumorphicCheckbox name="tiene_puerta_tradicional" label="Puerta Tradicional" checked={!!formData.tiene_puerta_tradicional} onChange={c => handleCheckboxChange('tiene_puerta_tradicional', c)} />
+            </div>
+             <div className="grid grid-cols-2 gap-4">
+                <LabeledInput as="select" label="Tipo de Cocina" name="tipo_cocina" value={formData.tipo_cocina} onChange={handleChange}>
+                    <option value="no_tiene">No tiene</option>
+                    <option value="sencilla">Sencilla</option>
+                    <option value="integral">Integral</option>
+                </LabeledInput>
+                 <LabeledInput as="select" label="Tipo de Vigilancia" name="tipo_vigilancia" value={formData.tipo_vigilancia} onChange={handleChange}>
+                    <option value="sin_vigilancia">Sector Sin Vigilancia</option>
+                    <option value="cuadrante_policia">Cuadrante de Policía</option>
+                    <option value="privada">Vigilancia Privada</option>
+                    <option value="pasa_policia">Pasa Policía Constantemente</option>
+                    <option value="sector_vigilado">Sector Vigilado por Policía</option>
+                </LabeledInput>
             </div>
 
             <h3 className="font-bold text-lg text-gray-700 border-b pb-2 pt-4">Imágenes (URLs)</h3>

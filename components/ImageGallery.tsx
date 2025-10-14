@@ -42,7 +42,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 
   return (
     <div>
-      <div className="relative group rounded-2xl overflow-hidden cursor-pointer shadow-[8px_8px_16px_#bebebe,-8px_-8px_16px_#ffffff]" onClick={openLightbox}>
+      <div className="relative group rounded-2xl overflow-hidden cursor-pointer shadow-xl border border-white/20" onClick={openLightbox}>
         <img src={mainImage.url} alt={mainImage.alt} className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105" />
         <div className="absolute inset-0 flex items-center justify-center">
             <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-40 h-auto opacity-20 pointer-events-none" />
@@ -60,7 +60,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       </div>
       <div className="grid grid-cols-4 gap-2 mt-2">
         {images.slice(0, 4).map((image, index) => (
-          <div key={index} className={`rounded-lg overflow-hidden cursor-pointer shadow-[3px_3px_6px_#bebebe,-3px_-3px_6px_#ffffff] transition-all duration-200 ${currentIndex === index ? 'ring-2 ring-[#153B67] ring-inset' : ''}`} onClick={() => setCurrentIndex(index)}>
+          <div key={index} className={`rounded-lg overflow-hidden cursor-pointer shadow-md transition-all duration-200 ${currentIndex === index ? 'ring-2 ring-[#153B67]' : ''}`} onClick={() => setCurrentIndex(index)}>
             <img src={image.url} alt={image.alt} className={`w-full h-16 object-cover transition-opacity duration-300 ${currentIndex === index ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`} />
           </div>
         ))}
