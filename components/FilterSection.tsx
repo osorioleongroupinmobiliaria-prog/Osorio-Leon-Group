@@ -50,16 +50,14 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
     { name: 'tiene_piscina_comun', labelKey: 'features.pool' },
     { name: 'tiene_gimnasio', labelKey: 'features.gym' },
     { name: 'tiene_balcon', labelKey: 'features.balcony' },
+    { name: 'tiene_comedor', labelKey: 'features.diningRoom' },
+    { name: 'tiene_gas_domiciliario', labelKey: 'features.gas' },
     { name: 'tiene_zonas_verdes', labelKey: 'features.greenAreas' },
     { name: 'tiene_cancha_futbol', labelKey: 'features.soccerField' },
     { name: 'tiene_kiosko_asados', labelKey: 'features.bbqKiosk' },
     { name: 'tiene_salon_social', labelKey: 'features.socialRoom' },
     { name: 'tiene_juegos_infantiles', labelKey: 'features.playground' },
     { name: 'tiene_sendero_peatonal', labelKey: 'features.walkingPath' },
-    { name: 'tiene_gas_domiciliario', labelKey: 'features.gas' },
-    { name: 'tiene_vidrio_templado', labelKey: 'features.temperedGlass' },
-    { name: 'tiene_reja', labelKey: 'features.grille' },
-    { name: 'tiene_puerta_tradicional', labelKey: 'features.traditionalDoor' },
   ];
 
   const glassInputContainer = "!bg-white/50 !shadow-none border border-white/60";
@@ -195,27 +193,23 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
                                   </NeumorphicInput>
                               </div>
                           </div>
-                           <div className="grid grid-cols-2 gap-3">
-                              <div>
-                                <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.kitchenType')}</h4>
+                          <div>
+                            <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.kitchenAndSurveillance')}</h4>
+                            <div className="grid grid-cols-2 gap-3">
                                 <NeumorphicInput as="select" name="tipo_cocina" value={filters.tipo_cocina} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}>
-                                    <option className={optionStyle} value="any">{t('kitchen.any')}</option>
-                                    <option className={optionStyle} value="integral">{t('kitchen.integral')}</option>
-                                    <option className={optionStyle} value="sencilla">{t('kitchen.sencilla')}</option>
-                                    <option className={optionStyle} value="no_tiene">{t('kitchen.no_tiene')}</option>
+                                    <option className={optionStyle} value="any">{t('filter.kitchen.any')}</option>
+                                    <option className={optionStyle} value="integral">{t('filter.kitchen.integral')}</option>
+                                    <option className={optionStyle} value="semi_integral">{t('filter.kitchen.semi_integral')}</option>
+                                    <option className={optionStyle} value="sencilla">{t('filter.kitchen.sencilla')}</option>
                                 </NeumorphicInput>
-                              </div>
-                               <div>
-                                <h4 className="font-bold text-lg text-[#153B67] mb-1.5">{t('filter.surveillanceType')}</h4>
                                 <NeumorphicInput as="select" name="tipo_vigilancia" value={filters.tipo_vigilancia} onChange={handleInputChange} containerClassName={glassInputContainer} className={glassInputText}>
-                                    <option className={optionStyle} value="any">{t('surveillance.any')}</option>
-                                    <option className={optionStyle} value="sin_vigilancia">{t('surveillance.sin_vigilancia')}</option>
-                                    <option className={optionStyle} value="cuadrante_policia">{t('surveillance.cuadrante_policia')}</option>
-                                    <option className={optionStyle} value="privada">{t('surveillance.privada')}</option>
-                                    <option className={optionStyle} value="pasa_policia">{t('surveillance.pasa_policia')}</option>
-                                    <option className={optionStyle} value="sector_vigilado">{t('surveillance.sector_vigilado')}</option>
+                                    <option className={optionStyle} value="any">{t('filter.surveillance.any')}</option>
+                                    <option className={optionStyle} value="celador">{t('filter.surveillance.guard')}</option>
+                                    <option className={optionStyle} value="privada">{t('filter.surveillance.private')}</option>
+                                    <option className={optionStyle} value="policia">{t('filter.surveillance.police')}</option>
+                                    <option className={optionStyle} value="ninguna">{t('filter.surveillance.none')}</option>
                                 </NeumorphicInput>
-                              </div>
+                            </div>
                           </div>
                       </div>
 

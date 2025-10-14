@@ -5,6 +5,7 @@ import PropertyForm from './PropertyForm';
 import AdminInstructions from './AdminInstructions';
 import NeumorphicButton from './ui/NeumorphicButton';
 import { COMPANY_INFO } from '../constants';
+import AdminDashboard from './AdminDashboard';
 
 interface AdminPanelProps {
   properties: Property[];
@@ -14,10 +15,10 @@ interface AdminPanelProps {
   isSaving: boolean;
 }
 
-type AdminView = 'list' | 'form' | 'instructions';
+type AdminView = 'dashboard' | 'list' | 'form' | 'instructions';
 
 const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, onLogout, isSaving }) => {
-  const [view, setView] = useState<AdminView>('list');
+  const [view, setView] = useState<AdminView>('dashboard');
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
 
   const handleEdit = (property: Property) => {
@@ -35,6 +36,11 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, o
     setView('list');
     setSelectedProperty(null);
   }
+  
+  const handleCancelForm = () => {
+    setView('list');
+    setSelectedProperty(null);
+  }
 
   return (
     <div className="min-h-screen bg-[#e0e0e0] p-4 sm:p-6 lg:p-8">
@@ -48,14 +54,15 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ properties, onSave, onDelete, o
         </header>
 
         <nav className="flex flex-wrap gap-2 mb-8">
+            <NeumorphicButton onClick={() => setView('dashboard')} className={`text-sm ${view === 'dashboard' && '!shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff]'}`}>Dashboard</NeumorphicButton>
             <NeumorphicButton onClick={() => setView('list')} className={`text-sm ${view === 'list' && '!shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff]'}`}>Lista de Propiedades</NeumorphicButton>
-            <NeumorphicButton onClick={handleAddNew} className={`text-sm ${view === 'form' && selectedProperty === null && '!shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff]'}`}>Nueva Propiedad</NeumorphicButton>
             <NeumorphicButton onClick={() => setView('instructions')} className={`text-sm ${view === 'instructions' && '!shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff]'}`}>Instrucciones</NeumorphicButton>
         </nav>
         
         <main>
-            {view === 'list' && <PropertyList properties={properties} onEdit={handleEdit} onDelete={onDelete} />}
-            {view === 'form' && <PropertyForm property={selectedProperty} onSave={handleSave} onCancel={() => setView('list')} isSaving={isSaving} />}
+            {view === 'dashboard' && <AdminDashboard properties={properties} onAddNew={handleAddNew} onEdit={handleEdit} />}
+            {view === 'list' && <PropertyList properties={properties} onAddNew={handleAddNew} onEdit={handleEdit} onDelete={onDelete} />}
+            {view === 'form' && <PropertyForm property={selectedProperty} onSave={handleSave} onCancel={handleCancelForm} isSaving={isSaving} />}
             {view === 'instructions' && <AdminInstructions />}
         </main>
       </div>

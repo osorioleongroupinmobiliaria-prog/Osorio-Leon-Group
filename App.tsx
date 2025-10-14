@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from './supabase/client';
 import Header from './components/Header';
@@ -18,7 +12,7 @@ import LoginForm from './components/LoginForm';
 import AdminPanel from './components/AdminPanel';
 import PropertyModal from './components/PropertyModal';
 import FeaturedProperties from './components/FeaturedProperties';
-import type { Property, Filters, KitchenType } from './types';
+import type { Property, Filters } from './types';
 import ServicesSection from './components/ServicesSection';
 import OfferPropertySection from './components/OfferPropertySection';
 import TestimonialsSection from './components/TestimonialsSection';

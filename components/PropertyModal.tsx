@@ -28,11 +28,9 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
   };
 
   const features = [
-    { labelKey: `surveillance.${property.tipo_vigilancia}`, value: property.tipo_vigilancia && property.tipo_vigilancia !== 'sin_vigilancia' },
-    { labelKey: 'features.kitchenIntegral', value: property.tipo_cocina === 'integral' },
-    { labelKey: 'features.kitchenSimple', value: property.tipo_cocina === 'sencilla' },
-    { labelKey: 'features.gas', value: property.tiene_gas_domiciliario },
     { labelKey: 'features.balcony', value: property.tiene_balcon },
+    { labelKey: 'features.diningRoom', value: property.tiene_comedor },
+    { labelKey: 'features.gas', value: property.tiene_gas_domiciliario },
     { labelKey: 'features.gym', value: property.tiene_gimnasio },
     { labelKey: 'features.pool', value: property.tiene_piscina_comun },
     { labelKey: 'features.elevator', value: property.tiene_ascensor },
@@ -44,7 +42,7 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
     { labelKey: 'features.playground', value: property.tiene_juegos_infantiles },
     { labelKey: 'features.walkingPath', value: property.tiene_sendero_peatonal },
     { labelKey: 'features.temperedGlass', value: property.tiene_vidrio_templado },
-    { labelKey: 'features.grille', value: property.tiene_reja },
+    { labelKey: 'features.securityGate', value: property.tiene_reja },
     { labelKey: 'features.traditionalDoor', value: property.tiene_puerta_tradicional },
   ].filter(f => f.value);
 
@@ -89,11 +87,13 @@ const PropertyModal: React.FC<PropertyModalProps> = ({ property, onClose }) => {
                 <div className="flex items-center space-x-2 text-lg"><span role="img" aria-label={t('propertyModal.parking')} className="text-xl">🚗</span><span>{property.parqueaderos || 0} {t('propertyModal.parking')}</span></div>
               </div>
               
-              {features.length > 0 && (
+              {(features.length > 0 || property.tipo_cocina || (property.tipo_vigilancia && property.tipo_vigilancia !== 'ninguna')) && (
                 <div className="mb-6">
                   <h3 className="font-bold text-lg mb-3 text-[#153B67]">{t('propertyModal.additionalFeatures')}</h3>
                   <div className="flex flex-wrap gap-2">
                     <FeatureChip>{t(`furnishing.${property.estado_amoblado}`)}</FeatureChip>
+                    {property.tipo_cocina && <FeatureChip>{t('kitchen.label')}: {t(`kitchen.${property.tipo_cocina}`)}</FeatureChip>}
+                    {property.tipo_vigilancia && property.tipo_vigilancia !== 'ninguna' && <FeatureChip>{t('surveillance.label')}: {t(`surveillance.${property.tipo_vigilancia}`)}</FeatureChip>}
                     {features.map(f => <FeatureChip key={f.labelKey}>{t(f.labelKey)}</FeatureChip>)}
                   </div>
                 </div>
