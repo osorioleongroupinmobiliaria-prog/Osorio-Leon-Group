@@ -6,10 +6,6 @@ import NeumorphicInput from './ui/NeumorphicInput';
 import PlusIcon from './icons/PlusIcon';
 import PencilIcon from './icons/PencilIcon';
 import TrashIcon from './icons/TrashIcon';
-import QRCode from 'qrcode';
-import EyeIcon from './icons/EyeIcon';
-import QRIcon from './icons/QRIcon';
-
 
 interface PropertyListProps {
   properties: Property[];
@@ -37,24 +33,6 @@ const PropertyList: React.FC<PropertyListProps> = ({ properties, onAddNew, onEdi
       })
       .sort((a, b) => new Date(b.fecha_publicacion).getTime() - new Date(a.fecha_publicacion).getTime());
   }, [properties, searchTerm, statusFilter]);
-
-  const handleDownloadQR = async (property: Property) => {
-    const url = `${window.location.origin}/propiedad/${property.id}`;
-    try {
-      const qrDataURL = await QRCode.toDataURL(url, { width: 300, margin: 2 });
-      const link = document.createElement('a');
-      link.href = qrDataURL;
-      const safeTitle = property.titulo.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-      link.download = `qr_${safeTitle}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (err) {
-      console.error('Failed to generate QR code', err);
-      alert('No se pudo generar el código QR.');
-    }
-  };
-
 
   const statusStyles: { [key: string]: string } = {
     publicado: 'bg-green-100 text-green-800 border-green-200',
@@ -123,14 +101,6 @@ const PropertyList: React.FC<PropertyListProps> = ({ properties, onAddNew, onEdi
                 </td>
                 <td className="p-3">
                   <div className="flex gap-2 justify-end">
-                     <a href={`/propiedad/${prop.id}`} target="_blank" rel="noopener noreferrer" className="inline-block" title="Ver en el sitio">
-                       <NeumorphicButton className="!p-2">
-                           <EyeIcon className="w-4 h-4" />
-                       </NeumorphicButton>
-                     </a>
-                     <NeumorphicButton onClick={() => handleDownloadQR(prop)} className="!p-2" title="Descargar QR">
-                        <QRIcon className="w-4 h-4" />
-                    </NeumorphicButton>
                     <NeumorphicButton onClick={() => onEdit(prop)} className="!p-2" title="Editar">
                         <PencilIcon className="w-4 h-4" />
                     </NeumorphicButton>
