@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
 import NeumorphicInput from './ui/NeumorphicInput';
@@ -62,7 +64,7 @@ const ContactSection: React.FC = () => {
                         <option>{t('contact.form.subject.management')}</option>
                     </NeumorphicInput>
                     <NeumorphicInput as="textarea" name="message" placeholder={t('contact.form.messagePlaceholder')} rows={4} required/>
-                    <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-white">{t('contact.form.submitButton')}</NeumorphicButton>
+                    <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-gray-300">{t('contact.form.submitButton')}</NeumorphicButton>
                 </form>
               </NeumorphicCard>
           </div>

@@ -141,7 +141,7 @@ const translations: Record<Language, any> = {
         semi_furnished: 'Semi-amoblado',
     },
     propertyGrid: {
-        title: 'Otras Propiedades',
+        title: 'Todas las Propiedades',
         sortBy: 'Ordenar por',
         sortOptions: {
             relevance: 'Relevancia',
@@ -417,7 +417,7 @@ const translations: Record<Language, any> = {
         semi_furnished: 'Semi-furnished',
     },
     propertyGrid: {
-        title: 'Other Properties',
+        title: 'All Properties',
         sortBy: 'Sort by',
         sortOptions: {
             relevance: 'Relevance',

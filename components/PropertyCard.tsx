@@ -24,13 +24,20 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
 
   const imagenPrincipal = property.imagenes?.find(img => img.es_principal) || property.imagenes?.[0];
 
+  const DetailItem: React.FC<{ icon: React.ReactNode, value: React.ReactNode }> = ({ icon, value }) => (
+    <div className="flex items-center space-x-1.5">
+        {icon}
+        <span className="text-xs">{value}</span>
+    </div>
+  );
+
   return (
     <NeumorphicCard className="flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1">
       <div className="relative group">
         <img
           src={imagenPrincipal?.url_imagen || 'https://picsum.photos/400/300'}
           alt={property.titulo}
-          className="w-full h-40 object-cover"
+          className="w-full h-64 object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity duration-300 flex items-center justify-center">
           <img src={COMPANY_INFO.logoUrl} alt="Watermark" className="w-24 h-auto opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
@@ -39,25 +46,25 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onVerMas }) => {
           {t(`property.operation.${property.tipo_operacion}`)}
         </div>
       </div>
-      <div className="p-3 flex flex-col flex-grow">
-        <h3 className="text-sm font-bold text-gray-800 h-10 line-clamp-2">{property.titulo}</h3>
+      <div className="p-2 flex flex-col flex-grow">
+        <h3 className="text-sm font-bold text-gray-800 h-8 line-clamp-2">{property.titulo}</h3>
         <div className="flex items-center text-xs text-gray-500 mt-1">
             <LocationIcon className="w-3 h-3 mr-1"/>
             <span>{property.barrio_sector}, {property.ciudad}</span>
         </div>
-        <p className="text-lg font-bold text-[#153B67] my-2">
+        <p className="text-lg font-bold text-[#153B67] my-1">
           {formatPrice(property.precio)}
           {property.es_negociable && <span className="text-xs text-gray-500 ml-2 font-normal">{t('property.negotiable')}</span>}
         </p>
         
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-600 mb-3">
-            {property.habitaciones ? <div className="flex items-center space-x-1"><span role="img" aria-label="habitaciones" className="text-base">🛏️</span><span className="text-xs">{property.habitaciones}</span></div> : null}
-            {property.banos_completos ? <div className="flex items-center space-x-1"><span role="img" aria-label="baños" className="text-base">🛁</span><span className="text-xs">{property.banos_completos}</span></div> : null}
-            {property.area_construida ? <div className="flex items-center space-x-1"><span role="img" aria-label="área" className="text-base">📏</span><span className="text-xs">{property.area_construida} m²</span></div> : null}
-            {property.parqueaderos ? <div className="flex items-center space-x-1"><span role="img" aria-label="parqueaderos" className="text-base">🚗</span><span className="text-xs">{property.parqueaderos}</span></div> : null}
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 text-gray-600 mb-2">
+            {property.habitaciones ? <DetailItem icon={<span className="text-base" role="img" aria-label="Habitaciones">🛏️</span>} value={property.habitaciones} /> : null}
+            {property.banos_completos ? <DetailItem icon={<span className="text-base" role="img" aria-label="Baños">🛁</span>} value={property.banos_completos} /> : null}
+            {property.area_construida ? <DetailItem icon={<span className="text-base" role="img" aria-label="Área">📏</span>} value={<>{property.area_construida} m²</>} /> : null}
+            {property.parqueaderos ? <DetailItem icon={<span className="text-base" role="img" aria-label="Parqueaderos">🚗</span>} value={property.parqueaderos} /> : null}
         </div>
         
-        <div className="mt-auto flex flex-col gap-2">
+        <div className="mt-auto flex flex-col gap-1.5 pt-1">
           <NeumorphicButton onClick={() => onVerMas(property)} className="w-full !px-3 !py-2 text-xs">
             {t('property.detailsButton')}
           </NeumorphicButton>

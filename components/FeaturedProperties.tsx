@@ -88,7 +88,7 @@ const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properties, onP
             className="flex gap-6 sm:gap-8 overflow-x-auto scroll-smooth py-4 scrollbar-hide -mx-2 sm:-mx-6 lg:-mx-8 px-2 sm:px-6 lg:px-8"
           >
             {properties.map(prop => (
-              <div key={prop.id} className="flex-shrink-0 w-[85vw] sm:w-[420px] md:w-[450px]">
+              <div key={prop.id} className="flex-shrink-0 w-[80vw] sm:w-[300px] md:w-[320px]">
                 <PropertyCard property={prop} onVerMas={onPropertySelect} />
               </div>
             ))}

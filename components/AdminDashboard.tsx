@@ -8,6 +8,7 @@ import CheckCircleIcon from './icons/CheckCircleIcon';
 import DocumentTextIcon from './icons/DocumentTextIcon';
 import StarIcon from './icons/StarIcon';
 import PlusIcon from './icons/PlusIcon';
+import PauseIcon from './icons/PauseIcon';
 
 interface AdminDashboardProps {
   properties: Property[];
@@ -41,6 +42,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, onAddNew, o
             total: properties.length,
             published: properties.filter(p => p.estado_publicacion === 'publicado').length,
             drafts: properties.filter(p => p.estado_publicacion === 'borrador').length,
+            paused: properties.filter(p => p.estado_publicacion === 'pausado').length,
             featured: properties.filter(p => p.es_destacado).length,
         };
     }, [properties]);
@@ -71,14 +73,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, onAddNew, o
                     <h2 className="text-2xl font-bold text-[#153B67]">Bienvenido al Panel</h2>
                     <p className="text-gray-600">Aquí tienes un resumen de la actividad de tus propiedades.</p>
                 </div>
-                <NeumorphicButton onClick={onAddNew} className="!bg-[#153B67] !text-white flex items-center gap-2">
+                <NeumorphicButton onClick={onAddNew} className="!bg-[#153B67] !text-gray-300 flex items-center gap-2">
                     <PlusIcon className="w-5 h-5"/>
                     <span>Añadir Propiedad</span>
                 </NeumorphicButton>
             </div>
 
             {/* Stat Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
                 <StatCard 
                     icon={<BuildingIcon className="w-6 h-6 text-blue-800" />} 
                     title="Propiedades Totales" 
@@ -96,6 +98,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, onAddNew, o
                     title="Borradores" 
                     value={stats.drafts}
                     colorClass="bg-yellow-200"
+                />
+                <StatCard 
+                    icon={<PauseIcon className="w-6 h-6 text-orange-800" />} 
+                    title="Pausadas" 
+                    value={stats.paused}
+                    colorClass="bg-orange-200"
                 />
                 <StatCard 
                     icon={<StarIcon className="w-6 h-6 text-purple-800" />} 

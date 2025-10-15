@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { supabase } from '../supabase/client';
 import NeumorphicCard from './ui/NeumorphicCard';
@@ -61,7 +62,7 @@ const LoginForm: React.FC = () => {
             />
           </div>
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-          <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-white" disabled={isLoading}>
+          <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-gray-300" disabled={isLoading}>
             {isLoading ? 'Ingresando...' : 'Ingresar'}
           </NeumorphicButton>
         </form>

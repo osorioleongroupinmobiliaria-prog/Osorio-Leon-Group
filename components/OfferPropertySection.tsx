@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import NeumorphicCard from './ui/NeumorphicCard';
 import NeumorphicInput from './ui/NeumorphicInput';
@@ -20,7 +22,7 @@ const OfferPropertySection: React.FC = () => {
                                 <NeumorphicInput type="email" name="email" placeholder={t('offerProperty.emailPlaceholder')} required />
                                 <NeumorphicInput type="tel" name="phone" placeholder={t('offerProperty.phonePlaceholder')} required />
                                 <NeumorphicInput as="textarea" name="details" placeholder={t('offerProperty.detailsPlaceholder')} rows={3} />
-                                <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-white">
+                                <NeumorphicButton type="submit" className="w-full !bg-[#153B67] !text-gray-300">
                                     {t('offerProperty.submitButton')}
                                 </NeumorphicButton>
                             </form>

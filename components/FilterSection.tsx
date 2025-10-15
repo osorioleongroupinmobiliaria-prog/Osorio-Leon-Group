@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import NeumorphicInput from './ui/NeumorphicInput';
 import NeumorphicButton from './ui/NeumorphicButton';
@@ -63,7 +65,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, setFilters, filt
   const glassInputContainer = "!bg-white/50 !shadow-none border border-white/60";
   const glassInputText = "!text-gray-900 placeholder-gray-600";
   const glassButton = "!bg-white/30 !shadow-none !text-gray-800 hover:!bg-white/50 active:!bg-white/20";
-  const glassButtonPrimary = "!bg-[#153B67]/80 backdrop-blur-sm !text-white !shadow-lg hover:!bg-[#153B67]/95";
+  const glassButtonPrimary = "!bg-[#153B67]/80 backdrop-blur-sm !text-gray-300 !shadow-lg hover:!bg-[#153B67]/95";
   const optionStyle = "bg-gray-100 text-gray-800";
   
   return (

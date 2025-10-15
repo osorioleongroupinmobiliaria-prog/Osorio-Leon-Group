@@ -19,6 +19,7 @@ import TestimonialsSection from './components/TestimonialsSection';
 import VisitorNotification from './components/VisitorNotification';
 import SplashScreen from './components/SplashScreen';
 import PartnersCarousel from './components/PartnersCarousel';
+import PropertyDetailPage from './components/PropertyDetailPage';
 
 export const initialFilters: Filters = {
   searchTerm: '',
@@ -26,8 +27,8 @@ export const initialFilters: Filters = {
   tipo_propiedad: 'todos',
   precio_min: 0,
   precio_max: 2000000000,
-  area_min: 30,
-  area_max: 500,
+  area_min: 0,
+  area_max: 100000,
   habitaciones: 'any',
   banos: 'any',
   parqueaderos: 'any',
@@ -44,7 +45,8 @@ export const initialFilters: Filters = {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [view, setView] = useState<'public' | 'login' | 'admin'>('public');
+  const [view, setView] = useState<'public' | 'login' | 'admin' | 'propertyDetail'>('public');
+  const [propertyId, setPropertyId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   
   const [properties, setProperties] = useState<Property[]>([]);
@@ -96,12 +98,19 @@ function App() {
 
   useEffect(() => {
     const handlePathChange = () => {
-      if (window.location.pathname === '/acceso-digital-osorio') {
+      const path = window.location.pathname;
+      
+      if (path === '/acceso-digital-osorio') {
         document.title = "Admin Panel - Osorio & León Group";
         setView(isAuthenticated ? 'admin' : 'login');
+      } else if (path.startsWith('/propiedad/')) {
+        const id = path.split('/')[2];
+        setPropertyId(id);
+        setView('propertyDetail');
       } else {
         document.title = "Osorio & León Group - Inmobiliaria";
         setView('public');
+        setPropertyId(null);
       }
     };
 
@@ -242,6 +251,8 @@ function App() {
                 onLogout={handleLogout} 
                 isSaving={isSaving}
              />;
+    case 'propertyDetail':
+        return <PropertyDetailPage propertyId={propertyId} />;
     case 'public':
     default:
       return (
