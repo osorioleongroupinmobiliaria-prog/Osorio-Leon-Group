@@ -1,16 +1,14 @@
 
 import React from 'react';
 
-interface NeumorphicButtonProps {
+// FIX: Extended props with ButtonHTMLAttributes to allow standard button props like 'title', resolving type errors in LoginForm and PropertyForm.
+interface NeumorphicButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
-  // FIX: Added disabled prop to support button disabling, resolving type errors in LoginForm and PropertyForm.
-  disabled?: boolean;
 }
 
-const NeumorphicButton: React.FC<NeumorphicButtonProps> = ({ children, className = '', onClick, type = 'button', disabled = false }) => {
+const NeumorphicButton: React.FC<NeumorphicButtonProps> = ({ children, className = '', type = 'button', ...props }) => {
   const buttonStyles = `
     bg-[#e0e0e0] rounded-xl
     text-gray-700 font-semibold
@@ -20,12 +18,12 @@ const NeumorphicButton: React.FC<NeumorphicButtonProps> = ({ children, className
     transition-all duration-150 ease-in-out
     focus:outline-none
     px-6 py-3
-    ${disabled ? 'opacity-60 cursor-not-allowed' : ''}
+    ${props.disabled ? 'opacity-60 cursor-not-allowed' : ''}
     ${className}
   `;
 
   return (
-    <button type={type} className={buttonStyles} onClick={onClick} disabled={disabled}>
+    <button type={type} className={buttonStyles} {...props}>
       {children}
     </button>
   );

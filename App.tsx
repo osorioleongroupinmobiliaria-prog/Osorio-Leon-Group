@@ -54,6 +54,68 @@ function App() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
+  // Helper to update meta tags for SEO and social sharing
+  const updateMetaTagsForProperty = (property: Property) => {
+    const updateMetaTag = (selector: string, content: string) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.setAttribute('content', content);
+      }
+    };
+    
+    const mainImage = property.imagenes?.find(img => img.es_principal) || property.imagenes?.[0];
+    document.title = property.titulo;
+    updateMetaTag('meta[property="og:title"]', property.titulo);
+    updateMetaTag('meta[name="twitter:title"]', property.titulo);
+    
+    const description = property.descripcion.substring(0, 150) + '...';
+    updateMetaTag('meta[name="description"]', description);
+    updateMetaTag('meta[property="og:description"]', description);
+    updateMetaTag('meta[name="twitter:description"]', description);
+    
+    if (mainImage) {
+      updateMetaTag('meta[property="og:image"]', mainImage.url_imagen);
+      updateMetaTag('meta[name="twitter:image"]', mainImage.url_imagen);
+    }
+    
+    const url = `${window.location.origin}/?property=${property.id}`;
+    updateMetaTag('meta[property="og:url"]', url);
+    updateMetaTag('meta[name="twitter:url"]', url);
+  };
+  
+  // Handles deep linking by fetching a single property if an ID is in the URL.
+  // This runs once on initial load.
+  useEffect(() => {
+    const fetchAndSetInitialProperty = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const propId = params.get('property');
+      
+      if (propId) {
+        try {
+          const { data, error } = await supabase
+            .from('properties')
+            .select('*')
+            .eq('id', propId)
+            .single();
+          
+          if (error) {
+            console.error("Error fetching initial property for deep link:", error);
+          } else if (data) {
+            // NOTE: Client-side meta tag updates are not always picked up by social media crawlers
+            // (like Facebook, WhatsApp). For robust social previews, server-side rendering (SSR) is recommended.
+            // This optimized logic fetches the specific property data as fast as possible to increase the chance of crawlers seeing it.
+            updateMetaTagsForProperty(data);
+            setSelectedProperty(data);
+          }
+        } catch (e) {
+            console.error("An unexpected error occurred during initial property fetch:", e);
+        }
+      }
+    };
+    
+    fetchAndSetInitialProperty();
+  }, []);
+
   const fetchProperties = async () => {
     const { data: { session } } = await supabase.auth.getSession();
 
@@ -96,11 +158,17 @@ function App() {
 
   useEffect(() => {
     const handlePathChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const hasProperty = params.has('property');
+      
       if (window.location.pathname === '/acceso-digital-osorio') {
         document.title = "Admin Panel - Osorio & León Group";
         setView(isAuthenticated ? 'admin' : 'login');
       } else {
-        document.title = "Osorio & León Group - Inmobiliaria";
+        // Only reset to public if there isn't an initial property to show
+        if (!hasProperty) {
+            document.title = "Osorio & León Group - Inmobiliaria";
+        }
         setView('public');
       }
     };

@@ -65,22 +65,31 @@ const newPropertyTemplate: Omit<Property, 'id'> = {
     tiene_puerta_tradicional: false,
 };
 
+// FIX: Created a helper function with an explicit return type to resolve a TypeScript inference issue.
+const createNewProperty = (): Property => ({
+    ...newPropertyTemplate,
+    id: `prop_${Date.now()}`
+});
+
 
 const PropertyForm: React.FC<PropertyFormProps> = ({ property, onSave, onCancel, isSaving }) => {
     const [formData, setFormData] = useState<Property>(
-        property || { ...newPropertyTemplate, id: `prop_${Date.now()}` }
+        // FIX: Used the createNewProperty helper to ensure the initial state is correctly typed as Property.
+        property || createNewProperty()
     );
     const [multiUrlInput, setMultiUrlInput] = useState('');
     
     useEffect(() => {
         if (property) {
+            // FIX: Corrected the object spread order to ensure `uploadMode` is correctly set and typed.
             const processedProperty = {
                 ...property,
-                imagenes: property.imagenes.map(img => ({ uploadMode: 'url', ...img })),
+                imagenes: property.imagenes.map(img => ({ ...img, uploadMode: 'url' as const })),
             };
             setFormData(processedProperty);
         } else {
-            setFormData({ ...newPropertyTemplate, id: `prop_${Date.now()}` });
+            // FIX: Used the createNewProperty helper to ensure the state is correctly typed as Property.
+            setFormData(createNewProperty());
         }
     }, [property]);
 
